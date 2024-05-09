@@ -8,7 +8,7 @@ namespace MiProyecto
         {
             //TypeClass.TypVar();
             //PrintTerminal.Print();
-            Edad.MainEdad();
+            //Edad.MainEdad();
         }
     }
     class Edad
@@ -63,6 +63,38 @@ namespace MiProyecto
         public static void Print()
         {
             Console.WriteLine("Holaaa");
+        }
+    }
+    class convertImEx
+    {
+        public static void Men(string[] args)
+        {
+            double temperatura = 10.2;
+            int temperaturaDar;
+            temperaturaDar = (int)temperatura;
+            //conversion explicita
+
+            //conversion implicita
+            int habitnates = 10000;
+            long habiantesCiudad = habitnates;
+            //
+            float pesoMaterial = 1.0f;
+            double pesoMaterialPrec = pesoMaterial;
+
+            Console.WriteLine(habiantesCiudad);
+        }
+    }
+    class convertString
+    {
+        public static void Men()
+        {
+            //conversion de texto a numero
+            Console.WriteLine("intrudce el valor");
+            int num = int.Parse(Console.ReadLine());
+            Console.WriteLine("introduce el segundo valor");
+            int num2 = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("la suma es " + (num + num2));
         }
     }
 }
