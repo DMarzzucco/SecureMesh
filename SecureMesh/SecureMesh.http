@@ -1,0 +1,6 @@
+@SecureMesh_HostAddress = http://localhost:5100
+
+GET {{SecureMesh_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

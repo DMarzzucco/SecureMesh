@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres
+    container_name: data_base_pg
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: data_base
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - compose-bridge
+      - 
+  securemesh:
+    image: ${DOCKER_REGISTRY-}securemesh
+    build:
+      context: .
+      dockerfile: SecureMesh/Dockerfile
