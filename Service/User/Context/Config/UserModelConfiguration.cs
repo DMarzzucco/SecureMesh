@@ -13,13 +13,13 @@ public class UserModelConfiguration:IEntityTypeConfiguration<UserModel>
         builder.HasKey(r => r.Id);
         builder.Property(r => r.Id).UseIdentityColumn().ValueGeneratedOnAdd();
         
-        builder.Property(r => r.complete_name).IsRequired().HasMaxLength(50);
+        builder.Property(r => r.FullName).IsRequired().HasMaxLength(50);
         
-        builder.Property(r => r.username).IsUnicode().IsRequired().HasMaxLength(50);
-        builder.Property(r => r.email).IsUnicode().IsRequired().HasMaxLength(50);
-        builder.Property(r => r.password);
+        builder.Property(r => r.Username).IsUnicode().IsRequired().HasMaxLength(50);
+        builder.Property(r => r.Email).IsUnicode().IsRequired().HasMaxLength(50);
+        builder.Property(r => r.Password);
         
-        builder.Property(r => r.roles)
+        builder.Property(r => r.Roles)
             .HasConversion(EnumConversionHelper.GetEnumConverter<ROLES>()).HasMaxLength(20).IsUnicode(false).IsRequired();
         
         builder.Property(r => r.RefreshToken).IsRequired(false);

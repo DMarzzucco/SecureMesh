@@ -1,4 +1,5 @@
 ﻿using Swashbuckle.AspNetCore.Annotations;
+using User.Configuration.Swagger.Attributes;
 using User.Module.Enums;
 
 namespace User.Module.Model;
@@ -9,19 +10,24 @@ public class UserModel
     public int Id { get; set; }
 
     [SwaggerSchema("User name")]
-    public required string complete_name { get; set; }
+    [SwaggerSchemaExample("Dario Marzzucco")]
+    public required string FullName { get; set; }
     
     [SwaggerSchema("User username")]
-    public required string username { get; set; }
+    [SwaggerSchemaExample("derkmarzz77")]
+    public required string Username { get; set; }
     
     [SwaggerSchema("User email")]
-    public required string email { get; set; }
+    [SwaggerSchemaExample("marzz77_@gmail.com")]
+    public required string Email { get; set; }
     
     [SwaggerSchema("User password")]
-    public required string password { get; set; }
+    [SwaggerSchemaExample ("passmort243")]
+    public required string Password { get; set; }
     
     [SwaggerSchema("User roles")]
-    public required ROLES roles { get; set; }
+    [SwaggerSchemaExample("ADMIN")]
+    public required ROLES Roles { get; set; }
 
     [SwaggerIgnore]
     public string? RefreshToken { get; set; }

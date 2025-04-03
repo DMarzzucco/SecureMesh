@@ -1,0 +1,326 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "User API",
+    "description": "User API",
+    "version": "0.1"
+  },
+  "paths": {
+    "/api/User": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateUserDTO": {
+        "required": [
+          "Email",
+          "FullName",
+          "Password",
+          "Roles",
+          "Username"
+        ],
+        "type": "object",
+        "properties": {
+          "FullName": {
+            "type": "string",
+            "description": "User name",
+            "nullable": true,
+            "example": "Dario Marzzucco"
+          },
+          "Username": {
+            "type": "string",
+            "description": "User username",
+            "nullable": true,
+            "example": "derkmarzz77"
+          },
+          "Email": {
+            "type": "string",
+            "description": "User email",
+            "nullable": true,
+            "example": "marzz77_@gmail.com"
+          },
+          "Password": {
+            "type": "string",
+            "description": "User password",
+            "nullable": true,
+            "example": "passmort243"
+          },
+          "Roles": {
+            "$ref": "#/components/schemas/ROLES"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ROLES": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "UpdateUserDTO": {
+        "type": "object",
+        "properties": {
+          "FullName": {
+            "type": "string",
+            "description": "User name",
+            "nullable": true,
+            "example": "Dario Marzzucco"
+          },
+          "Username": {
+            "type": "string",
+            "description": "User username",
+            "nullable": true,
+            "example": "derkmarzz77"
+          },
+          "Email": {
+            "type": "string",
+            "description": "User email",
+            "nullable": true,
+            "example": "marzz77_@gmail.com"
+          },
+          "Password": {
+            "type": "string",
+            "description": "User password",
+            "nullable": true,
+            "example": "passmort243"
+          },
+          "Roles": {
+            "$ref": "#/components/schemas/ROLES"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserModel": {
+        "required": [
+          "Email",
+          "FullName",
+          "Password",
+          "Roles",
+          "Username"
+        ],
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "User Id",
+            "format": "int32"
+          },
+          "FullName": {
+            "type": "string",
+            "description": "User name",
+            "nullable": true,
+            "example": "Dario Marzzucco"
+          },
+          "Username": {
+            "type": "string",
+            "description": "User username",
+            "nullable": true,
+            "example": "derkmarzz77"
+          },
+          "Email": {
+            "type": "string",
+            "description": "User email",
+            "nullable": true,
+            "example": "marzz77_@gmail.com"
+          },
+          "Password": {
+            "type": "string",
+            "description": "User password",
+            "nullable": true,
+            "example": "passmort243"
+          },
+          "Roles": {
+            "$ref": "#/components/schemas/ROLES"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

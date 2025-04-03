@@ -15,7 +15,7 @@ public static class DatabaseConnection
 
         using (var serviceProvider = service.BuildServiceProvider())
         {
-            var logger = serviceProvider.GetService<ILogger<object>>();
+            var logger = serviceProvider.GetRequiredService<ILogger<object>>();
 
             WaitForIt.WaitForDatabaseAsync(connectionString, logger).GetAwaiter().GetResult();
         }

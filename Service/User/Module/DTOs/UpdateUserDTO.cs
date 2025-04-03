@@ -1,4 +1,5 @@
 ﻿using Swashbuckle.AspNetCore.Annotations;
+using User.Configuration.Swagger.Attributes;
 using User.Module.Enums;
 
 namespace User.Module.DTOs;
@@ -6,17 +7,22 @@ namespace User.Module.DTOs;
 public class UpdateUserDTO
 {
     [SwaggerSchema("User name")]
-    public string? complete_name { get; set; }
-    
+    [SwaggerSchemaExample("Dario Marzzucco")]
+    public string? FullName { get; set; }
+
     [SwaggerSchema("User username")]
-    public string? username { get; set; }
-    
+    [SwaggerSchemaExample("derkmarzz77")]
+    public string? Username { get; set; }
+
     [SwaggerSchema("User email")]
-    public string? email { get; set; }
-    
+    [SwaggerSchemaExample("marzz77_@gmail.com")]
+    public string? Email { get; set; }
+
     [SwaggerSchema("User password")]
-    public string? password { get; set; }
-    
+    [SwaggerSchemaExample("passmort243")]
+    public string? Password { get; set; }
+
     [SwaggerSchema("User roles")]
-    public ROLES? roles { get; set; }
+    [SwaggerSchemaExample("ADMIN")]
+    public ROLES? Roles { get; set; }
 }

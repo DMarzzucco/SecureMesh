@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "FjDRl5K3hlu7U0Sa6iVTLgwLzVDKcpzqkjprHYdkvt0=",
+  "Source": "SecureMesh",
+  "BasePath": "_content/SecureMesh",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
