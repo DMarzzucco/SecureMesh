@@ -1,4 +1,6 @@
-﻿namespace User.Extensions;
+﻿using User.Module.Stubs;
+
+namespace User.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
@@ -6,9 +8,9 @@ public static class ApplicationBuilderExtensions
     {
         app.UseHttpsRedirection();
         app.UseRouting();
-        //app.UseEndpoints(e => {
-        //    e.MapGrpcService<UserServiceGrpcImple>();
-        //});
+        app.UseEndpoints(e => {
+            e.MapGrpcService<UserServiceGrpcImpl>();
+        });
         app.UseStaticFiles();
         app.UseCors("CorsPolicy");
 

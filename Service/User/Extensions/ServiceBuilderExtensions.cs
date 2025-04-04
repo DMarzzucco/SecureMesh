@@ -19,11 +19,14 @@ public static partial class ServiceBuilderExtensions
     {
         //database connection
         services.AddDatabaseConnection(configuration);
+        //gRPC
+        services.AddGrpc();
         //controller configuration
         services.AddControllers(static op =>
         {
             op.Filters.Add(typeof(GlobalFilterExceptions));
-        }).AddJsonOptions( o => {
+        }).AddJsonOptions(o =>
+        {
             o.JsonSerializerOptions.PropertyNamingPolicy = null;
             o.JsonSerializerOptions.WriteIndented = true;
             o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
@@ -35,9 +38,11 @@ public static partial class ServiceBuilderExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         //swagger
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(e => {
+        services.AddSwaggerGen(e =>
+        {
             e.EnableAnnotations();
-            e.SwaggerDoc("v1", new OpenApiInfo { 
+            e.SwaggerDoc("v1", new OpenApiInfo
+            {
                 Title = "User API",
                 Version = "0.1",
                 Description = "User API"
@@ -45,9 +50,15 @@ public static partial class ServiceBuilderExtensions
             e.SchemaFilter<SwaggerSchemaFilter>();
         });
         //CorsPolicy
-        services.AddCors(p => {
-            p.AddPolicy("CorsPolicy", e => {
-                e.WithOrigins("https:localhost:8888");
+        services.AddCors(p =>
+        {
+            p.AddPolicy("CorsPolicy", e =>
+            {
+                e.WithOrigins(
+                   "https://localhost:5090",
+                    //"https://auth:5090",
+                   "https://localhost:8888"
+                    );
                 e.AllowCredentials();
                 e.AllowAnyHeader();
             });
@@ -59,8 +70,9 @@ public static partial class ServiceBuilderExtensions
         });
         IMapper mapper = mappConfig.CreateMapper();
         services.AddSingleton(mapper);
-        //
+        services.AddMvc();
+
         return services;
     }
-    
+
 }

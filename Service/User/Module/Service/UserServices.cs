@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using User.Module.DTOs;
 using User.Module.Model;
 using User.Module.Repository.Interface;
@@ -25,8 +26,7 @@ namespace User.Module.Service
         /// <exception cref="NotImplementedException"></exception>
         public async Task<UserModel> FindUserById(int id)
         {
-            var user = await this._repository.FindByIdAsync(id);
-            if (user == null)
+            var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
             return user;
         }
@@ -54,6 +54,10 @@ namespace User.Module.Service
                 throw new ConflictExceptions("Email already exist");
 
             var user = this._mapper.Map<UserModel>(body);
+
+            var passwordHasher = new PasswordHasher<UserModel>();
+            user.Password = passwordHasher.HashPassword(user, body.Password);
+
             await this._repository.AddChangeAsync(user);
             return user;
         }

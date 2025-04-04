@@ -20,6 +20,27 @@ services:
       context: .
       dockerfile: SecureMesh/Dockerfile
 
+  user:
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetcert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=4080
+      - ASPNETCORE_HTTPS_PORTS=4080
+    container_name: user.net
+    image: ${DOCKER_REGISTRY-}user
+    build:
+        context: .
+        dockerfile: Service/User/Dockerfile
+    ports:
+      - "4080:4080"
+    volumes:
+      - ./certs/user/aspnetcert.pfx:/https/aspnetcert.pfx
+    networks:
+      - compose-bridge
+    depends_on:
+      - db
+
 networks:
 
   compose-bridge:

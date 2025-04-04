@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\user\\extensions\\servicebuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|solutionrelative:service\\user\\extensions\\servicebuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\security\\utils\\filter\\globalfilterexceptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|solutionrelative:service\\security\\utils\\filter\\globalfilterexceptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\user\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|solutionrelative:service\\user\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\security\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|solutionrelative:service\\security\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\user\\configuration\\dbconfiguration\\databaseconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|solutionrelative:service\\user\\configuration\\dbconfiguration\\databaseconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\security\\extensions\\applicationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|solutionrelative:service\\security\\extensions\\applicationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\user\\module\\model\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22EABEA4-F137-4444-ACFE-6C723BA05ABB}|Service\\User\\User.csproj|solutionrelative:service\\user\\module\\model\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81DDED9D-158B-E303-5F62-77A2896D2A5A}|docker-compose.dcproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{81DDED9D-158B-E303-5F62-77A2896D2A5A}|docker-compose.dcproj|solutionrelative:docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\service\\security\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Security\\Security.csproj|solutionrelative:service\\security\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,8 +25,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 763,
-          "SelectedChildIndex": 7,
+          "DockedWidth": 770,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,48 +50,35 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserModel.cs",
-              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Module\\Model\\UserModel.cs",
-              "RelativeDocumentMoniker": "Service\\User\\Module\\Model\\UserModel.cs",
-              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Module\\Model\\UserModel.cs",
-              "RelativeToolTip": "Service\\User\\Module\\Model\\UserModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T17:41:10.039Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "docker-compose.yml",
-              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\docker-compose.yml",
-              "RelativeDocumentMoniker": "docker-compose.yml",
-              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\docker-compose.yml",
-              "RelativeToolTip": "docker-compose.yml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2025-04-03T16:49:29.177Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Program.cs",
-              "RelativeDocumentMoniker": "Service\\User\\Program.cs",
-              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Program.cs",
-              "RelativeToolTip": "Service\\User\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAYAAAAAAAAAA==",
+              "Title": "JwtService.cs",
+              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\JWT\\JwtService.cs",
+              "RelativeDocumentMoniker": "Service\\Security\\JWT\\JwtService.cs",
+              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\JWT\\JwtService.cs",
+              "RelativeToolTip": "Service\\Security\\JWT\\JwtService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T16:49:11.103Z",
+              "WhenOpened": "2025-04-04T18:35:40.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\Program.cs",
+              "RelativeDocumentMoniker": "Service\\Security\\Program.cs",
+              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\Program.cs",
+              "RelativeToolTip": "Service\\Security\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T12:02:14.917Z",
               "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedWidth": 763,
-          "SelectedChildIndex": 2,
+          "DockedWidth": 756,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -103,28 +86,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DatabaseConnection.cs",
-              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Configuration\\DbConfiguration\\DatabaseConnection.cs",
-              "RelativeDocumentMoniker": "Service\\User\\Configuration\\DbConfiguration\\DatabaseConnection.cs",
-              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Configuration\\DbConfiguration\\DatabaseConnection.cs",
-              "RelativeToolTip": "Service\\User\\Configuration\\DbConfiguration\\DatabaseConnection.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAzAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "GlobalFilterExceptions.cs",
+              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\Utils\\Filter\\GlobalFilterExceptions.cs",
+              "RelativeDocumentMoniker": "Service\\Security\\Utils\\Filter\\GlobalFilterExceptions.cs",
+              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\Utils\\Filter\\GlobalFilterExceptions.cs",
+              "RelativeToolTip": "Service\\Security\\Utils\\Filter\\GlobalFilterExceptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T17:01:51.699Z",
+              "WhenOpened": "2025-04-04T20:12:42.222Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ServiceBuilderExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Extensions\\ServiceBuilderExtensions.cs",
-              "RelativeDocumentMoniker": "Service\\User\\Extensions\\ServiceBuilderExtensions.cs",
-              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\User\\Extensions\\ServiceBuilderExtensions.cs",
-              "RelativeToolTip": "Service\\User\\Extensions\\ServiceBuilderExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "ApplicationBuilderExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\Extensions\\ApplicationBuilderExtensions.cs",
+              "RelativeDocumentMoniker": "Service\\Security\\Extensions\\ApplicationBuilderExtensions.cs",
+              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\Service\\Security\\Extensions\\ApplicationBuilderExtensions.cs",
+              "RelativeToolTip": "Service\\Security\\Extensions\\ApplicationBuilderExtensions.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAiwDMAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T16:56:58.238Z",
+              "WhenOpened": "2025-04-04T12:03:11.28Z",
               "EditorCaption": ""
             }
           ]

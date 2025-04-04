@@ -4,9 +4,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
 
+COPY certs/user/aspnetcert.pfx /https/aspnetcert.pfx
+
+# Variables de entorno para HTTPS
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetcert.pfx
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
+
+EXPOSE 4080
+EXPOSE 4081
 
 # Esta fase se usa para compilar el proyecto de servicio
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -16,7 +22,13 @@ COPY ["Service/User/User.csproj", "Service/User/"]
 RUN dotnet restore "./Service/User/User.csproj"
 COPY . .
 WORKDIR "/src/Service/User"
+#dotnet ef
+RUN dotnet tool install --global dotnet-ef 
+ENV PATH="$PATH:/root/.dotnet/tools"
+#build
 RUN dotnet build "./User.csproj" -c $BUILD_CONFIGURATION -o /app/build
+#execute dotnet ef
+CMD dotnet ef database update --environment Production --project src/TASK-FLOW.NET
 
 # Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.
 FROM build AS publish

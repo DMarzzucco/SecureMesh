@@ -1,0 +1,174 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Security API",
+    "description": " Api of Security",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Security/login": {
+      "post": {
+        "tags": [
+          "Security"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Security/profile": {
+      "get": {
+        "tags": [
+          "Security"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Security/logout": {
+      "post": {
+        "tags": [
+          "Security"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Security/refresh": {
+      "post": {
+        "tags": [
+          "Security"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginDTO": {
+        "required": [
+          "Password",
+          "Username"
+        ],
+        "type": "object",
+        "properties": {
+          "Username": {
+            "type": "string",
+            "description": "User username",
+            "nullable": true,
+            "example": "derkmarzz77"
+          },
+          "Password": {
+            "type": "string",
+            "description": "User password",
+            "nullable": true,
+            "example": "passmort243"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ROLES": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "UserModel": {
+        "required": [
+          "Email",
+          "FullName",
+          "Password",
+          "Roles",
+          "Username"
+        ],
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "User Id",
+            "format": "int32"
+          },
+          "FullName": {
+            "type": "string",
+            "description": "User name",
+            "nullable": true,
+            "example": "Dario Marzzucco"
+          },
+          "Username": {
+            "type": "string",
+            "description": "User username",
+            "nullable": true,
+            "example": "derkmarzz77"
+          },
+          "Email": {
+            "type": "string",
+            "description": "User email",
+            "nullable": true,
+            "example": "marzz77_@gmail.com"
+          },
+          "Password": {
+            "type": "string",
+            "description": "User password",
+            "nullable": true,
+            "example": "passmort243"
+          },
+          "Roles": {
+            "$ref": "#/components/schemas/ROLES"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

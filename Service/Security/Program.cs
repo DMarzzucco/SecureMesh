@@ -1,7 +1,18 @@
+using Security.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddServiceBuilderExtensions(builder.Configuration);
+
+builder.WebHost.ConfigureKestrel(op =>
+{
+    op.ListenAnyIP(5090, listen =>
+    {
+        listen.UseHttps();
+        listen.Protocols =
+            Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+    });
+});
 
 var app = builder.Build();
 
@@ -12,5 +23,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseApplicationBuilderExtensions();
+app.MapControllers();
 app.Run();

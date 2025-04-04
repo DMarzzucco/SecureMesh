@@ -1,0 +1,2 @@
+obj\Debug\net8.0\Proto/UserServiceGrpc.cs \
+obj\Debug\net8.0\Proto/UserServiceGrpcGrpc.cs: Proto/UserServiceGrpc.proto

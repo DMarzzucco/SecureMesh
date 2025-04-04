@@ -1,0 +1,58 @@
+[
+  {
+    "ContainingType": "Security.Module.Controller.SecurityController",
+    "Method": "Login",
+    "RelativePath": "api/Security/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "Security.Module.DTOs.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Security.Module.Controller.SecurityController",
+    "Method": "CloseSection",
+    "RelativePath": "api/Security/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Security.Module.Controller.SecurityController",
+    "Method": "GetProfile",
+    "RelativePath": "api/Security/profile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Security.Server.Model.UserModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Security.Module.Controller.SecurityController",
+    "Method": "RefreshToken",
+    "RelativePath": "api/Security/refresh",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

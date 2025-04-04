@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option csharp_namespace = "User";
+
+service UserServiceGrpc {
+    rpc GetUserByIdForAuth (UserRequest) returns (AuthUserResponse);
+    rpc UpdateRefreshToken (RefreshTokenRequest) returns (AuthUserResponse);
+    rpc FindByValueForAuth (ValueKeysRequest) returns (ValidationResponse);
+}
+
+message ValidationResponse {
+    oneof result {
+        AuthUserResponse user = 1;
+        ErrorResponse error = 2;
+    }
+}
+message RefreshTokenRequest {
+    int32 id = 1;
+    optional string refresh_token = 2;
+}
+
+message ValueKeysRequest{
+    string key = 1;
+    oneof value {
+        string string_value = 2;
+        int32 int_value = 3;
+        bool bool_value = 4;
+    }
+}
+
+message UserRequest {
+    int32 id = 1;
+}
+
+message AuthUserResponse {
+    int32 id = 1;
+    string full_name = 2;
+    string username = 3;
+    string email = 4;
+    string password = 5;
+    ROLES roles = 6;
+    optional string refresh_token = 7;
+}
+
+message ErrorResponse {
+    int32 status_code = 1;
+    string message = 2;
+}
+enum ROLES{
+     ADMIN = 0;
+     CREATOR = 1;
+     BASIC = 2;
+}
