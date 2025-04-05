@@ -40,6 +40,25 @@ services:
       - compose-bridge
     depends_on:
       - db
+  auth:
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5090
+      - ASPNETCORE_HTTPS_PORTS=5090
+    container_name: auth.net
+    image: ${DOCKER_REGISTRY-}auth
+    build:
+        context: .
+        dockerfile: Service/Security/Dockerfile
+    ports:
+      - "5090:5090"
+    volumes:
+      - ./certs/auth/cert.pfx:/https/cert.pfx
+    networks:
+      - compose-bridge
+
 
 networks:
 

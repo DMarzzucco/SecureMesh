@@ -36,3 +36,13 @@ C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\obj\Debug\net8.0\refint\
 C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\obj\Debug\net8.0\SecureMesh.pdb
 C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\obj\Debug\net8.0\SecureMesh.genruntimeconfig.cache
 C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\obj\Debug\net8.0\ref\SecureMesh.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\System.IO.Hashing.dll
+C:\Users\darmarzrold\source\repos\SecureMesh\SecureMesh\bin\Debug\net8.0\Yarp.ReverseProxy.dll

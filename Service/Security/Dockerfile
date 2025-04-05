@@ -4,8 +4,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+
+COPY certs/auth/cert.pfx /https/cert.pfx
+
+# Variables de entorno para HTTPS
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.pfx
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
+
+EXPOSE 5090
+EXPOSE 5090
 
 
 # Esta fase se usa para compilar el proyecto de servicio
