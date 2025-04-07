@@ -1,0 +1,126 @@
+name: dockercompose14858158102831918834
+services:
+  auth:
+    build:
+      context: C:\Users\darmarzrold\source\repos\SecureMesh
+      dockerfile: Service/Security/Dockerfile
+    container_name: auth.net
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "5090"
+      ASPNETCORE_HTTPS_PORTS: "5090"
+      ASPNETCORE_Kestrel__Certificates__Default__Password: pass123
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/cert.pfx
+    image: auth
+    networks:
+      compose-bridge: null
+    ports:
+      - mode: ingress
+        target: 5090
+        published: "5090"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\darmarzrold\source\repos\SecureMesh\certs\auth\cert.pfx
+        target: /https/cert.pfx
+        bind:
+          create_host_path: true
+  db:
+    container_name: data_base_pg
+    environment:
+      POSTGRES_DB: data_base
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+    image: postgres
+    networks:
+      compose-bridge: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: C:\Users\darmarzrold\source\repos\SecureMesh\db\init.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+        bind:
+          create_host_path: true
+  securemesh:
+    build:
+      context: C:\Users\darmarzrold\source\repos\SecureMesh
+      dockerfile: SecureMesh/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+    image: securemesh
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\darmarzrold\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\darmarzrold\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\darmarzrold\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\darmarzrold\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  user:
+    build:
+      context: C:\Users\darmarzrold\source\repos\SecureMesh
+      dockerfile: Service/User/Dockerfile
+    container_name: user.net
+    depends_on:
+      db:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "4080"
+      ASPNETCORE_HTTPS_PORTS: "4080"
+      ASPNETCORE_Kestrel__Certificates__Default__Password: pass123
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetcert.pfx
+    image: user
+    networks:
+      compose-bridge: null
+    ports:
+      - mode: ingress
+        target: 4080
+        published: "4080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\darmarzrold\source\repos\SecureMesh\certs\user\aspnetcert.pfx
+        target: /https/aspnetcert.pfx
+        bind:
+          create_host_path: true
+networks:
+  compose-bridge:
+    name: dockercompose14858158102831918834_compose-bridge
+    driver: bridge
+  default:
+    name: dockercompose14858158102831918834_default

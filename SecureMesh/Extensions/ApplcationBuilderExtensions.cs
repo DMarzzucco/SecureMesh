@@ -1,4 +1,12 @@
-﻿namespace SecureMesh.Extensions
+﻿using Yarp.ReverseProxy.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Yarp.ReverseProxy.Transforms;
+using Microsoft.AspNetCore.Authentication;
+using SecureMesh.Utils.Filter;
+using SecureMesh.ReverseProxy;
+using SecureMesh.Configuration;
+
+namespace SecureMesh.Extensions
 {
     /// <summary>
     /// Application builder Extensions
@@ -7,6 +15,7 @@
     {
         public static IApplicationBuilder UseApplicationBuilderExtensions(this IApplicationBuilder app)
         {
+            app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthentication();
@@ -21,20 +30,21 @@
     {
         public static IServiceCollection AddServiceBuilderExtensions(this IServiceCollection service, IConfiguration conf)
         {
-            //Swagger Configuration
-            service.AddEndpointsApiExplorer();
-            service.AddSwaggerGen();
+            //jwt Config
+            service.AddJwtBearerConfiguration();
             //Yarp
-            service.AddReverseProxy()
-                .LoadFromConfig(conf.GetSection("ReverseProxy"));
+            service.AddReverseProxyConfig(conf); 
             //controller
             service.AddControllers(o =>
             {
-                //o.Filters.Add(typeof());
+                o.Filters.Add(typeof(GlobalFilterExceptions));
             });
             ///service add scope
-            //service.AddScoped<>();
+            service.AddScoped<GlobalFilterExceptions>();
 
+            //Swagger Configuration
+            service.AddEndpointsApiExplorer();
+            service.AddSwaggerGen();
             //Cors Policy
             service.AddCors(x =>
             {
