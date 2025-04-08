@@ -140,7 +140,7 @@ namespace Security.JWT
             var claims = new List<Claim>
             {
                 new ("sub", user.Id.ToString()),
-                new ("rol", user.Roles.ToString()),
+                new (ClaimTypes.Role, user.Roles.ToString()),
             };
 
             var accessToken = CreateToken(claims, credentials, accessTokenExpiration);

@@ -39,7 +39,7 @@ namespace User.Module.Controller
         /// </summary>
         /// <param name="body"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<ActionResult<UserModel>> RegisterUser([FromBody] CreateUserDTO body)
         {
             var date = await this._service.RegisterUser(body);

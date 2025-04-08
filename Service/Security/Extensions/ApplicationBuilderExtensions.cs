@@ -42,6 +42,7 @@ namespace Security.Extensions
         public static IServiceCollection AddServiceBuilderExtensions(this IServiceCollection service, IConfiguration configuration)
         {
             service.AddHttpContextAccessor();
+            
             //JWT Configuration
             var secretKey = configuration.GetSection("JwtSettings").GetSection("seecretKey").ToString();
             if (string.IsNullOrEmpty(secretKey))

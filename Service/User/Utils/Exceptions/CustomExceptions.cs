@@ -3,30 +3,12 @@
 /// <summary>
 /// 409
 /// </summary>
-public class ConflictExceptions : Exception
-{
-    public ConflictExceptions(string message) : base(message)
-    {
-        
-    }
-}
+public class ConflictExceptions(string message) : Exception(message) { }
 /// <summary>
 /// 400
 /// </summary>
-public class BadRequestExceptions : Exception
-{
-    public BadRequestExceptions(string message) : base(message)
-    {
-        
-    }
-}
+public class BadRequestExceptions(string message) : Exception(message) { }
 /// <summary>
 /// 404
 /// </summary>
-public class NotFoundExceptions : Exception
-{
-    public NotFoundExceptions(string message) : base(message)
-    {
-        
-    }
-}
+public class NotFoundExceptions(string message) : Exception(message) { }

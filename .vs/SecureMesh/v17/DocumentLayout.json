@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\securemesh\\extensions\\applcationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\extensions\\applcationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\securemesh\\reverseproxy\\reverseproxyconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\reverseproxy\\reverseproxyconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\securemesh\\configuration\\jwtbearerconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\configuration\\jwtbearerconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\securemesh\\extensions\\applcationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\extensions\\applcationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\securemesh\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darmarzrold\\source\\repos\\securemesh\\securemesh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,41 +54,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "JwtBearerConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "RelativeDocumentMoniker": "SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "RelativeToolTip": "SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T21:30:45.577Z",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\appsettings.json",
+              "RelativeDocumentMoniker": "SecureMesh\\appsettings.json",
+              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\appsettings.json",
+              "RelativeToolTip": "SecureMesh\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T18:42:18.592Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ReverseProxyConfig.cs",
               "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
               "RelativeDocumentMoniker": "SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
               "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
               "RelativeToolTip": "SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAzwC8AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAIwDYAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-07T21:22:32.386Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Program.cs",
-              "RelativeDocumentMoniker": "SecureMesh\\Program.cs",
-              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Program.cs",
-              "RelativeToolTip": "SecureMesh\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T13:53:19.363Z",
               "EditorCaption": ""
             }
           ]
@@ -99,13 +90,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "JwtBearerConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
+              "RelativeDocumentMoniker": "SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
+              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
+              "RelativeToolTip": "SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAwwBUAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T21:30:45.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Program.cs",
+              "RelativeDocumentMoniker": "SecureMesh\\Program.cs",
+              "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Program.cs",
+              "RelativeToolTip": "SecureMesh\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T13:53:19.363Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ApplcationBuilderExtensions.cs",
               "DocumentMoniker": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
               "RelativeDocumentMoniker": "SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
               "ToolTip": "C:\\Users\\darmarzrold\\source\\repos\\SecureMesh\\SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
               "RelativeToolTip": "SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAzwCQAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-05T13:53:40.515Z",
               "EditorCaption": ""

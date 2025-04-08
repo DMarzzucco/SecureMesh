@@ -1,8 +1,4 @@
-﻿using Yarp.ReverseProxy.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using Yarp.ReverseProxy.Transforms;
-using Microsoft.AspNetCore.Authentication;
-using SecureMesh.Utils.Filter;
+﻿using SecureMesh.Utils.Filter;
 using SecureMesh.ReverseProxy;
 using SecureMesh.Configuration;
 
@@ -18,7 +14,8 @@ namespace SecureMesh.Extensions
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseRateLimiter();
 
             return app;
         }
@@ -31,7 +28,7 @@ namespace SecureMesh.Extensions
         public static IServiceCollection AddServiceBuilderExtensions(this IServiceCollection service, IConfiguration conf)
         {
             //jwt Config
-            service.AddJwtBearerConfiguration();
+            service.AddJwtBearerConfiguration(conf);
             //Yarp
             service.AddReverseProxyConfig(conf); 
             //controller
