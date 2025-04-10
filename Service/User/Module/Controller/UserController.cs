@@ -30,9 +30,9 @@ namespace User.Module.Controller
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserModel>> GetUserById (int id)
+        public async Task<ActionResult<UserDTO>> GetUserById (int id)
         {
-            return Ok(await this._service.FindUserById(id));
+            return Ok(await this._service.GetUserProfileById(id));
         }
         /// <summary>
         /// Register User

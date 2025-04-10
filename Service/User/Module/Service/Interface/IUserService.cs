@@ -5,6 +5,7 @@ namespace User.Module.Service.Interface
 {
     public interface IUserService
     {
+        Task<UserDTO> GetUserProfileById(int id);
         Task<UserModel> RegisterUser(CreateUserDTO body);
         Task<UserModel> FindUserById(int id);
         Task<IEnumerable<UserModel>> ListOfAllRegister();

@@ -10,5 +10,6 @@ public class MapperProfile:Profile
     {
         CreateMap<CreateUserDTO, UserModel>();
         CreateMap<UpdateUserDTO, UserModel>();
+        CreateMap<UserModel, UserDTO>();
     }
 }

@@ -3,6 +3,7 @@ using Security.Cookies.Interfaces;
 using Security.JWT.Interfaces;
 using Security.Module.DTOs;
 using Security.Module.Services.Interfaces;
+using Security.Server.DTOs;
 using Security.Server.Model;
 using Security.Server.Service.Interfaces;
 
@@ -64,7 +65,15 @@ namespace Security.Module.Services
         public async Task<object> GetProfile()
         {
             var user = await this.GetUserByCookie();
-            return user;
+            var response = new UserDTO
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                Username = user.Username,
+                Roles = user.Roles
+            };
+            return response;
         }
         /// <summary>
         /// Get User By Cookie

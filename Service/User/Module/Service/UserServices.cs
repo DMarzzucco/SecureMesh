@@ -31,6 +31,17 @@ namespace User.Module.Service
             return user;
         }
         /// <summary>
+        /// Get User Profile By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<UserDTO> GetUserProfileById(int id)
+        {
+            var user = await this.FindUserById(id);
+            var response = this._mapper.Map<UserDTO>(user);
+            return response;
+        }
+        /// <summary>
         /// List of All Register
         /// </summary>
         /// <returns></returns>
