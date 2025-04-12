@@ -1,9 +1,9 @@
-﻿using Swashbuckle.AspNetCore.Annotations;
 using User.Configuration.Swagger.Attributes;
 using User.Module.Enums;
 
 namespace User.Module.Model;
-public class UserModel
+
+public class UserDTO
 {
     [SwaggerSchema("User Id")]
     public int Id { get; set; }
@@ -20,14 +20,7 @@ public class UserModel
     [SwaggerSchemaExample("marzz77_@gmail.com")]
     public required string Email { get; set; }
 
-    [SwaggerSchema("User password")]
-    [SwaggerSchemaExample("passmort243")]
-    public required string Password { get; set; }
-
     [SwaggerSchema("User roles")]
     [SwaggerSchemaExample("ADMIN")]
     public required ROLES Roles { get; set; }
-
-    [SwaggerIgnore]
-    public string? RefreshToken { get; set; }
 }
