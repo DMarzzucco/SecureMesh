@@ -20,7 +20,7 @@ namespace User.Module.Controller
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserModel>>> GetAllRegister()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllRegister()
         {
             return Ok(await this._service.ListOfAllRegister());
         }

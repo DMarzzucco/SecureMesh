@@ -19,7 +19,7 @@ namespace User.Module.Service
             _mapper = mapper;
         }
         /// <summary>
-        /// Find User By Id
+        /// Find User By id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -46,9 +46,11 @@ namespace User.Module.Service
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<IEnumerable<UserModel>> ListOfAllRegister()
+        public async Task<IEnumerable<UserDTO>> ListOfAllRegister()
         {
-            return await this._repository.ToListAsync();
+            var user = await this._repository.ToListAsync();
+            var response = this._mapper.Map<IEnumerable<UserDTO>>(user);
+            return response;
         }
         /// <summary>
         /// Register User
