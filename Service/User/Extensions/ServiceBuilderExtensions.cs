@@ -9,6 +9,8 @@ using User.Module.Service.Interface;
 using User.Module.Service;
 using User.Module.Repository;
 using User.Module.Repository.Interface;
+using User.Module.Validations;
+using User.Module.Validations.Interface;
 
 namespace User.Extensions;
 
@@ -34,6 +36,7 @@ public static partial class ServiceBuilderExtensions
         });
         //service scope
         services.AddScoped<GlobalFilterExceptions>();
+        services.AddScoped<IUserValidation, UserValidation>();
         services.AddScoped<IUserService, UserServices>();
         services.AddScoped<IUserRepository, UserRepository>();
         //swagger

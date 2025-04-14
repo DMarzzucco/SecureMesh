@@ -27,7 +27,7 @@ namespace Security.Server.Model
         public required string Email { get; set; }
 
         [SwaggerSchema("User password")]
-        [SwaggerSchemaExample("passmort243")]
+        [SwaggerSchemaExample("Pr@motheus98")]
         public required string Password { get; set; }
 
         [SwaggerSchema("User roles")]

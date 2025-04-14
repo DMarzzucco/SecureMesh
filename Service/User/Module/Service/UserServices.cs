@@ -4,6 +4,7 @@ using User.Module.DTOs;
 using User.Module.Model;
 using User.Module.Repository.Interface;
 using User.Module.Service.Interface;
+using User.Module.Validations.Interface;
 using User.Utils.Exceptions;
 
 namespace User.Module.Service
@@ -12,11 +13,12 @@ namespace User.Module.Service
     {
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
-
-        public UserServices(IUserRepository repository, IMapper mapper)
+        private readonly IUserValidation _validation;
+        public UserServices(IUserRepository repository, IMapper mapper, IUserValidation validation)
         {
             _repository = repository;
             _mapper = mapper;
+            _validation = validation;
         }
         /// <summary>
         /// Find User By id
@@ -60,12 +62,8 @@ namespace User.Module.Service
         /// <exception cref="ConflictExceptions"></exception>
         public async Task<UserModel> RegisterUser(CreateUserDTO body)
         {
-            if (this._repository.ExistisByUsername(body.Username))
-                throw new ConflictExceptions("Username already exist");
-
-            if (this._repository.ExistisByEmail(body.Email))
-                throw new ConflictExceptions("Email already exist");
-
+            this._validation.ValidationCreateUser(body);
+            
             var user = this._mapper.Map<UserModel>(body);
 
             var passwordHasher = new PasswordHasher<UserModel>();

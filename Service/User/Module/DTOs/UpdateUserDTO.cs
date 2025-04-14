@@ -19,7 +19,7 @@ public class UpdateUserDTO
     public string? Email { get; set; }
 
     [SwaggerSchema("User password")]
-    [SwaggerSchemaExample("passmort243")]
+    [SwaggerSchemaExample("Pr@motheus98")]
     public string? Password { get; set; }
 
     [SwaggerSchema("User roles")]

@@ -10,7 +10,7 @@ namespace Security.Module.DTOs
         public required string Username { get; set; }
 
         [SwaggerSchema("User password")]
-        [SwaggerSchemaExample("passmort243")]
+        [SwaggerSchemaExample("Pr@motheus98")]
         public required string Password { get; set; }
     }
 }

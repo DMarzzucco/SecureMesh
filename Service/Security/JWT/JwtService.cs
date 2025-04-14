@@ -23,7 +23,7 @@ namespace Security.JWT
             _secretKey = secretKeySection;
             _context = context;
         }
-
+        
         /// <summary>
         /// Get Id From Token
         /// </summary>

@@ -20,22 +20,21 @@ namespace SecureMesh.Extensions
             return app;
         }
     }
+
     /// <summary>
     /// Service builder extensions
     /// </summary>
     public static class ServiceBuilderExtensions
     {
-        public static IServiceCollection AddServiceBuilderExtensions(this IServiceCollection service, IConfiguration conf)
+        public static IServiceCollection AddServiceBuilderExtensions(this IServiceCollection service,
+            IConfiguration conf)
         {
             //jwt Config
             service.AddJwtBearerConfiguration(conf);
             //Yarp
-            service.AddReverseProxyConfig(conf); 
+            service.AddReverseProxyConfig(conf);
             //controller
-            service.AddControllers(o =>
-            {
-                o.Filters.Add(typeof(GlobalFilterExceptions));
-            });
+            service.AddControllers(o => { o.Filters.Add(typeof(GlobalFilterExceptions)); });
             ///service add scope
             service.AddScoped<GlobalFilterExceptions>();
 
