@@ -1,4 +1,6 @@
-﻿using SecureMesh.Utils.Filter;
+﻿using Microsoft.AspNetCore.Authorization;
+using SecureMesh.Authorization;
+using SecureMesh.Utils.Filter;
 using SecureMesh.ReverseProxy;
 using SecureMesh.Configuration;
 
@@ -37,7 +39,7 @@ namespace SecureMesh.Extensions
             service.AddControllers(o => { o.Filters.Add(typeof(GlobalFilterExceptions)); });
             ///service add scope
             service.AddScoped<GlobalFilterExceptions>();
-
+            service.AddSingleton<IAuthorizationHandler, MinimumRolesHandler>();
             //Swagger Configuration
             service.AddEndpointsApiExplorer();
             service.AddSwaggerGen();

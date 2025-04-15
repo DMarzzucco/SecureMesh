@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SecureMesh.Authorization;
+using SecureMesh.Utils.Auth;
 
 namespace SecureMesh.Configuration
 {
     public static class JwtBearerConfiguration
     {
-        public static IServiceCollection AddJwtBearerConfiguration(this IServiceCollection service, IConfiguration configuration)
+        public static IServiceCollection AddJwtBearerConfiguration(this IServiceCollection service,
+            IConfiguration configuration)
         {
             var secretKey = configuration.GetSection("JwtSettings").GetSection("seecretKey").ToString();
             if (string.IsNullOrEmpty(secretKey))
@@ -30,10 +33,24 @@ namespace SecureMesh.Configuration
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+                conf.Events = JwtEventHandlers.GetJwtBearerEvents();
             });
 
-            service.AddAuthorizationBuilder()
-                .AddPolicy("UserPolicy", pol => pol.RequireAuthenticatedUser().RequireRole("ADMIN"));
+            service.AddAuthorization(op =>
+            {
+                op.AddPolicy("AdminPolicy", pol
+                    => pol.RequireAuthenticatedUser()
+                        .Requirements.Add(new MinimumRolesRequirement
+                            (Roles.ADMIN)));
+
+                op.AddPolicy("CreatorPolicy", pol
+                    => pol.RequireAuthenticatedUser().Requirements.Add(new MinimumRolesRequirement
+                        (Roles.CREATOR)));
+                
+                op.AddPolicy("BasicPolicy", pol
+                    => pol.RequireAuthenticatedUser().Requirements.Add(new MinimumRolesRequirement
+                        (Roles.BASIC)));
+            });
 
             return service;
         }

@@ -1,5 +1,7 @@
 ﻿using Yarp.ReverseProxy.Configuration;
 
+namespace SecureMesh.ReverseProxy.Routes;
+
 public static class RoutesDefinitions
 {
     public static IReadOnlyList<RouteConfig> GetRoutes()
@@ -17,7 +19,7 @@ public static class RoutesDefinitions
             {
                 RouteId = "auth_route",
                 ClusterId = "auth_cluster",
-                AuthorizationPolicy = "UserPolicy",
+                AuthorizationPolicy = "AdminPolicy",
                 Match = new RouteMatch { Path = "/api/Security/{**catch-all}" },
                 Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
             },
@@ -26,7 +28,7 @@ public static class RoutesDefinitions
                 RouteId = "user_route",
                 ClusterId = "user_cluster",
                 RateLimiterPolicy = "rt-sl",
-                AuthorizationPolicy = "UserPolicy",
+                AuthorizationPolicy = "BasicPolicy",
                 Match = new RouteMatch { Path = "/api/User/{**catch-all}" },
                 Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
             },

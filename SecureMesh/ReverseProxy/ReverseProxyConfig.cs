@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.RateLimiting;
 using Yarp.ReverseProxy.Transforms;
 using SecureMesh.ReverseProxy.Clusters;
+using SecureMesh.ReverseProxy.Routes;
 
 namespace SecureMesh.ReverseProxy
 {
