@@ -4,5 +4,7 @@ namespace User.Module.Validations.Interface;
 
 public interface IUserValidation
 {
-    void ValidationCreateUser(CreateUserDTO body);
+    void ValidationEmail(string email);
+    Task ValidationDuplicated(CreateUserDTO body);
+    void ValidateStructurePassword (string password);
 }

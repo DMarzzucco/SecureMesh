@@ -9,7 +9,7 @@ public static class DatabaseConnection
     public static IServiceCollection AddDatabaseConnection(this IServiceCollection service,
         IConfiguration configuration)
     {
-        //var connectionString = configuration.GetConnectionString("Connection");
+        // var connectionString = configuration.GetConnectionString("Connection");
         var connectionString = configuration.GetConnectionString("Container");
 
         if (string.IsNullOrEmpty(connectionString))

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using User.Context;
 using User.Module.Model;
 using User.Module.Repository.Interface;
@@ -32,18 +33,18 @@ namespace User.Module.Repository
         /// <param name="email"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool ExistisByEmail(string email)
+        public async Task<bool> ExistisByEmail(string email)
         {
-            return this._context.UserModel.Any(u => u.Email == email);
+            return await this._context.UserModel.AnyAsync(u => u.Email == email);
         }
         /// <summary>
         /// Exist by Username
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public bool ExistisByUsername(string username)
+        public async Task<bool> ExistisByUsername(string username)
         {
-            return this._context.UserModel.Any(u => u.Username == username);
+            return await this._context.UserModel.AnyAsync(u => u.Username == username);
         }
         /// <summary>
         /// Fin User by Value

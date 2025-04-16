@@ -56,6 +56,19 @@ namespace User.Module.Controller
             await this._service.UpdateRegister(body, id);
             return NoContent();
         }
+
+        /// <summary>
+        /// Update Password
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="oldPassword"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
+        [HttpPut("{id}/password")]
+        public async Task<ActionResult<string>> UpdatePassword (int id, string oldPassword, string newPassword)
+        {
+            return Ok(await this._service.UpdatePassword(id, oldPassword, newPassword));
+        }
         /// <summary>
         /// Remove User
         /// </summary>
