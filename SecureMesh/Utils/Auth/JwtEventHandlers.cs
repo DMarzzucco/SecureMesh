@@ -10,6 +10,16 @@ public static class JwtEventHandlers
     {
         return new JwtBearerEvents
         {
+            //Cookie Authentication
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Cookies["Authentication"];
+                
+                if (!string.IsNullOrEmpty(accessToken))
+                    context.Token = accessToken;
+                
+                return Task.CompletedTask;
+            },
             OnChallenge = async context =>
             {
                 context.HandleResponse();

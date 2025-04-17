@@ -14,6 +14,7 @@ using Security.JWT;
 using Security.Module.Services.Interfaces;
 using Security.Module.Services;
 using Security.Module.Filter;
+using Security.Utils.Middleware;
 
 namespace Security.Extensions
 {
@@ -28,7 +29,7 @@ namespace Security.Extensions
             app.UseAuthorization();
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            //app.UseMiddleware<>();
+            app.UseMiddleware<RefreshTokenMiddleware>();
             app.UseCors("CorsPolicy");
             return app;
         }
@@ -120,7 +121,7 @@ namespace Security.Extensions
             service.AddGrpcClient<UserServiceGrpc.UserServiceGrpcClient>(x =>
             {
                 //x.Address = new Uri("https://172.31.64.1:4080");
-                //x.Address = new Uri("https://localhost:4080");
+                // x.Address = new Uri("https://localhost:4080");
                 x.Address = new Uri("https://user:4080");
                 x.ChannelOptionsActions.Add(op =>
                 {

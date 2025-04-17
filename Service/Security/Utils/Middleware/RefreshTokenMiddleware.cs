@@ -24,7 +24,7 @@ namespace Security.Utils.Middleware
         /// <returns></returns>
         public async Task InvokeAsync(HttpContext context, IJwtService tokenService, ISecurityService authService, ICookieService cookieService)
         {
-            var publicPaths = new[] { "/api/Auth/login", "/api/User/register" };
+            var publicPaths = new[] { "/api/Security/login", "/api/User/register" };
 
             var path = context.Request.Path.Value;
             if (publicPaths.Contains(path))
