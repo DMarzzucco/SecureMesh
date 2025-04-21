@@ -4,14 +4,14 @@
     "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\Specs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\Specs.csproj": {
+    "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\Security.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\Specs.csproj",
-        "projectName": "Specs",
-        "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\Specs.csproj",
+        "projectUniqueName": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\Security.csproj",
+        "projectName": "Security",
+        "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\Security.csproj",
         "packagesPath": "C:\\Users\\darma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\obj\\",
+        "outputPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\darma\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,9 +44,258 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.29.3, )"
+            },
+            "Grpc": {
+              "target": "Package",
+              "version": "[2.46.6, )"
+            },
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.67.0, )"
+            },
+            "Grpc.AspNetCore.Server": {
+              "target": "Package",
+              "version": "[2.67.0, )"
+            },
+            "Grpc.Net.Client": {
+              "target": "Package",
+              "version": "[2.67.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.69.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.21.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.2.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj",
+        "projectName": "User",
+        "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj",
+        "packagesPath": "C:\\Users\\darma\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\darma\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.29.3, )"
+            },
+            "Grpc": {
+              "target": "Package",
+              "version": "[2.46.6, )"
+            },
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.50.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.69.0, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.21.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\Specs.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\Specs.csproj",
+        "projectName": "Specs",
+        "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\Specs.csproj",
+        "packagesPath": "C:\\Users\\darma\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Specs\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\darma\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\Security.csproj": {
+                "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\Security.csproj"
+              },
+              "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj": {
+                "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[17.8.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
             },
             "coverlet.collector": {
               "target": "Package",

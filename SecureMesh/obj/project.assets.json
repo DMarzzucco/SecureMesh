@@ -2,6 +2,39 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "IdentityModel/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/IdentityModel.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/IdentityModel.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "IdentityModel.AspNetCore/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "IdentityModel": "6.0.0",
+          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/IdentityModel.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/IdentityModel.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.11": {
         "type": "package",
         "dependencies": {
@@ -14,6 +47,25 @@
         },
         "runtime": {
           "lib/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Microsoft.AspNetCore.Authentication.OpenIdConnect/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.10.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll": {
             "related": ".xml"
           }
         },
@@ -159,11 +211,41 @@
           }
         }
       },
+      "Microsoft.OpenApi.Readers/1.6.10": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.OpenApi": "1.6.10",
+          "SharpYaml": "2.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.OpenApi.Readers.dll": {
+            "related": ".pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.OpenApi.Readers.dll": {
+            "related": ".pdb"
+          }
+        }
+      },
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.21.0": {
         "type": "package",
         "build": {
           "build/Microsoft.VisualStudio.Azure.Containers.Tools.Targets.props": {},
           "build/Microsoft.VisualStudio.Azure.Containers.Tools.Targets.targets": {}
+        }
+      },
+      "SharpYaml/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/SharpYaml.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/SharpYaml.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Swashbuckle.AspNetCore/6.6.2": {
@@ -262,6 +344,21 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+      "Treyt.Yarp.ReverseProxy.Swagger/3.9.0": {
+        "type": "package",
+        "dependencies": {
+          "IdentityModel.AspNetCore": "4.3.0",
+          "Microsoft.OpenApi.Readers": "1.6.10",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.5.0",
+          "Yarp.ReverseProxy": "2.1.0"
+        },
+        "compile": {
+          "lib/net8.0/Yarp.ReverseProxy.Swagger.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Yarp.ReverseProxy.Swagger.dll": {}
+        }
+      },
       "Yarp.ReverseProxy/2.3.0": {
         "type": "package",
         "dependencies": {
@@ -287,6 +384,51 @@
     }
   },
   "libraries": {
+    "IdentityModel/6.0.0": {
+      "sha512": "eVHCR7a6m/dm5RFcBzE3qs/Jg5j9R5Rjpu8aTOv9e4AFvaQtBXb5ah7kmwU+YwA0ufRwz4wf1hnIvsD2hSnI4g==",
+      "type": "package",
+      "path": "identitymodel/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.jpg",
+        "identitymodel.6.0.0.nupkg.sha512",
+        "identitymodel.nuspec",
+        "lib/net461/IdentityModel.dll",
+        "lib/net461/IdentityModel.pdb",
+        "lib/net461/IdentityModel.xml",
+        "lib/net472/IdentityModel.dll",
+        "lib/net472/IdentityModel.pdb",
+        "lib/net472/IdentityModel.xml",
+        "lib/net5.0/IdentityModel.dll",
+        "lib/net5.0/IdentityModel.pdb",
+        "lib/net5.0/IdentityModel.xml",
+        "lib/net6.0/IdentityModel.dll",
+        "lib/net6.0/IdentityModel.pdb",
+        "lib/net6.0/IdentityModel.xml",
+        "lib/netstandard2.0/IdentityModel.dll",
+        "lib/netstandard2.0/IdentityModel.pdb",
+        "lib/netstandard2.0/IdentityModel.xml"
+      ]
+    },
+    "IdentityModel.AspNetCore/4.3.0": {
+      "sha512": "WWb9QJXoDM9Z3ThDYtyyNfhUFvBj+YMcF9rl5CA23aDwN/VqNCUo1eHirjh/YYEhBoMiB5USmeWbimfbxrBKUQ==",
+      "type": "package",
+      "path": "identitymodel.aspnetcore/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.jpg",
+        "identitymodel.aspnetcore.4.3.0.nupkg.sha512",
+        "identitymodel.aspnetcore.nuspec",
+        "lib/net5.0/IdentityModel.AspNetCore.dll",
+        "lib/net5.0/IdentityModel.AspNetCore.xml",
+        "lib/net6.0/IdentityModel.AspNetCore.dll",
+        "lib/net6.0/IdentityModel.AspNetCore.xml",
+        "lib/netcoreapp3.1/IdentityModel.AspNetCore.dll",
+        "lib/netcoreapp3.1/IdentityModel.AspNetCore.xml"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.11": {
       "sha512": "9KhRuywosM24BPf1R5erwsvIkpRUu1+btVyOPlM3JgrhFVP4pq5Fuzi3vjP01OHXfbCtNhWa+HGkZeqaWdcO5w==",
       "type": "package",
@@ -300,6 +442,21 @@
         "lib/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.xml",
         "microsoft.aspnetcore.authentication.jwtbearer.8.0.11.nupkg.sha512",
         "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.OpenIdConnect/6.0.0": {
+      "sha512": "cJxdro36spFzk/K2OFCddM6vZ+yoj6ug8mTFRH3Gdv1Pul/buSuCtfb/FSCp31UmS5S4C1315dU7wX3ErLFuDg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.openidconnect/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.xml",
+        "microsoft.aspnetcore.authentication.openidconnect.6.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.openidconnect.nuspec"
       ]
     },
     "Microsoft.AspNetCore.OpenApi/8.0.14": {
@@ -701,6 +858,21 @@
         "microsoft.openapi.nuspec"
       ]
     },
+    "Microsoft.OpenApi.Readers/1.6.10": {
+      "sha512": "KcXwktDYGKFI+lqGdxmOWCqsMOXlAchmXiI/zXEsbFHYYRiCA9whq4SeuRsslwQJJiS9vdC4tS1w5FqfprsUzQ==",
+      "type": "package",
+      "path": "microsoft.openapi.readers/1.6.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/netstandard2.0/Microsoft.OpenApi.Readers.dll",
+        "lib/netstandard2.0/Microsoft.OpenApi.Readers.pdb",
+        "lib/netstandard2.0/Microsoft.OpenApi.xml",
+        "microsoft.openapi.readers.1.6.10.nupkg.sha512",
+        "microsoft.openapi.readers.nuspec"
+      ]
+    },
     "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.21.0": {
       "sha512": "8NudeHOE56YsY59HYY89akRMup8Ho+7Y3cADTGjajjWroXVU9RQai2nA6PfteB8AuzmRHZ5NZQB2BnWhQEul5g==",
       "type": "package",
@@ -779,6 +951,19 @@
         "tools/zh-Hant/Microsoft.VisualStudio.Containers.Tools.Common.resources.dll",
         "tools/zh-Hant/Microsoft.VisualStudio.Containers.Tools.Shared.resources.dll",
         "tools/zh-Hant/Microsoft.VisualStudio.Containers.Tools.Tasks.resources.dll"
+      ]
+    },
+    "SharpYaml/2.1.0": {
+      "sha512": "2jBenJ6QN0mj8G3ohrNO/uNhA92OJYsQFuI5dJ4zM/HauVoC/oJzK1sCVlUaVUpuXpHUa/k1waXVkkBR2luP/w==",
+      "type": "package",
+      "path": "sharpyaml/2.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/SharpYaml.dll",
+        "lib/netstandard2.0/SharpYaml.xml",
+        "sharpyaml.2.1.0.nupkg.sha512",
+        "sharpyaml.nuspec"
       ]
     },
     "Swashbuckle.AspNetCore/6.6.2": {
@@ -936,6 +1121,21 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Treyt.Yarp.ReverseProxy.Swagger/3.9.0": {
+      "sha512": "13fuEBHvAomv9XeD/McEZPnSyGSiVP7s3PzMGoXrVEB6vELSgs4ep3Jh9sABtcSCdTt9Iex8byy/LBTQ0bTWQQ==",
+      "type": "package",
+      "path": "treyt.yarp.reverseproxy.swagger/3.9.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net5.0/Yarp.ReverseProxy.Swagger.dll",
+        "lib/net6.0/Yarp.ReverseProxy.Swagger.dll",
+        "lib/net7.0/Yarp.ReverseProxy.Swagger.dll",
+        "lib/net8.0/Yarp.ReverseProxy.Swagger.dll",
+        "treyt.yarp.reverseproxy.swagger.3.9.0.nupkg.sha512",
+        "treyt.yarp.reverseproxy.swagger.nuspec"
+      ]
+    },
     "Yarp.ReverseProxy/2.3.0": {
       "sha512": "gxtkN3a+9biu9V9Zd5NaTO6VZWXAnS2mhQ0R/VXmSPoTuiQNZsakKikrKpDtKxrL5nUYzbRsHtl40WNq+ZBKKg==",
       "type": "package",
@@ -966,6 +1166,7 @@
       "Microsoft.AspNetCore.OpenApi >= 8.0.14",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.21.0",
       "Swashbuckle.AspNetCore >= 6.6.2",
+      "Treyt.Yarp.ReverseProxy.Swagger >= 3.9.0",
       "Yarp.ReverseProxy >= 2.3.0"
     ]
   },
@@ -1027,6 +1228,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.6.2, )"
+          },
+          "Treyt.Yarp.ReverseProxy.Swagger": {
+            "target": "Package",
+            "version": "[3.9.0, )"
           },
           "Yarp.ReverseProxy": {
             "target": "Package",

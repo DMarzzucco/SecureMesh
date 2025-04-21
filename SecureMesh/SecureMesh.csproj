@@ -14,6 +14,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+		<PackageReference Include="Treyt.Yarp.ReverseProxy.Swagger" Version="3.9.0" />
 		<PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
 	</ItemGroup>
 

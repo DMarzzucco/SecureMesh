@@ -5,11 +5,9 @@ using SecureMesh.Utils.Helper;
 
 namespace SecureMesh.Utils.Filter
 {
-    public class GlobalFilterExceptions : IExceptionFilter
+    public class GlobalFilterExceptions (ILogger<GlobalFilterExceptions> logger) : IExceptionFilter
     {
-        private readonly ILogger<GlobalFilterExceptions> _logger;
-
-        public GlobalFilterExceptions(ILogger<GlobalFilterExceptions> logger) => _logger = logger;
+        private readonly ILogger<GlobalFilterExceptions> _logger = logger;
 
         public void OnException(ExceptionContext context)
         {

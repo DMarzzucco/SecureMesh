@@ -113,9 +113,9 @@ namespace Security.Extensions
             });
             //gRPC
             service.AddGrpc();
+            // just for dev
             var httpClientHandler = new HttpClientHandler
             {
-                // Just For Dev
                 ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             };
             service.AddGrpcClient<UserServiceGrpc.UserServiceGrpcClient>(x =>

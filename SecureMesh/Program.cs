@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Options;
 using SecureMesh.Extensions;
+using Yarp.ReverseProxy.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI( op => {
+        var config  = app.Services.GetRequiredService<IOptionsMonitor<ReverseProxyDocumentFilterConfig>>().CurrentValue;
+        foreach ( var cluster in config.Clusters)
+        {
+            op.SwaggerEndpoint($"/swagger/{cluster.Key}/swagger.json", cluster.Key);
+        }
+    });
 }
 
 app.UseApplicationBuilderExtensions();

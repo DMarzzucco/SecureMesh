@@ -2,6 +2,7 @@
 using Yarp.ReverseProxy.Transforms;
 using SecureMesh.ReverseProxy.Clusters;
 using SecureMesh.ReverseProxy.Routes;
+using Yarp.ReverseProxy.Swagger.Extensions;
 
 namespace SecureMesh.ReverseProxy
 {
@@ -11,7 +12,7 @@ namespace SecureMesh.ReverseProxy
             IConfiguration configuration)
         {
             service.AddReverseProxy().ConfigureHttpClient((context, handler) =>
-                    //Just for dev 
+            //Just for dev 
                 {
                     if (handler is SocketsHttpHandler socketsHttpHandler)
                     {
@@ -23,7 +24,7 @@ namespace SecureMesh.ReverseProxy
                 })
                 .LoadFromMemory(
                     RoutesDefinitions.GetRoutes(), ClustersDefinitions.GetCluster()
-                )
+                ).AddSwagger(SwaggerDocumentProxy.GetSwaggerConfig())
                 .AddTransforms(tr =>
                 {
                     tr.AddRequestTransform(async ctx =>

@@ -12,10 +12,31 @@
           "Microsoft.AspNetCore.OpenApi": "8.0.14",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.21.0",
           "Swashbuckle.AspNetCore": "6.6.2",
+          "Treyt.Yarp.ReverseProxy.Swagger": "3.9.0",
           "Yarp.ReverseProxy": "2.3.0"
         },
         "runtime": {
           "SecureMesh.dll": {}
+        }
+      },
+      "IdentityModel/6.0.0": {
+        "runtime": {
+          "lib/net6.0/IdentityModel.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.0.0"
+          }
+        }
+      },
+      "IdentityModel.AspNetCore/4.3.0": {
+        "dependencies": {
+          "IdentityModel": "6.0.0",
+          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/IdentityModel.AspNetCore.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.3.0.0"
+          }
         }
       },
       "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.11": {
@@ -26,6 +47,17 @@
           "lib/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
             "assemblyVersion": "8.0.11.0",
             "fileVersion": "8.0.1124.52116"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.OpenIdConnect/6.0.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "7.1.2"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52608"
           }
         }
       },
@@ -114,7 +146,27 @@
           }
         }
       },
+      "Microsoft.OpenApi.Readers/1.6.10": {
+        "dependencies": {
+          "Microsoft.OpenApi": "1.6.14",
+          "SharpYaml": "2.1.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.OpenApi.Readers.dll": {
+            "assemblyVersion": "1.6.10.0",
+            "fileVersion": "1.6.10.0"
+          }
+        }
+      },
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.21.0": {},
+      "SharpYaml/2.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/SharpYaml.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.0.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.6.2": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -173,6 +225,20 @@
           }
         }
       },
+      "Treyt.Yarp.ReverseProxy.Swagger/3.9.0": {
+        "dependencies": {
+          "IdentityModel.AspNetCore": "4.3.0",
+          "Microsoft.OpenApi.Readers": "1.6.10",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.6.2",
+          "Yarp.ReverseProxy": "2.3.0"
+        },
+        "runtime": {
+          "lib/net8.0/Yarp.ReverseProxy.Swagger.dll": {
+            "assemblyVersion": "3.9.0.0",
+            "fileVersion": "3.9.0.0"
+          }
+        }
+      },
       "Yarp.ReverseProxy/2.3.0": {
         "dependencies": {
           "System.IO.Hashing": "8.0.0"
@@ -192,12 +258,33 @@
       "serviceable": false,
       "sha512": ""
     },
+    "IdentityModel/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eVHCR7a6m/dm5RFcBzE3qs/Jg5j9R5Rjpu8aTOv9e4AFvaQtBXb5ah7kmwU+YwA0ufRwz4wf1hnIvsD2hSnI4g==",
+      "path": "identitymodel/6.0.0",
+      "hashPath": "identitymodel.6.0.0.nupkg.sha512"
+    },
+    "IdentityModel.AspNetCore/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WWb9QJXoDM9Z3ThDYtyyNfhUFvBj+YMcF9rl5CA23aDwN/VqNCUo1eHirjh/YYEhBoMiB5USmeWbimfbxrBKUQ==",
+      "path": "identitymodel.aspnetcore/4.3.0",
+      "hashPath": "identitymodel.aspnetcore.4.3.0.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.11": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-9KhRuywosM24BPf1R5erwsvIkpRUu1+btVyOPlM3JgrhFVP4pq5Fuzi3vjP01OHXfbCtNhWa+HGkZeqaWdcO5w==",
       "path": "microsoft.aspnetcore.authentication.jwtbearer/8.0.11",
       "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.8.0.11.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.OpenIdConnect/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cJxdro36spFzk/K2OFCddM6vZ+yoj6ug8mTFRH3Gdv1Pul/buSuCtfb/FSCp31UmS5S4C1315dU7wX3ErLFuDg==",
+      "path": "microsoft.aspnetcore.authentication.openidconnect/6.0.0",
+      "hashPath": "microsoft.aspnetcore.authentication.openidconnect.6.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/8.0.14": {
       "type": "package",
@@ -262,12 +349,26 @@
       "path": "microsoft.openapi/1.6.14",
       "hashPath": "microsoft.openapi.1.6.14.nupkg.sha512"
     },
+    "Microsoft.OpenApi.Readers/1.6.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KcXwktDYGKFI+lqGdxmOWCqsMOXlAchmXiI/zXEsbFHYYRiCA9whq4SeuRsslwQJJiS9vdC4tS1w5FqfprsUzQ==",
+      "path": "microsoft.openapi.readers/1.6.10",
+      "hashPath": "microsoft.openapi.readers.1.6.10.nupkg.sha512"
+    },
     "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.21.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-8NudeHOE56YsY59HYY89akRMup8Ho+7Y3cADTGjajjWroXVU9RQai2nA6PfteB8AuzmRHZ5NZQB2BnWhQEul5g==",
       "path": "microsoft.visualstudio.azure.containers.tools.targets/1.21.0",
       "hashPath": "microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
+    },
+    "SharpYaml/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2jBenJ6QN0mj8G3ohrNO/uNhA92OJYsQFuI5dJ4zM/HauVoC/oJzK1sCVlUaVUpuXpHUa/k1waXVkkBR2luP/w==",
+      "path": "sharpyaml/2.1.0",
+      "hashPath": "sharpyaml.2.1.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.6.2": {
       "type": "package",
@@ -310,6 +411,13 @@
       "sha512": "sha512-ne1843evDugl0md7Fjzy6QjJrzsjh46ZKbhf8GwBXb5f/gw97J4bxMs0NQKifDuThh/f0bZ0e62NPl1jzTuRqA==",
       "path": "system.io.hashing/8.0.0",
       "hashPath": "system.io.hashing.8.0.0.nupkg.sha512"
+    },
+    "Treyt.Yarp.ReverseProxy.Swagger/3.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-13fuEBHvAomv9XeD/McEZPnSyGSiVP7s3PzMGoXrVEB6vELSgs4ep3Jh9sABtcSCdTt9Iex8byy/LBTQ0bTWQQ==",
+      "path": "treyt.yarp.reverseproxy.swagger/3.9.0",
+      "hashPath": "treyt.yarp.reverseproxy.swagger.3.9.0.nupkg.sha512"
     },
     "Yarp.ReverseProxy/2.3.0": {
       "type": "package",

@@ -24,8 +24,7 @@ public static class ServiceBuilderExtensions
         service.AddScoped<GlobalFilterExceptions>();
         service.AddSingleton<IAuthorizationHandler, MinimumRolesHandler>();
         //Swagger Configuration
-        service.AddEndpointsApiExplorer();
-        service.AddSwaggerGen();
+        service.AddSwaggerConfigurationService();
         //Cors Policy
         service.AddCors(x =>
         {

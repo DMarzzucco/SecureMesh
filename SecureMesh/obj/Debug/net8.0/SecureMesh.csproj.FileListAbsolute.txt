@@ -93,3 +93,9 @@ C:\Users\darma\Documents\source\SecureMesh\SecureMesh\obj\Debug\net8.0\refint\Se
 C:\Users\darma\Documents\source\SecureMesh\SecureMesh\obj\Debug\net8.0\SecureMesh.pdb
 C:\Users\darma\Documents\source\SecureMesh\SecureMesh\obj\Debug\net8.0\SecureMesh.genruntimeconfig.cache
 C:\Users\darma\Documents\source\SecureMesh\SecureMesh\obj\Debug\net8.0\ref\SecureMesh.dll
+C:\Users\darma\Documents\source\SecureMesh\SecureMesh\bin\Debug\net8.0\IdentityModel.dll
+C:\Users\darma\Documents\source\SecureMesh\SecureMesh\bin\Debug\net8.0\IdentityModel.AspNetCore.dll
+C:\Users\darma\Documents\source\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+C:\Users\darma\Documents\source\SecureMesh\SecureMesh\bin\Debug\net8.0\Microsoft.OpenApi.Readers.dll
+C:\Users\darma\Documents\source\SecureMesh\SecureMesh\bin\Debug\net8.0\SharpYaml.dll
+C:\Users\darma\Documents\source\SecureMesh\SecureMesh\bin\Debug\net8.0\Yarp.ReverseProxy.Swagger.dll

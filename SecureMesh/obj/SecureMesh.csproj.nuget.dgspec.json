@@ -60,6 +60,10 @@
               "target": "Package",
               "version": "[6.6.2, )"
             },
+            "Treyt.Yarp.ReverseProxy.Swagger": {
+              "target": "Package",
+              "version": "[3.9.0, )"
+            },
             "Yarp.ReverseProxy": {
               "target": "Package",
               "version": "[2.3.0, )"
