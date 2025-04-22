@@ -1,6 +1,5 @@
 ﻿using Swashbuckle.AspNetCore.Annotations;
 using User.Configuration.Swagger.Attributes;
-using User.Module.Enums;
 
 namespace User.Module.Model;
 public class UserModel

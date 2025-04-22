@@ -17,12 +17,19 @@ public class UserValidation(IUserRepository repository) : IUserValidation
     /// <param name="email"></param>
     public void ValidationEmail(string email)
     {
+       if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                throw new BadRequestExceptions("Invalid email addres");
+
         var disposableDomains = new[] { "gmail.com", "hotmail.com", "outlook.com", "icloud.com", "yahoo.com" };
-        var emailDomains = email.Split('@')[1];
+
+        var parts = email.Split('@');
+        if (parts.Length != 2)
+            throw new BadRequestExceptions("Invalid email address");
+
+        var emailDomains = parts[1];
 
         var validations = new List<(bool isInvalid, Exception Error)>
         {
-            (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"), new BadRequestExceptions("Invalid email address")),
             (email.Length > 320, new BadRequestExceptions ("Email is too long")),
             (!disposableDomains.Contains(emailDomains), new BadRequestExceptions ("Disposable email domains are not allowed"))
         };

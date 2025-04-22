@@ -67,7 +67,7 @@ namespace User.Module.Service
             await this._validation.ValidationDuplicated(body);
             this._validation.ValidationEmail(body.Email);
             this._validation.ValidateStructurePassword(body.Password);
-            
+
             var user = this._mapper.Map<UserModel>(body);
 
             var passwordHasher = new PasswordHasher<UserModel>();
@@ -84,7 +84,9 @@ namespace User.Module.Service
         /// <exception cref="NotImplementedException"></exception>
         public async Task RemoveUserRegister(int id)
         {
-            var user = await this.FindUserById(id);
+            var user = await this._repository.FindByIdAsync(id) ??
+                throw new NotFoundExceptions("User not found");
+
             await this._repository.DeleteAsync(user);
         }
         /// <summary>
@@ -96,7 +98,9 @@ namespace User.Module.Service
         /// <exception cref="NotImplementedException"></exception>
         public async Task<UserModel> UpdateRefreshToken(int id, string RefreshToken)
         {
-            var user = await this.FindUserById(id);
+            var user = await this._repository.FindByIdAsync(id) ??
+                throw new NotFoundExceptions("User not found");
+
             user.RefreshToken = RefreshToken;
             await this._repository.UpdateAsync(user);
             return user;
@@ -108,25 +112,28 @@ namespace User.Module.Service
         /// <param name="id"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<string> UpdatePassword (int id, string oldPassword, string password){
-            var date = await this.FindUserById(id);
+        public async Task<string> UpdatePassword(int id, string oldPassword, string password)
+        {
+            var date = await this._repository.FindByIdAsync(id) ??
+                throw new NotFoundExceptions("User not found");
+
             var passwordHasher = new PasswordHasher<UserModel>();
 
             var verificationPass = passwordHasher.VerifyHashedPassword(date, date.Password, oldPassword);
             if (verificationPass == PasswordVerificationResult.Failed)
-                throw new BadRequestExceptions ("Password Wrong");
+                throw new BadRequestExceptions("Password Wrong");
 
             this._validation.ValidateStructurePassword(password);
 
             var verificationResult = passwordHasher.VerifyHashedPassword(date, date.Password, password);
 
             if (verificationResult == PasswordVerificationResult.Success)
-                throw new ConflictExceptions ("The password cannot be the same as the current one");
+                throw new ConflictExceptions("The password cannot be the same as the current one");
 
-            date.Password= passwordHasher.HashPassword(date, password);
+            date.Password = passwordHasher.HashPassword(date, password);
             await this._repository.UpdateAsync(date);
 
-            return "Password update successfully";
+            return "Password updated successfully";
         }
         /// <summary>
         /// Update User
@@ -137,7 +144,11 @@ namespace User.Module.Service
         /// <exception cref="NotImplementedException"></exception>
         public async Task<UserModel> UpdateRegister(UpdateUserDTO body, int id)
         {
-            var user = await this.FindUserById(id);
+            var user = await this._repository.FindByIdAsync(id) ?? 
+                throw new NotFoundExceptions("User not found");
+
+            this._validation.ValidationEmail(body.Email);
+            
             this._mapper.Map(body, user);
             await this._repository.UpdateAsync(user);
             return user;
