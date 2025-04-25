@@ -36,7 +36,7 @@ public class ReverseProxyDocumentFilterSwagger (IHttpClientFactory httpClientFac
 {
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
 
-    /// <summary>
+    /// <summary> 
     /// Apply Documentation
     /// </summary>
     /// <param name="swaggerDoc"></param>

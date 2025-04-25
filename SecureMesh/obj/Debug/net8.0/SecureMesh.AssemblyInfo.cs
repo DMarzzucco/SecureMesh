@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SecureMesh")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a9c5e72fafcd42d046732fc7d207bb0538eb9c6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0232f500aa856290c6c3806be61bd8448a94f998")]
 [assembly: System.Reflection.AssemblyProductAttribute("SecureMesh")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SecureMesh")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
