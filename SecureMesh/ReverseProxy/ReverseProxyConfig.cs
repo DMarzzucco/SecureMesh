@@ -3,6 +3,7 @@ using Yarp.ReverseProxy.Transforms;
 using SecureMesh.ReverseProxy.Clusters;
 using SecureMesh.ReverseProxy.Routes;
 using Yarp.ReverseProxy.Swagger.Extensions;
+using SecureMesh.Configuration.Swagger;
 
 namespace SecureMesh.ReverseProxy
 {

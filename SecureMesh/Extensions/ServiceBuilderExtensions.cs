@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using SecureMesh.Authorization;
 using SecureMesh.Configuration;
+using SecureMesh.Configuration.Swagger;
 using SecureMesh.ReverseProxy;
 using SecureMesh.Utils.Filter;
 

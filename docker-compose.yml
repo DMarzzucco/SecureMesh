@@ -54,8 +54,12 @@ services:
         dockerfile: Service/Security/Dockerfile
     ports:
       - "5090:5090"
+    depends_on:
+      - user
     volumes:
       - ./certs/auth/cert.pfx:/https/cert.pfx
+      - ./scripts/wait-for-it.sh:/wait-for-it.sh
+    entrypoint: ["/bin/sh", "-c", "/wait-for-it.sh user:4080 -- dotnet Security.dll"]
     networks:
       - compose-bridge
 
