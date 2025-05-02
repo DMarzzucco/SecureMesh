@@ -20,6 +20,7 @@ public class GlobalFilterExceptions:IExceptionFilter
         var statusCode = context.Exception switch
         {
             BadRequestExceptions => 400,
+            ForbiddenExceptions => 403,
             NotFoundExceptions => 404,
             ConflictExceptions => 409,
             _ => 500
@@ -30,6 +31,7 @@ public class GlobalFilterExceptions:IExceptionFilter
             Message = statusCode switch
             {
                 400 => context.Exception.Message,
+                403 => context.Exception.Message,
                 404 => context.Exception.Message,
                 409 => context.Exception.Message,
                 _ => context.Exception.Message

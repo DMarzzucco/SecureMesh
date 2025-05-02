@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.OpenApi.Expressions;
 using Moq;
 using User.Module.DTOs;
 using User.Module.Model;
@@ -118,8 +120,8 @@ public class IntServicesUser
     [Fact]
     public async Task ShouldRemoveOneRegister()
     {
-        int id = 4;
-        var user = UsersMock.UserMock;
+        int id = 5;
+        var user = UsersMock.UserMockBasic;
 
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
         this._repository.Setup(r => r.DeleteAsync(user)).ReturnsAsync(true);
@@ -127,6 +129,27 @@ public class IntServicesUser
         var res = this._service.RemoveUserRegister(id);
 
         Assert.NotNull(res);
+    }
+    /// <summary>
+    /// Delete Own Register
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldRemoveOwnRegister()
+    {
+        int id = 4;
+        string password = UsersMock.UserMock.Password;
+
+        var user = UsersMock.UserHashPassMock;
+        string message = "User was remove successfully";
+
+        this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._repository.Setup(r=> r.DeleteAsync(user)).ReturnsAsync(true);
+
+        var res = await this._service.RemoveUserRegisterForBasicRoles(id, password);
+
+        Assert.NotNull(res);
+        Assert.Equal(message, res);
     }
 
     /// <summary>
@@ -172,7 +195,26 @@ public class IntServicesUser
         Assert.NotNull(res);
         Assert.Equal(message, res);
     }
+    /// <summary>
+    /// Update Roles
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldUpdateRoles()
+    {
+        int id = 4;
+        var roles = UsersMock.RolesDTOMock;
+        var user = UsersMock.UserMock;
+        string message = "Roles were updated successfully";
 
+        this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._repository.Setup(r=> r.UpdateAsync(user)).ReturnsAsync(true);
+
+        var res = await this._service.UpdateRoles(id, roles);
+
+        Assert.NotNull(res);
+        Assert.Equal(message, res);
+    }
     /// <summary>
     /// Update Register
     /// </summary>
@@ -182,8 +224,8 @@ public class IntServicesUser
     {
         // Given
         var body = UsersMock.UpdateUserDTOMOck;
-        int id = 4;
-        var user = UsersMock.UserMock;    
+        int id = 5;
+        var user = UsersMock.UserMockBasic;    
         // When
         this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
         this._validation.Setup(v => v.ValidationEmail(body.Email));
@@ -194,5 +236,28 @@ public class IntServicesUser
 
         Assert.NotNull(res);
         Assert.Equal(body.Username, res.Username);
+    }
+    /// <summary>
+    /// Update own register
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task  ShouldUpdateOwnRegister()
+    {
+        int id = 4;
+        string password = UsersMock.UserMock.Password;
+        var body = UsersMock.UpdateUserDTOMOck;
+
+        var user = UsersMock.UserHashPassMock;
+        string message = "Your reforms was saved successfully";
+
+        this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._validation.Setup(v=> v.ValidationEmail(body.Email));
+        this._repository.Setup(r=> r.UpdateAsync(user)).ReturnsAsync(true);
+
+        var res = await this._service.UpdateOwnRegister(id, password, body);
+
+        Assert.NotNull(res);
+        Assert.Equal(message, res);
     }
 }

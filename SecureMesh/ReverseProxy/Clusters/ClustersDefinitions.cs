@@ -13,7 +13,9 @@ public static class ClustersDefinitions
                 ClusterId = "user_cluster",
                 Destinations = new Dictionary<string, DestinationConfig>
                 {
-                    { "user", new DestinationConfig { Address = "https://localhost:4080" } }
+                    // { "user", new DestinationConfig { Address = "https://localhost:4080" } }
+                    { "user", new DestinationConfig { Address = "https://user:4080" } }
+
                 }
             },
             new ClusterConfig
@@ -21,7 +23,8 @@ public static class ClustersDefinitions
                 ClusterId = "auth_cluster",
                 Destinations = new Dictionary<string, DestinationConfig>
                 {
-                    { "auth", new DestinationConfig { Address = "https://localhost:5090" } }
+                    // { "auth", new DestinationConfig { Address = "https://localhost:5090" } }
+                    { "auth", new DestinationConfig { Address = "https://auth:5090" } }
                 }
             }
         };

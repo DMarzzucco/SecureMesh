@@ -4,9 +4,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
 
+COPY certs/gateway/gate.pfx /https/gate.pfx
+
+# Variables de entorno para HTTPS
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/gate.pfx
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
+
+EXPOSE 8888
+EXPOSE 8889
 
 # Esta fase se usa para compilar el proyecto de servicio
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build

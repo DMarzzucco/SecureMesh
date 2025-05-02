@@ -5,6 +5,11 @@
 /// </summary>
 public class ConflictExceptions(string message) : Exception(message) { }
 /// <summary>
+/// 403
+/// </summary>
+public class ForbiddenExceptions(string message) : Exception(message) { }
+
+/// <summary>
 /// 400
 /// </summary>
 public class BadRequestExceptions(string message) : Exception(message) { }

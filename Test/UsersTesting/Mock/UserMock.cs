@@ -6,7 +6,7 @@ namespace UsersTesting.Mock
 {
     public static class UsersMock
     {
-        
+
         public static UserModel UserMock => new UserModel
         {
             Id = 4,
@@ -14,16 +14,25 @@ namespace UsersTesting.Mock
             Username = "derkmarzz77",
             Email = "marzz77_@gmail.com",
             Password = "Pr@motheus98",
-            Roles =  ROLES.Admin
+            Roles = ROLES.Admin
         };
 
+        public static UserModel UserMockBasic => new UserModel
+        {
+            Id = 5,
+            FullName = "Dario Marzzucco",
+            Username = "derkmarzz77",
+            Email = "marzz77_@gmail.com",
+            Password = "Pr@motheus98",
+            Roles = ROLES.Basic
+        };
         public static UserDTO UserMockDTO => new UserDTO
         {
             Id = 4,
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
             Email = "marzz77_@gmail.com",
-            Roles =  ROLES.Admin
+            Roles = ROLES.Admin
         };
         public static UserModel UserHashPassMock => new UserModel
         {
@@ -48,7 +57,10 @@ namespace UsersTesting.Mock
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
             Email = "marzz77_@gmail.com",
-            Roles = ROLES.Admin
+        };
+        public static RolesDTO RolesDTOMock => new RolesDTO
+        {
+            Roles = ROLES.Creator
         };
     }
 }

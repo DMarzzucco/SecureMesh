@@ -4,7 +4,19 @@ using Yarp.ReverseProxy.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://*:8888");
+builder.Configuration.AddJsonFile("appsettings.json");
+
+builder.WebHost.ConfigureKestrel(op =>
+{
+    op.ListenAnyIP(8888, listen =>
+    {
+        listen.UseHttps();
+        listen.Protocols=
+            Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+    });
+});
+
+
 builder.Services.AddServiceBuilderExtensions(builder.Configuration);
 
 var app = builder.Build();
@@ -13,9 +25,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI( op => {
-        var config  = app.Services.GetRequiredService<IOptionsMonitor<ReverseProxyDocumentFilterConfig>>().CurrentValue;
-        foreach ( var cluster in config.Clusters)
+    app.UseSwaggerUI(op =>
+    {
+        var config = app.Services.GetRequiredService<IOptionsMonitor<ReverseProxyDocumentFilterConfig>>().CurrentValue;
+        foreach (var cluster in config.Clusters)
         {
             op.SwaggerEndpoint($"/swagger/{cluster.Key}/swagger.json", cluster.Key);
         }

@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using User.Module.Controller;
 using User.Module.DTOs;
-using User.Module.Model;
 using User.Module.Service.Interface;
 using UsersTesting.Mock;
 
@@ -82,8 +80,8 @@ public class UnitControllerUser
     public async Task ShouldEditUserRegister()
     {
         var body = UsersMock.UpdateUserDTOMOck;
-        var id = 4;
-        var user = UsersMock.UserMock;
+        var id = 5;
+        var user = UsersMock.UserMockBasic;
 
         this._service.Setup(s => s.UpdateRegister(body, id)).ReturnsAsync(user);
         var res = await this._controller.EditUser(id, body) as NoContentResult;
@@ -93,13 +91,35 @@ public class UnitControllerUser
     }
 
     /// <summary>
+    /// Edit Own Register
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task  ShouldUPdateOwnRegister()
+    {
+        int id = 4;
+        string password = UsersMock.UserMock.Password;
+        var body = UsersMock.UpdateUserDTOMOck;
+
+        string message = "Your reforms was saved successfully";
+
+        this._service.Setup(s=> s.UpdateOwnRegister(id, password, body)).ReturnsAsync(message);
+
+        var res = await this._controller.EditOwnCount(id, password, body);
+        var result = Assert.IsType<OkObjectResult>(res.Result);
+
+        Assert.NotNull(result);
+        Assert.Equal(200, result.StatusCode);
+        Assert.Equal(message, result.Value);
+    }
+    /// <summary>
     /// Remove on Register
     /// </summary>
     /// <returns></returns>
     [Fact]
     public async Task ShouldDeletedOneRegister()
     {
-        var id = 4;
+        var id = 5;
 
         this._service.Setup(s => s.RemoveUserRegister(id)).Returns(Task.CompletedTask);
 
@@ -108,7 +128,27 @@ public class UnitControllerUser
         Assert.NotNull(res);
         Assert.Equal(204, res.StatusCode);
     }
+    /// <summary>
+    /// Delete Own Count 
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldDelteOwnRegister()
+    {
+        int id = 4;
+        string password = UsersMock.UserMock.Password;
 
+        string message = "User was remove successfully";
+
+        this._service.Setup(s=> s.RemoveUserRegisterForBasicRoles(id, password)).ReturnsAsync(message);
+
+        var res = await this._controller.DeleteOwnCount(id, password);
+        var result = Assert.IsType<OkObjectResult>(res.Result);
+
+        Assert.NotNull(result);
+        Assert.Equal(200, result.StatusCode);
+        Assert.Equal(message, result.Value);
+    }
     /// <summary>
     /// Update Password
     /// </summary>
@@ -129,5 +169,27 @@ public class UnitControllerUser
         Assert.NotNull(response);
         Assert.Equal(200, response.StatusCode);
         Assert.Equal(message, response.Value);
+    }
+
+    /// <summary>
+    /// Update Roles
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldUpdateRoles()
+    {
+        int id = 5;
+        var body = UsersMock.RolesDTOMock;
+
+        string message = "Roles were updated successfully";
+
+        this._service.Setup(s=> s.UpdateRoles(id, body)).ReturnsAsync(message);
+
+        var res = await this._controller.UpdateRoles(id, body);
+        var result = Assert.IsType<OkObjectResult>(res.Result);
+
+        Assert.NotNull(result);
+        Assert.Equal(200, result.StatusCode);
+        Assert.Equal(message, result.Value);
     }
 }
