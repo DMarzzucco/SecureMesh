@@ -62,26 +62,25 @@ namespace User.Module.Controller
         /// Update own count (ROLES:BASIC)
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="password"></param>
         /// <param name="body"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<string>> EditOwnCount (int id, string password, [FromBody] UpdateUserDTO body)
+        public async Task<ActionResult<string>> EditOwnCount(int id, [FromBody] UpdateOwnUserDTO body)
         {
-            var res =await this._service.UpdateOwnRegister(id, password, body);
+            var res = await this._service.UpdateOwnRegister(id, body);
             return Ok(res);
         }
+
         /// <summary>
         /// Update Password
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="oldPassword"></param>
-        /// <param name="newPassword"></param>
+        /// <param name="dt"></param>
         /// <returns></returns>
-        [HttpPut("{id}/password")]
-        public async Task<ActionResult<string>> UpdatePassword(int id, string oldPassword, string newPassword)
+        [HttpPatch("{id}/password")]
+        public async Task<ActionResult<string>> UpdatePassword(int id, [FromBody] UpdatePasswordDTO dt)
         {
-            return Ok(await this._service.UpdatePassword(id, oldPassword, newPassword));
+            return Ok(await this._service.UpdatePassword(id, dt));
         }
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace User.Module.Controller
         /// <param name="id"></param>
         /// <param name="newRoles"></param>
         /// <returns></returns>
-        [HttpPut("{id}/rm0x1")]
+        [HttpPatch("{id}/rm0x1")]
         public async Task<ActionResult<string>> UpdateRoles(int id, [FromBody] RolesDTO newRoles)
         {
             var res = await this._service.UpdateRoles(id, newRoles);
@@ -113,12 +112,12 @@ namespace User.Module.Controller
         /// Delete Own Count 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="password"></param>
+        /// <param name="dt"></param>
         /// <returns></returns>
         [HttpDelete("{id}/deletedCount")]
-        public async Task <ActionResult<string>> DeleteOwnCount (int id, string password)
+        public async Task<ActionResult<string>> DeleteOwnCount(int id, [FromBody] PasswordDTO dt)
         {
-            return Ok(await this._service.RemoveUserRegisterForBasicRoles(id, password));
+            return Ok(await this._service.RemoveUserRegisterForBasicRoles(id, dt));
         }
     }
 }

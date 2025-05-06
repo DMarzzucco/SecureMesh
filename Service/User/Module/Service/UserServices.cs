@@ -111,27 +111,34 @@ namespace User.Module.Service
         /// Update Password
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="password"></param>
+        /// <param name="dt"></param>
         /// <returns></returns>
-        public async Task<string> UpdatePassword(int id, string oldPassword, string password)
+        /// <exception cref="BadRequestExceptions"></exception>
+        /// <exception cref="NotFoundExceptions"></exception>
+        /// <exception cref="ForbiddenExceptions"></exception>
+        /// <exception cref="ConflictExceptions"></exception>
+        public async Task<string> UpdatePassword(int id, UpdatePasswordDTO dt)
         {
+            if (string.IsNullOrEmpty(dt.OldPassword))
+                throw new BadRequestExceptions("Old password is required");
+
             var date = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
             var passwordHasher = new PasswordHasher<UserModel>();
 
-            var verificationPass = passwordHasher.VerifyHashedPassword(date, date.Password, oldPassword);
+            var verificationPass = passwordHasher.VerifyHashedPassword(date, date.Password, dt.OldPassword);
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password Wrong");
 
-            this._validation.ValidateStructurePassword(password);
+            this._validation.ValidateStructurePassword(dt.NewPassword);
 
-            var verificationResult = passwordHasher.VerifyHashedPassword(date, date.Password, password);
+            var verificationResult = passwordHasher.VerifyHashedPassword(date, date.Password, dt.NewPassword);
 
             if (verificationResult == PasswordVerificationResult.Success)
                 throw new ConflictExceptions("The password cannot be the same as the current one");
 
-            date.Password = passwordHasher.HashPassword(date, password);
+            date.Password = passwordHasher.HashPassword(date, dt.NewPassword);
             await this._repository.UpdateAsync(date);
 
             return "Password updated successfully";
@@ -166,16 +173,16 @@ namespace User.Module.Service
         /// <returns></returns>
         /// <exception cref="NotFoundExceptions"></exception>
         /// <exception cref="ForbiddenExceptions"></exception>
-        public async Task<string> UpdateOwnRegister(int id, string password, UpdateUserDTO body)
+        public async Task<string> UpdateOwnRegister(int id, UpdateOwnUserDTO body)
         {
-            if (password == null)
+            if (string.IsNullOrEmpty(body.Password))
                 throw new BadRequestExceptions("Password is required");
 
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
             var passwordHasher = new PasswordHasher<UserModel>();
-            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, password);
+            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, body.Password);
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password is wrong");
 
@@ -215,17 +222,17 @@ namespace User.Module.Service
         /// <param name="password"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<string> RemoveUserRegisterForBasicRoles(int id, string password)
+        public async Task<string> RemoveUserRegisterForBasicRoles(int id, PasswordDTO dt)
         {
-            if (password == null)
+            if (dt.Password == null)
                 throw new BadRequestExceptions("Password is required");
-                
+
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
             var passwordHasher = new PasswordHasher<UserModel>();
 
-            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, password);
+            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, dt.Password);
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password Wrong");
 

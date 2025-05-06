@@ -62,5 +62,21 @@ namespace UsersTesting.Mock
         {
             Roles = ROLES.Creator
         };
+
+        public static PasswordDTO PasswordDTOMock => new PasswordDTO { Password = "Pr@motheus98" };
+
+        public static UpdatePasswordDTO UpdatePasswordDTOMock => new UpdatePasswordDTO
+        {
+            OldPassword = "Pr@motheus98",
+            NewPassword = "Sr@motheus23"
+        };
+
+        public static UpdateOwnUserDTO UpdateOwnUserDTOMock => new UpdateOwnUserDTO
+        {
+            Password = "Pr@motheus98",
+            FullName = "Dario Marzzucco",
+            Username = "derkmarzz77",
+            Email = "marzz77_@gmail.com"
+        };
     }
 }

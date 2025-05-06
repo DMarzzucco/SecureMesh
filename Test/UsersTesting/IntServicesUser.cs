@@ -28,6 +28,8 @@ public class IntServicesUser
         {
             conf.CreateMap<CreateUserDTO, UserModel>();
             conf.CreateMap<UpdateUserDTO, UserModel>();
+            conf.CreateMap<UpdateOwnUserDTO, UserModel>()
+                .ForMember(d=>d.Password, op => op.Ignore());
             conf.CreateMap<UserModel, UserDTO>();
         });
         this._mapper = conf.CreateMapper();
@@ -138,15 +140,14 @@ public class IntServicesUser
     public async Task ShouldRemoveOwnRegister()
     {
         int id = 4;
-        string password = UsersMock.UserMock.Password;
-
+        var dt = UsersMock.PasswordDTOMock;
         var user = UsersMock.UserHashPassMock;
         string message = "User was remove successfully";
 
-        this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._repository.Setup(r=> r.DeleteAsync(user)).ReturnsAsync(true);
+        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._repository.Setup(r => r.DeleteAsync(user)).ReturnsAsync(true);
 
-        var res = await this._service.RemoveUserRegisterForBasicRoles(id, password);
+        var res = await this._service.RemoveUserRegisterForBasicRoles(id, dt);
 
         Assert.NotNull(res);
         Assert.Equal(message, res);
@@ -180,17 +181,17 @@ public class IntServicesUser
     public async Task ShouldUpdatePassword()
     {
         int id = 4;
-        string oldPassword = "Pr@motheus98";
-        string newPassword = "sdAr@motheus34";
+        var dt = UsersMock.UpdatePasswordDTOMock;
+
         string message = "Password updated successfully";
 
         var user = UsersMock.UserHashPassMock;
 
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._validation.Setup(v=> v.ValidateStructurePassword(oldPassword));
-        this._repository.Setup(r=> r.UpdateAsync(user)).ReturnsAsync(true);
+        this._validation.Setup(v => v.ValidateStructurePassword(dt.NewPassword));
+        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
-        var res = await this._service.UpdatePassword(id, oldPassword, newPassword);
+        var res = await this._service.UpdatePassword(id, dt);
 
         Assert.NotNull(res);
         Assert.Equal(message, res);
@@ -207,8 +208,8 @@ public class IntServicesUser
         var user = UsersMock.UserMock;
         string message = "Roles were updated successfully";
 
-        this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._repository.Setup(r=> r.UpdateAsync(user)).ReturnsAsync(true);
+        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
         var res = await this._service.UpdateRoles(id, roles);
 
@@ -225,11 +226,11 @@ public class IntServicesUser
         // Given
         var body = UsersMock.UpdateUserDTOMOck;
         int id = 5;
-        var user = UsersMock.UserMockBasic;    
+        var user = UsersMock.UserMockBasic;
         // When
-        this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
         this._validation.Setup(v => v.ValidationEmail(body.Email));
-        this._repository.Setup(r=> r.UpdateAsync(user)).ReturnsAsync(true);
+        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
         var res = await this._service.UpdateRegister(body, id);
         // Then
@@ -242,20 +243,19 @@ public class IntServicesUser
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task  ShouldUpdateOwnRegister()
+    public async Task ShouldUpdateOwnRegister()
     {
         int id = 4;
-        string password = UsersMock.UserMock.Password;
-        var body = UsersMock.UpdateUserDTOMOck;
+        var body = UsersMock.UpdateOwnUserDTOMock;
 
         var user = UsersMock.UserHashPassMock;
         string message = "Your reforms was saved successfully";
 
-        this._repository.Setup(r=> r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._validation.Setup(v=> v.ValidationEmail(body.Email));
-        this._repository.Setup(r=> r.UpdateAsync(user)).ReturnsAsync(true);
+        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._validation.Setup(v => v.ValidationEmail(body.Email));
+        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
-        var res = await this._service.UpdateOwnRegister(id, password, body);
+        var res = await this._service.UpdateOwnRegister(id, body);
 
         Assert.NotNull(res);
         Assert.Equal(message, res);

@@ -98,14 +98,13 @@ public class UnitControllerUser
     public async Task  ShouldUPdateOwnRegister()
     {
         int id = 4;
-        string password = UsersMock.UserMock.Password;
-        var body = UsersMock.UpdateUserDTOMOck;
+        var body = UsersMock.UpdateOwnUserDTOMock;
 
         string message = "Your reforms was saved successfully";
 
-        this._service.Setup(s=> s.UpdateOwnRegister(id, password, body)).ReturnsAsync(message);
+        this._service.Setup(s=> s.UpdateOwnRegister(id,body)).ReturnsAsync(message);
 
-        var res = await this._controller.EditOwnCount(id, password, body);
+        var res = await this._controller.EditOwnCount(id, body);
         var result = Assert.IsType<OkObjectResult>(res.Result);
 
         Assert.NotNull(result);
@@ -136,13 +135,13 @@ public class UnitControllerUser
     public async Task ShouldDelteOwnRegister()
     {
         int id = 4;
-        string password = UsersMock.UserMock.Password;
+        var dt = UsersMock.PasswordDTOMock;
 
         string message = "User was remove successfully";
 
-        this._service.Setup(s=> s.RemoveUserRegisterForBasicRoles(id, password)).ReturnsAsync(message);
+        this._service.Setup(s=> s.RemoveUserRegisterForBasicRoles(id, dt)).ReturnsAsync(message);
 
-        var res = await this._controller.DeleteOwnCount(id, password);
+        var res = await this._controller.DeleteOwnCount(id, dt);
         var result = Assert.IsType<OkObjectResult>(res.Result);
 
         Assert.NotNull(result);
@@ -157,13 +156,13 @@ public class UnitControllerUser
     public async Task ShouldUpdateThePassword()
     {
         int id = 4;
-        string oldPassword = "Pr@motheus98";
-        string newPassword = "sdAr@motheus34";
+        var dt = UsersMock.UpdatePasswordDTOMock;
+        
         string message = "Password updated successfully";
 
-        this._service.Setup(s => s.UpdatePassword(id, oldPassword, newPassword)).ReturnsAsync(message);
+        this._service.Setup(s => s.UpdatePassword(id, dt)).ReturnsAsync(message);
 
-        var res = await this._controller.UpdatePassword(id, oldPassword, newPassword);
+        var res = await this._controller.UpdatePassword(id, dt);
         var response = Assert.IsType<OkObjectResult>(res.Result);
 
         Assert.NotNull(response);
