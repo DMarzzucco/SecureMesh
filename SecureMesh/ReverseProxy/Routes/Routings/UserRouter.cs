@@ -10,16 +10,6 @@ public static class UserRouter
 {
     public static IReadOnlyList<RouteConfig> GetRoutes() =>
     [
-        //Register (PUBLIC)
-        new RouteConfig
-        {
-            RouteId = "register_route",
-            ClusterId = "user_cluster",
-            RateLimiterPolicy = Policies.RateLimiterPolicy,
-            Match = new RouteMatch { Path = "/api/User/xk12" },
-            Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
-        },
-
         // (ROLES:ADMIN)
         //Update Roles
         new RouteConfig

@@ -1,4 +1,6 @@
 services:
+
+  # Database Container
   db:
     image: postgres
     container_name: data_base_pg
@@ -14,6 +16,23 @@ services:
     networks:
       - compose-bridge
 
+  # Hangfire database
+  db_hangfire:
+    image: postgres
+    container_name: data_base_pg_hangfire
+    restart: always
+    environment:
+      POSTGRES_USER: hangfire
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: data_base_hangfire
+    ports:
+      - "5433:5432"  
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - db-hangfire-bridge
+
+  # Api Gateway Container
   securemesh:
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/gate.pfx
@@ -36,6 +55,8 @@ services:
     entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh auth:5090 -- dotnet SecureMesh.dll" ]
     networks:
       - compose-bridge
+
+  #User Api Container
   user:
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetcert.pfx
@@ -54,8 +75,12 @@ services:
       - ./certs/user/aspnetcert.pfx:/https/aspnetcert.pfx
     networks:
       - compose-bridge
+      - db-hangfire-bridge
     depends_on:
       - db
+      - db_hangfire
+
+  # Security Api Container
   auth:
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.pfx
@@ -72,14 +97,57 @@ services:
       - "5090:5090"
     depends_on:
       - user
+      - redis
+      - rabbitmq
     volumes:
       - ./certs/auth/cert.pfx:/https/cert.pfx
       - ./scripts/wait-for-it.sh:/wait-for-it.sh
     entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh user:4080 -- dotnet Security.dll" ]
     networks:
       - compose-bridge
+      - rabbit_network
+      - redis_network
+  #Redis
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - redis_network
+  #RabbitMQ Container
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - rabbit_network
+
+volumes:
+  redis_data:
+
+  rabbitmq_data:
+    driver: local
 
 networks:
 
+  redis_network:
+    driver: bridge
+
+  rabbit_network:
+    driver: bridge
+    
   compose-bridge:
     driver: bridge
+
+  db-hangfire-bridge:
+    driver : bridge

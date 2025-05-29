@@ -85,6 +85,9 @@ C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Mic
 C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\StackExchange.Redis.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\Security\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll

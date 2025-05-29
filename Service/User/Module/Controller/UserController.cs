@@ -15,6 +15,7 @@ namespace User.Module.Controller
         {
             _service = service;
         }
+
         /// <summary>
         /// Get All 
         /// </summary>
@@ -34,17 +35,7 @@ namespace User.Module.Controller
         {
             return Ok(await this._service.GetUserProfileById(id));
         }
-        /// <summary>
-        /// Register User
-        /// </summary>
-        /// <param name="body"></param>
-        /// <returns></returns>
-        [HttpPost("xk12")]
-        public async Task<ActionResult<UserModel>> RegisterUser([FromBody] CreateUserDTO body)
-        {
-            var date = await this._service.RegisterUser(body);
-            return CreatedAtAction(nameof(GetAllRegister), new { id = date.Id }, date);
-        }
+
         /// <summary>
         /// Edit User (ROLES:CREATOR)
         /// </summary>
@@ -106,18 +97,6 @@ namespace User.Module.Controller
         {
             await this._service.RemoveUserRegister(id);
             return NoContent();
-        }
-
-        /// <summary>
-        /// Delete Own Count 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}/deletedCount")]
-        public async Task<ActionResult<string>> DeleteOwnCount(int id, [FromBody] PasswordDTO dt)
-        {
-            return Ok(await this._service.RemoveUserRegisterForBasicRoles(id, dt));
         }
     }
 }

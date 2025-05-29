@@ -11,6 +11,9 @@ using User.Module.Repository;
 using User.Module.Repository.Interface;
 using User.Module.Validations;
 using User.Module.Validations.Interface;
+using User.Module.Stubs.Maps;
+using User.Module.Stubs.Handlers;
+using User.Configuration;
 
 namespace User.Extensions;
 
@@ -21,6 +24,9 @@ public static partial class ServiceBuilderExtensions
     {
         //database connection
         services.AddDatabaseConnection(configuration);
+        //Hangfire
+        services.AddHangfireServices(configuration);
+        // inyect hangfire services
         //gRPC
         services.AddGrpc();
         //controller configuration
@@ -36,6 +42,8 @@ public static partial class ServiceBuilderExtensions
         });
         //service scope
         services.AddScoped<GlobalFilterExceptions>();
+        services.AddScoped<MapResponseGrpc>();
+        services.AddScoped<HandlerGrpcExceptions>();
         services.AddScoped<IUserValidation, UserValidation>();
         services.AddScoped<IUserService, UserServices>();
         services.AddScoped<IUserRepository, UserRepository>();

@@ -57,6 +57,16 @@ namespace User.Module.Repository
             return await this._context.UserModel.FindAsync(id);
         }
         /// <summary>
+        /// Find User By Email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public async Task<UserModel?> FindByEmailAsync(string email)
+        {
+            var user = await this._context.UserModel.FirstOrDefaultAsync(f => f.Email == email);
+            return user;
+        }
+        /// <summary>
         /// Find User By Key and Value to validated
         /// </summary>
         /// <param name="key"></param>

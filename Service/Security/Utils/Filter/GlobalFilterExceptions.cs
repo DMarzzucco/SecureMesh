@@ -2,20 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
+using Security.Utils.Exceptions;
 
 namespace Security.Utils.Filter
 {
-    public class GlobalFilterExceptions : IExceptionFilter
+    public class GlobalFilterExceptions (ILogger<GlobalFilterExceptions> logger) : IExceptionFilter
     {
-        private readonly ILogger<GlobalFilterExceptions> _logger;
-
-        public GlobalFilterExceptions(ILogger<GlobalFilterExceptions> logger) => this._logger = logger;
+        private readonly ILogger<GlobalFilterExceptions> _logger = logger;
 
         public void OnException(ExceptionContext context)
         {
             var statusCode = context.Exception switch
             {
+                BadRequestExceptions => 400,
                 UnauthorizedAccessException => 401,
+                ForbiddenExceptions => 403,
                 SecurityTokenExpiredException => 403,
                 SecurityTokenSignatureKeyNotFoundException => 403,
                 KeyNotFoundException => 404,
@@ -27,6 +28,7 @@ namespace Security.Utils.Filter
                     StatusCode.InvalidArgument => 400,
                     _ => 500
                 },
+                ConflictExceptions => 409,
                 _ => 500
             };
 
@@ -35,6 +37,7 @@ namespace Security.Utils.Filter
                 StatusCode = statusCode,
                 Message = statusCode switch
                 {
+                    400 => context.Exception.Message,
                     401 => context.Exception.Message,
                     403 => context.Exception switch
                     {
@@ -43,6 +46,7 @@ namespace Security.Utils.Filter
                         _ => context.Exception.Message
                     },
                     404 => context.Exception.Message,
+                    409=> context.Exception.Message,
                     _ => context.Exception.Message
                 },
                 Details = statusCode == 500 ?

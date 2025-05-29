@@ -48,29 +48,39 @@ namespace User {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.UserRequest> __Marshaller_UserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.UserRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::User.AuthUserResponse> __Marshaller_AuthUserResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.AuthUserResponse.Parser));
+    static readonly grpc::Marshaller<global::User.ValidationResponse> __Marshaller_ValidationResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.ValidationResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.RefreshTokenRequest> __Marshaller_RefreshTokenRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.RefreshTokenRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.ValueKeysRequest> __Marshaller_ValueKeysRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.ValueKeysRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::User.ValidationResponse> __Marshaller_ValidationResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.ValidationResponse.Parser));
+    static readonly grpc::Marshaller<global::User.CreateUserRequest> __Marshaller_CreateUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.CreateUserRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::User.NewEmailDTORequest> __Marshaller_NewEmailDTORequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.NewEmailDTORequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::User.UserEmailRequest> __Marshaller_UserEmailRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.UserEmailRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::User.PasswordDTORequest> __Marshaller_PasswordDTORequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.PasswordDTORequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::User.MessageResponse> __Marshaller_MessageResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.MessageResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.UserRequest, global::User.AuthUserResponse> __Method_GetUserByIdForAuth = new grpc::Method<global::User.UserRequest, global::User.AuthUserResponse>(
+    static readonly grpc::Method<global::User.UserRequest, global::User.ValidationResponse> __Method_GetUserByIdForAuth = new grpc::Method<global::User.UserRequest, global::User.ValidationResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "GetUserByIdForAuth",
         __Marshaller_UserRequest,
-        __Marshaller_AuthUserResponse);
+        __Marshaller_ValidationResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.RefreshTokenRequest, global::User.AuthUserResponse> __Method_UpdateRefreshToken = new grpc::Method<global::User.RefreshTokenRequest, global::User.AuthUserResponse>(
+    static readonly grpc::Method<global::User.RefreshTokenRequest, global::User.ValidationResponse> __Method_UpdateRefreshToken = new grpc::Method<global::User.RefreshTokenRequest, global::User.ValidationResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "UpdateRefreshToken",
         __Marshaller_RefreshTokenRequest,
-        __Marshaller_AuthUserResponse);
+        __Marshaller_ValidationResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::User.ValueKeysRequest, global::User.ValidationResponse> __Method_FindByValueForAuth = new grpc::Method<global::User.ValueKeysRequest, global::User.ValidationResponse>(
@@ -79,6 +89,62 @@ namespace User {
         "FindByValueForAuth",
         __Marshaller_ValueKeysRequest,
         __Marshaller_ValidationResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.CreateUserRequest, global::User.ValidationResponse> __Method_RegisterUserInAuth = new grpc::Method<global::User.CreateUserRequest, global::User.ValidationResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "RegisterUserInAuth",
+        __Marshaller_CreateUserRequest,
+        __Marshaller_ValidationResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.UserRequest, global::User.ValidationResponse> __Method_MarkEmailVerifyAuth = new grpc::Method<global::User.UserRequest, global::User.ValidationResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "MarkEmailVerifyAuth",
+        __Marshaller_UserRequest,
+        __Marshaller_ValidationResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.NewEmailDTORequest, global::User.ValidationResponse> __Method_UpdateEmailAdressAuth = new grpc::Method<global::User.NewEmailDTORequest, global::User.ValidationResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "UpdateEmailAdressAuth",
+        __Marshaller_NewEmailDTORequest,
+        __Marshaller_ValidationResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.UserEmailRequest, global::User.ValidationResponse> __Method_GetUserByEmailForAuth = new grpc::Method<global::User.UserEmailRequest, global::User.ValidationResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetUserByEmailForAuth",
+        __Marshaller_UserEmailRequest,
+        __Marshaller_ValidationResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.PasswordDTORequest, global::User.ValidationResponse> __Method_ReturnPasswordForAuth = new grpc::Method<global::User.PasswordDTORequest, global::User.ValidationResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ReturnPasswordForAuth",
+        __Marshaller_PasswordDTORequest,
+        __Marshaller_ValidationResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_CancelationOperationAuth = new grpc::Method<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "CancelationOperationAuth",
+        __Marshaller_UserRequest,
+        __Marshaller_google_protobuf_Empty);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.PasswordDTORequest, global::User.MessageResponse> __Method_DeletedOwnAccountAuth = new grpc::Method<global::User.PasswordDTORequest, global::User.MessageResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "DeletedOwnAccountAuth",
+        __Marshaller_PasswordDTORequest,
+        __Marshaller_MessageResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -114,42 +180,42 @@ namespace User {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::User.AuthUserResponse GetUserByIdForAuth(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::User.ValidationResponse GetUserByIdForAuth(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetUserByIdForAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::User.AuthUserResponse GetUserByIdForAuth(global::User.UserRequest request, grpc::CallOptions options)
+      public virtual global::User.ValidationResponse GetUserByIdForAuth(global::User.UserRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_GetUserByIdForAuth, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::User.AuthUserResponse> GetUserByIdForAuthAsync(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> GetUserByIdForAuthAsync(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetUserByIdForAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::User.AuthUserResponse> GetUserByIdForAuthAsync(global::User.UserRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> GetUserByIdForAuthAsync(global::User.UserRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetUserByIdForAuth, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::User.AuthUserResponse UpdateRefreshToken(global::User.RefreshTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::User.ValidationResponse UpdateRefreshToken(global::User.RefreshTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return UpdateRefreshToken(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::User.AuthUserResponse UpdateRefreshToken(global::User.RefreshTokenRequest request, grpc::CallOptions options)
+      public virtual global::User.ValidationResponse UpdateRefreshToken(global::User.RefreshTokenRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_UpdateRefreshToken, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::User.AuthUserResponse> UpdateRefreshTokenAsync(global::User.RefreshTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> UpdateRefreshTokenAsync(global::User.RefreshTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return UpdateRefreshTokenAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::User.AuthUserResponse> UpdateRefreshTokenAsync(global::User.RefreshTokenRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> UpdateRefreshTokenAsync(global::User.RefreshTokenRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_UpdateRefreshToken, null, options, request);
       }
@@ -172,6 +238,146 @@ namespace User {
       public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> FindByValueForAuthAsync(global::User.ValueKeysRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_FindByValueForAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse RegisterUserInAuth(global::User.CreateUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return RegisterUserInAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse RegisterUserInAuth(global::User.CreateUserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_RegisterUserInAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> RegisterUserInAuthAsync(global::User.CreateUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return RegisterUserInAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> RegisterUserInAuthAsync(global::User.CreateUserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_RegisterUserInAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse MarkEmailVerifyAuth(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return MarkEmailVerifyAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse MarkEmailVerifyAuth(global::User.UserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_MarkEmailVerifyAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> MarkEmailVerifyAuthAsync(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return MarkEmailVerifyAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> MarkEmailVerifyAuthAsync(global::User.UserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_MarkEmailVerifyAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse UpdateEmailAdressAuth(global::User.NewEmailDTORequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateEmailAdressAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse UpdateEmailAdressAuth(global::User.NewEmailDTORequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_UpdateEmailAdressAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> UpdateEmailAdressAuthAsync(global::User.NewEmailDTORequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateEmailAdressAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> UpdateEmailAdressAuthAsync(global::User.NewEmailDTORequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_UpdateEmailAdressAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse GetUserByEmailForAuth(global::User.UserEmailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetUserByEmailForAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse GetUserByEmailForAuth(global::User.UserEmailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetUserByEmailForAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> GetUserByEmailForAuthAsync(global::User.UserEmailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetUserByEmailForAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> GetUserByEmailForAuthAsync(global::User.UserEmailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetUserByEmailForAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse ReturnPasswordForAuth(global::User.PasswordDTORequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ReturnPasswordForAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.ValidationResponse ReturnPasswordForAuth(global::User.PasswordDTORequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ReturnPasswordForAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> ReturnPasswordForAuthAsync(global::User.PasswordDTORequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ReturnPasswordForAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.ValidationResponse> ReturnPasswordForAuthAsync(global::User.PasswordDTORequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ReturnPasswordForAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty CancelationOperationAuth(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CancelationOperationAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty CancelationOperationAuth(global::User.UserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_CancelationOperationAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> CancelationOperationAuthAsync(global::User.UserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CancelationOperationAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> CancelationOperationAuthAsync(global::User.UserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_CancelationOperationAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.MessageResponse DeletedOwnAccountAuth(global::User.PasswordDTORequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DeletedOwnAccountAuth(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::User.MessageResponse DeletedOwnAccountAuth(global::User.PasswordDTORequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_DeletedOwnAccountAuth, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.MessageResponse> DeletedOwnAccountAuthAsync(global::User.PasswordDTORequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DeletedOwnAccountAuthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::User.MessageResponse> DeletedOwnAccountAuthAsync(global::User.PasswordDTORequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_DeletedOwnAccountAuth, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]

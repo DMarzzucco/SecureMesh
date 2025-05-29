@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
 using System.Text;
-using User;
 using Security.Configuration.Swagger;
 using Security.Utils.Filter;
 using Security.Server.Service.Interfaces;
@@ -14,6 +13,16 @@ using Security.JWT;
 using Security.Module.Services.Interfaces;
 using Security.Module.Services;
 using Security.Module.Filter;
+using Security.Configuration;
+using Security.Server.Helper;
+using Security.Queues;
+using Security.Queues.Interfaces;
+using Security.Queues.Messaging.Interfaces;
+using Security.Queues.Messaging;
+using Security.Server.Maps;
+using Security.Configuration.Redis;
+using Security.Configuration.Redis.Repository.Interfaces;
+using Security.Configuration.Redis.Repository;
 
 namespace Security.Extensions
 {
@@ -25,12 +34,13 @@ namespace Security.Extensions
         public static IServiceCollection AddServiceBuilderExtensions(this IServiceCollection service, IConfiguration configuration)
         {
             service.AddHttpContextAccessor();
-            
+
             //JWT Configuration
             var secretKey = configuration.GetSection("JwtSettings").GetSection("seecretKey").ToString();
             if (string.IsNullOrEmpty(secretKey))
                 throw new ArgumentNullException(nameof(secretKey), "Secret Key cannot be null or empty");
-
+                
+            service.AddRedisConnection();    
             service.AddAuthentication(conf =>
             {
                 conf.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -63,7 +73,15 @@ namespace Security.Extensions
             });
             //scope
             service.AddScoped<GlobalFilterExceptions>();
+            //redis
+            service.AddScoped<IRedisRepository, RedisRepository>();
+            //rabbitMQ
+            service.AddScoped<IRabbitMQServices, RabbitMQServices>();
+            service.AddScoped<IMessagingQueues, MessagingQueues>();
+
+            service.AddScoped<RequestMapperUserGrpc>();
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<HandleGrpcError>();
             service.AddScoped<ICookieService, CookieService>();
             service.AddScoped<IJwtService, JwtService>();
             service.AddScoped<ISecurityService, SecurityService>();
@@ -94,22 +112,7 @@ namespace Security.Extensions
                 });
             });
             //gRPC
-            service.AddGrpc();
-            // just for dev
-            var httpClientHandler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-            };
-            service.AddGrpcClient<UserServiceGrpc.UserServiceGrpcClient>(x =>
-            {
-                //x.Address = new Uri("https://172.31.64.1:4080");
-                // x.Address = new Uri("https://localhost:4080");
-                x.Address = new Uri("https://user:4080");
-                x.ChannelOptionsActions.Add(op =>
-                {
-                    op.HttpHandler = httpClientHandler;
-                });
-            });
+            service.AddGrpcService();
 
             return service;
         }

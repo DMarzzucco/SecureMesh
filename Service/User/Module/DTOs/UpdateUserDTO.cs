@@ -12,8 +12,4 @@ public class UpdateUserDTO
     [SwaggerSchema("User username")]
     [SwaggerSchemaExample("derkmarzz77")]
     public string? Username { get; set; }
-
-    [SwaggerSchema("User email")]
-    [SwaggerSchemaExample("marzz77_@gmail.com")]
-    public string? Email { get; set; }
 }

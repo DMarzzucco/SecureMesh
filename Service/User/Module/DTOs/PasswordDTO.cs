@@ -9,6 +9,6 @@ namespace User.Module.DTOs;
 public class PasswordDTO
 {
     [SwaggerSchema("User password to validate credentials")]
-    [SwaggerSchemaExample("Pr@motheus98")]
+    [SwaggerSchemaExample("Sr@motheus23")]
     public required string Password { get; set; }
 }

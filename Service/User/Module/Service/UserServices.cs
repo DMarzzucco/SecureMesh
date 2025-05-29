@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using User.Module.DTOs;
 using User.Module.Model;
@@ -14,11 +15,14 @@ namespace User.Module.Service
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUserValidation _validation;
-        public UserServices(IUserRepository repository, IMapper mapper, IUserValidation validation)
+        private readonly IBackgroundJobClient backgroundJobClient;
+
+        public UserServices(IUserRepository repository, IMapper mapper, IUserValidation validation, IBackgroundJobClient backgroundJobClient)
         {
-            _repository = repository;
-            _mapper = mapper;
-            _validation = validation;
+            this._repository = repository;
+            this._mapper = mapper;
+            this._validation = validation;
+            this.backgroundJobClient = backgroundJobClient;
         }
         /// <summary>
         /// Find User By id
@@ -33,6 +37,25 @@ namespace User.Module.Service
             return user;
         }
         /// <summary>
+        /// Counted Deleted
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundExceptions"></exception>
+        public async Task CountedDeleted(int id)
+        {
+            var user = await this._repository.FindByIdAsync(id) ??
+                    throw new NotFoundExceptions("User was not found");
+                    
+            if (!user.IsDeleted || user.DeletedAt == null)
+                return;
+                
+            if (DateTime.UtcNow < user.DeletedAt.Value.AddMinutes(10))
+                return;
+
+            await this._repository.DeleteAsync(user);
+        }
+        /// <summary>
         /// Get User Profile By Id
         /// </summary>
         /// <param name="id"></param>
@@ -42,6 +65,18 @@ namespace User.Module.Service
             var user = await this.FindUserById(id);
             var response = this._mapper.Map<UserDTO>(user);
             return response;
+        }
+        /// <summary>
+        /// Get user by email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundExceptions"></exception>
+        public async Task<UserModel> GetUserByEmail(string email)
+        {
+            var user = await this._repository.FindByEmailAsync(email) ??
+                throw new NotFoundExceptions("This email adress not exist ");
+            return user;
         }
         /// <summary>
         /// List of All Register
@@ -54,6 +89,25 @@ namespace User.Module.Service
             var response = this._mapper.Map<IEnumerable<UserDTO>>(user);
             return response;
         }
+
+        /// <summary>
+        /// MarkEmailAsVerified
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundExceptions"></exception>
+        public async Task<UserModel> MarkEmailAsVerifieds(int id)
+        {
+            var user = await this._repository.FindByIdAsync(id) ??
+                throw new NotFoundExceptions("User not found");
+
+            user.EmailVerified = true;
+
+            await this._repository.UpdateAsync(user);
+
+            return user;
+        }
+
         /// <summary>
         /// Register User
         /// </summary>
@@ -144,6 +198,41 @@ namespace User.Module.Service
             return "Password updated successfully";
         }
         /// <summary>
+        /// Update Email Adress
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundExceptions"></exception>
+        /// <exception cref="ForbiddenExceptions"></exception>
+        /// <exception cref="ConflictExceptions"></exception>
+        public async Task<UserModel> UpdateEmail(int id, NewEmailDTO dt)
+        {
+            if (string.IsNullOrEmpty(dt.NewEmail))
+                throw new BadRequestExceptions("The Email is required");
+
+            var user = await this._repository.FindByIdAsync(id) ??
+                throw new NotFoundExceptions("User not found");
+
+            var passwordHasher = new PasswordHasher<UserModel>();
+            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, dt.Password);
+            if (verificationPass == PasswordVerificationResult.Failed)
+                throw new ForbiddenExceptions("Password is Wrong");
+
+            this._validation.ValidationEmail(dt.NewEmail);
+
+            if (user.Email == dt.NewEmail)
+                throw new ConflictExceptions("The new email address must be different from the current one.");
+
+            await this._validation.ValidateEmailDuplicate(dt.NewEmail);
+
+            user.Email = dt.NewEmail;
+            user.EmailVerified = false;
+
+            await this._repository.UpdateAsync(user);
+            return user;
+        }
+        /// <summary>
         /// Update User
         /// </summary>
         /// <param name="body"></param>
@@ -158,7 +247,7 @@ namespace User.Module.Service
             if (user.Roles == ROLES.Admin)
                 throw new ForbiddenExceptions("Could not edit a user Admin");
 
-            this._validation.ValidationEmail(body.Email);
+            // this._validation.ValidationEmail(body.Email);
 
             this._mapper.Map(body, user);
             await this._repository.UpdateAsync(user);
@@ -185,8 +274,6 @@ namespace User.Module.Service
             var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, body.Password);
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password is wrong");
-
-            this._validation.ValidationEmail(body.Email);
 
             this._mapper.Map(body, user);
             await this._repository.UpdateAsync(user);
@@ -216,15 +303,17 @@ namespace User.Module.Service
         }
 
         /// <summary>
-        /// Remove user for basic user roles
+        /// Remove user for own acount
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="password"></param>
+        /// <param name="dt"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="BadRequestExceptions"></exception>
+        /// <exception cref="NotFoundExceptions"></exception>
+        /// <exception cref="ForbiddenExceptions"></exception>
         public async Task<string> RemoveUserRegisterForBasicRoles(int id, PasswordDTO dt)
         {
-            if (dt.Password == null)
+            if (string.IsNullOrEmpty(dt.Password))
                 throw new BadRequestExceptions("Password is required");
 
             var user = await this._repository.FindByIdAsync(id) ??
@@ -234,11 +323,47 @@ namespace User.Module.Service
 
             var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, dt.Password);
             if (verificationPass == PasswordVerificationResult.Failed)
-                throw new ForbiddenExceptions("Password Wrong");
+                throw new ForbiddenExceptions("Password is Wrong");
 
-            await this._repository.DeleteAsync(user);
+            var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeleted(user.Id), TimeSpan.FromMinutes(10));
+
+            user.IsDeleted = true;
+            user.DeletedAt = DateTime.UtcNow;
+            user.ScheduledDeletionJobId = jobId;
+
+            await this._repository.UpdateAsync(user);
 
             return "User was remove successfully";
         }
+        /// <summary>
+        /// Return Password Async 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundExceptions"></exception>
+        /// <exception cref="ConflictExceptions"></exception>
+        /// <exception cref="BadRequestExceptions"></exception>
+        public async Task<UserModel> ReturnPasswordAsync(int id, PasswordDTO body)
+        {
+            var user = await this._repository.FindByIdAsync(id) ??
+                throw new NotFoundExceptions("User not found");
+
+            var passwordHasher = new PasswordHasher<UserModel>();
+
+            this._validation.ValidateStructurePassword(body.Password);
+
+            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, body.Password);
+
+            if (verificationPass == PasswordVerificationResult.Success)
+                throw new ConflictExceptions("The password cannot be the same as the old one");
+
+            user.Password = passwordHasher.HashPassword(user, body.Password);
+
+            await this._repository.UpdateAsync(user);
+
+            return user;
+        }
     }
+    
 }

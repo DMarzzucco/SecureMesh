@@ -10,8 +10,4 @@ public static class RoutesDefinitions
             .. AuthRouter.GetRoutes(),
             .. UserRouter.GetRoutes()
         ];
-
-    // AuthRouter.GetRoutes()
-    // .Concat(UserRouter.GetRoutes())
-    // .ToList();
 }

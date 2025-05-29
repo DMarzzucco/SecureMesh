@@ -5,6 +5,7 @@ namespace User.Module.Repository.Interface
     public interface IUserRepository
     {
         Task<UserModel?> FindByIdAsync(int id);
+        Task<UserModel?> FindByEmailAsync(string email);
         Task<IEnumerable<UserModel>> ToListAsync();
         Task<bool> ExistisByEmail(string email);
         Task <bool> ExistisByUsername(string username);

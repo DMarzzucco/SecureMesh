@@ -2,6 +2,7 @@
 using User.Configuration.Swagger.Attributes;
 
 namespace User.Module.Model;
+
 public class UserModel
 {
     [SwaggerSchema("User Id")]
@@ -19,6 +20,9 @@ public class UserModel
     [SwaggerSchemaExample("marzz77_@gmail.com")]
     public required string Email { get; set; }
 
+    [SwaggerIgnore]
+    public bool EmailVerified { get; set; } = false;
+
     [SwaggerSchema("User password")]
     [SwaggerSchemaExample("passmort243")]
     public required string Password { get; set; }
@@ -26,6 +30,15 @@ public class UserModel
     [SwaggerSchema("User roles")]
     [SwaggerSchemaExample("ADMIN")]
     public required ROLES Roles { get; set; }
+
+    [SwaggerIgnore]
+    public bool IsDeleted { get; set; } = false;
+
+    [SwaggerIgnore]
+    public DateTime? DeletedAt { get; set; } = null;
+
+    [SwaggerIgnore]
+    public string? ScheduledDeletionJobId { get; set; }
 
     [SwaggerIgnore]
     public string? RefreshToken { get; set; }

@@ -6,6 +6,9 @@ using Security.Module.Services.Interfaces;
 using Security.Server.DTOs;
 using Security.Server.Model;
 using Security.Server.Service.Interfaces;
+using Security.Utils.Exceptions;
+using Security.Queues.Messaging.Interfaces;
+using Security.Configuration.Redis.Repository.Interfaces;
 
 namespace Security.Module.Services
 {
@@ -15,15 +18,38 @@ namespace Security.Module.Services
         private readonly IJwtService _jwtService;
         private readonly ICookieService _cookieService;
         private readonly IUserService _userService;
-
-        public SecurityService(IHttpContextAccessor context, IJwtService jwtService, ICookieService cookieService, IUserService userService)
+        private readonly IMessagingQueues _messagingQueues;
+        private readonly IRedisRepository _redisRepository;
+        public SecurityService(IHttpContextAccessor context, IJwtService jwtService, ICookieService cookieService, IUserService userService, IMessagingQueues messagingQueues, IRedisRepository redisRepository)
         {
-            _context = context;
-            _jwtService = jwtService;
-            _cookieService = cookieService;
-            _userService = userService;
+            this._context = context;
+            this._jwtService = jwtService;
+            this._cookieService = cookieService;
+            this._userService = userService;
+            this._messagingQueues = messagingQueues;
+            this._redisRepository = redisRepository;
         }
+        /// <summary>
+        /// Registered of user
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        /// <exception cref="BadRequestExceptions"></exception>
+        public async Task<string> RegisteredUser(CreateUserDTO body)
+        {
+            if (body == null)
+                throw new BadRequestExceptions($"{body} is required");
 
+            var user = await this._userService.RegisterUser(body);
+            if (user != null)
+            {
+                var verificationToken = await this._jwtService.GenerateEmailVerificationToken(user);
+
+                await this._messagingQueues.SendEmailVerificactionEvent(user.Email, verificationToken, user.Id);
+            }
+
+            return $"Your was registerd successfully, now you need check your email to verificated";
+        }
         /// <summary>
         /// Generate Refresh Token 
         /// </summary>
@@ -46,7 +72,8 @@ namespace Security.Module.Services
         /// </summary>
         /// <param name="body"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="ForbiddenExceptions"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
         public async Task<string> GenerateToken(UserModel body)
         {
             var httpContext = this._context.HttpContext ?? throw new UnauthorizedAccessException("Http Context is null");
@@ -55,7 +82,7 @@ namespace Security.Module.Services
             await this._userService.UpdateRefreshToken(body.Id, token.RefreshHasherToken);
             this._cookieService.SetTokenCookies(httpContext.Response, token);
 
-            return token.AccessToken;
+            return $"Welcome {body.FullName}";
         }
         /// <summary>
         /// Get Profile
@@ -87,6 +114,21 @@ namespace Security.Module.Services
             return user;
         }
         /// <summary>
+        /// Forget Password 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public async Task<string> ForgetPassword(ForgetPasswordDTO dto)
+        {
+            var user = await this._userService.GetUserByEmail(dto.Email);
+            if (user != null)
+            {
+                var token = await this._jwtService.GenerateRecuperationPasswordToken(user);
+                await this._messagingQueues.PasswordRecuperationMessage(user.Email, token, user.Id);
+            }
+            return "You need check your email to next.";
+        }
+        /// <summary>
         /// Log Out
         /// </summary>
         /// <returns></returns>
@@ -100,6 +142,18 @@ namespace Security.Module.Services
             await this._userService.UpdateRefreshToken(user.Id, null);
 
             this._cookieService.ClearTokenCookies(httpContext.Response);
+        }
+        /// <summary>
+        /// Remove Own Account
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public async Task<string> RemoveOwnAccount(int id, PasswordDTO dto)
+        {
+            var response = await this._userService.DeletedOwnAccount(id, dto);
+            await this.LogOut();
+            return response;
         }
         /// <summary>
         /// Refresh Token Validate
@@ -118,6 +172,74 @@ namespace Security.Module.Services
             return user;
         }
         /// <summary>
+        /// Reset Password
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public async Task<string> ResetPassword(string token, PasswordDTO body)
+        {
+            var jwtToken = await this._jwtService.ValidateVerificationToken(token);
+
+            var userId = jwtToken?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ??
+                throw new UnauthorizedAccessException("Invalid Token");
+
+            int id = int.Parse(userId);
+
+            var user = await this._userService.ReturnPassword(id, body);
+
+            //invalidar token
+            await this._redisRepository.UpdateStateAsync(token);
+
+            return $"{user.FullName} Your new password was chanchis successfully";
+        }
+
+
+        /// <summary>
+        /// VerificationEmail
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<string> VerificationEmail(string token)
+        {
+            var jwt = await this._jwtService.ValidateVerificationToken(token);
+
+            var userId = jwt?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ??
+                throw new UnauthorizedAccessException("Invalid Token");
+
+            int id = int.Parse(userId);
+
+            var user = await this._userService.GetUserById(id);
+
+            await this._userService.MarkEmailAsync(id);
+            await this._messagingQueues.SendWelcomeMessage(user.FullName, user.Email, user.Id);
+            await this._redisRepository.UpdateStateAsync(token);
+
+            return $" Hello {user.FullName} your account was verificate successfully ";
+        }
+
+        /// <summary>
+        /// Validate New Email
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<string> VerificationNewEmail(string token)
+        {
+            var jwt = await this._jwtService.ValidateVerificationToken(token);
+
+            var userId = jwt?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ??
+                throw new UnauthorizedAccessException("Invalid Token");
+
+            int id = int.Parse(userId);
+
+            var user = await this._userService.GetUserById(id);
+
+            await this._userService.MarkEmailAsync(id);
+            await this._redisRepository.UpdateStateAsync(token);
+
+            return $" {user.Username} your new adress was verificate successfully, now you can login in";
+        }
+
+        /// <summary>
         /// Validate User
         /// </summary>
         /// <param name="body"></param>
@@ -135,7 +257,32 @@ namespace Security.Module.Services
             if (verificationResult == PasswordVerificationResult.Failed)
                 throw new UnauthorizedAccessException("Password is wrong");
 
+            if (!user.EmailVerified)
+                throw new ForbiddenExceptions("You need check your email to login");
+                
+             await this._userService.CancelationOperation(user.Id);
+
             return user;
+        }
+
+        /// <summary>
+        /// Update Email Address
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public async Task<string> ChangeAddressEmail(int id, NewEmailDTO body)
+        {
+            var user = await this._userService.UpdateEmailAdress(id, body);
+            if (user != null)
+            {
+                var token = await this._jwtService.GenerateEmailVerificationToken(user);
+                await this._messagingQueues.SendNewEmailVerificationEvent(user.Email, token, user.Id);
+
+                await this.LogOut();
+            }
+
+            return $"Email was updated his new email is {user.Email} ";
         }
     }
 }

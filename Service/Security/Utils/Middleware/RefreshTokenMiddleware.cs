@@ -24,7 +24,14 @@ namespace Security.Utils.Middleware
         /// <returns></returns>
         public async Task InvokeAsync(HttpContext context, IJwtService tokenService, ISecurityService authService, ICookieService cookieService)
         {
-            var publicPaths = new[] { "/api/Security/login", "/api/User/register" };
+            var publicPaths = new[] {
+                "/api/Security/login",
+                "/api/Security/registered",
+                "/api/Security/12349smska_wqj1n234msm949401",
+                "/api/Security/elm23019_123mskw_123fnsk",
+                "/api/Security/5413444_dsdn123fS_231_ddf",
+                "/api/Security/8382fd_1231sfw13312saeDAs12"
+                  };
 
             var path = context.Request.Path.Value;
             if (publicPaths.Contains(path))
@@ -49,7 +56,7 @@ namespace Security.Utils.Middleware
                     await context.Response.WriteAsJsonAsync(new { message = "Invalid Token" });
                     return;
                 }
-                if (tokenService.isTokenExpirationSoon(accessToken))
+                if (tokenService.IsTokenExpirationSoon(accessToken))
                 {
                     var user = await authService.GetUserByCookie();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.EntityFrameworkCore;
 using User.Configuration.DbConfiguration.Helper;
 using User.Context;
 
@@ -9,11 +10,11 @@ public static class DatabaseConnection
     public static IServiceCollection AddDatabaseConnection(this IServiceCollection service,
         IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Connection");
-        // var connectionString = configuration.GetConnectionString("Container");
+        // var connectionString = configuration.GetConnectionString("Connection");
+        var connectionString = configuration.GetConnectionString("Container");
 
         if (string.IsNullOrEmpty(connectionString))
-            throw new ArgumentNullException(nameof(connectionString),"Connection String cannot be null or empty");
+            throw new ArgumentNullException(nameof(connectionString), "Connection String cannot be null or empty");
 
         using (var serviceProvider = service.BuildServiceProvider())
         {
@@ -28,6 +29,7 @@ public static class DatabaseConnection
             if (configuration.GetValue<string>("APNETCORE_ENVIROMENT") == "Development")
                 op.EnableSensitiveDataLogging();
         });
+
         return service;
     }
 }

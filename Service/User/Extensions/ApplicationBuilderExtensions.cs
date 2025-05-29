@@ -1,4 +1,5 @@
-﻿using User.Module.Stubs;
+﻿using Hangfire;
+using User.Module.Stubs;
 
 namespace User.Extensions;
 
@@ -12,6 +13,7 @@ public static class ApplicationBuilderExtensions
             e.MapGrpcService<UserServiceGrpcImpl>();
         });
         app.UseStaticFiles();
+        app.UseHangfireDashboard();
         app.UseCors("CorsPolicy");
 
         return app;

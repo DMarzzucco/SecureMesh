@@ -2,10 +2,19 @@ syntax = "proto3";
 
 option csharp_namespace = "User";
 
+import "google/protobuf/empty.proto";
+
 service UserServiceGrpc {
-    rpc GetUserByIdForAuth (UserRequest) returns (AuthUserResponse);
-    rpc UpdateRefreshToken (RefreshTokenRequest) returns (AuthUserResponse);
+    rpc GetUserByIdForAuth (UserRequest) returns (ValidationResponse);
+    rpc UpdateRefreshToken (RefreshTokenRequest) returns (ValidationResponse);
     rpc FindByValueForAuth (ValueKeysRequest) returns (ValidationResponse);
+    rpc RegisterUserInAuth (CreateUserRequest) returns (ValidationResponse);
+    rpc MarkEmailVerifyAuth (UserRequest) returns (ValidationResponse);
+    rpc UpdateEmailAdressAuth (NewEmailDTORequest) returns (ValidationResponse);
+    rpc GetUserByEmailForAuth (UserEmailRequest) returns (ValidationResponse);
+    rpc ReturnPasswordForAuth (PasswordDTORequest) returns (ValidationResponse);
+    rpc CancelationOperationAuth (UserRequest) returns (google.protobuf.Empty);
+    rpc DeletedOwnAccountAuth (PasswordDTORequest) returns (MessageResponse);
 }
 
 message ValidationResponse {
@@ -13,6 +22,16 @@ message ValidationResponse {
         AuthUserResponse user = 1;
         ErrorResponse error = 2;
     }
+}
+message MessageResponse {
+    oneof result {
+        string message = 1;
+        ErrorResponse error = 2;
+    }
+}
+
+message UserEmailRequest {
+    string email = 1;
 }
 message RefreshTokenRequest {
     int32 id = 1;
@@ -31,15 +50,32 @@ message ValueKeysRequest{
 message UserRequest {
     int32 id = 1;
 }
+message NewEmailDTORequest {
+    int32 id = 1;
+    string password = 2;
+    string new_email = 3;
+}
+message PasswordDTORequest {
+    int32 id = 1;
+    string password= 2;
+}
+message CreateUserRequest {
+    string full_name = 2;
+    string username = 3;
+    string email = 4;
+    string password = 5;
+    ROLES roles = 6;
+}
 
 message AuthUserResponse {
     int32 id = 1;
     string full_name = 2;
     string username = 3;
     string email = 4;
-    string password = 5;
-    ROLES roles = 6;
-    optional string refresh_token = 7;
+    bool email_verified = 5;
+    string password = 6;
+    ROLES roles = 7;
+    optional string refresh_token = 8;
 }
 
 message ErrorResponse {

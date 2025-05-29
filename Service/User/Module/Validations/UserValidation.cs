@@ -38,7 +38,22 @@ public class UserValidation(IUserRepository repository) : IUserValidation
         if (firstError != default)
             throw firstError.Error;
     }
+    /// <summary>
+    /// Validate Email Duplicate
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    /// <exception cref="ConflictExceptions"></exception>
+    public async Task ValidateEmailDuplicate(string email)
+    {
+        if (string.IsNullOrEmpty(email))
+            throw new BadRequestExceptions("Email is required");
+            
+        var normalizedEmail = email.Trim().ToLowerInvariant();
 
+        if (await this._repository.ExistisByEmail(normalizedEmail))
+            throw new ConflictExceptions("This adress already exists");
+    }
     /// <summary>
     /// Validation Duplicated
     /// </summary>
@@ -66,6 +81,7 @@ public class UserValidation(IUserRepository repository) : IUserValidation
     {
         var validation = new List<(bool isInvalid, Exception Error)>
         {
+            (string.IsNullOrEmpty(password), new BadRequestExceptions("Password is required")),
             (password.Length < 8, new BadRequestExceptions("Password must be at least 8 characters long.")),
             (!password.Any(char.IsDigit), new BadRequestExceptions("Password must contain at least one digit")),
             (!password.Any(char.IsUpper), new BadRequestExceptions("Password must contain at least one upper case letter")),

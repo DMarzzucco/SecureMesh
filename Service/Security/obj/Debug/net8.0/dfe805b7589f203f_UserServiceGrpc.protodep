@@ -1,2 +1,3 @@
 obj\Debug\net8.0\Proto/UserServiceGrpc.cs \
-obj\Debug\net8.0\Proto/UserServiceGrpcGrpc.cs: Proto/UserServiceGrpc.proto
+obj\Debug\net8.0\Proto/UserServiceGrpcGrpc.cs: C:/Users/darma/.nuget/packages/grpc.tools/2.69.0/build/native/include/google/protobuf/empty.proto\
+ Proto/UserServiceGrpc.proto

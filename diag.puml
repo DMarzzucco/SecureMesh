@@ -1,0 +1,81 @@
+@startuml DistributedSystem
+left to right direction
+!theme aws-orange
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam rectangle {
+    StereotypeFontSize 12
+    StereotypeFontColor #888888
+    FontColor white
+    FontSize 14
+}
+
+package "Clientes" {
+  [Client Web] as ClientWeb <<Client>>
+  [Client Mobile] as ClientMobile <<Client>>
+  [Client Desktop] as ClientDesktop <<Client>>
+}
+
+package "API Gateway (Docker)" {
+  [API Gateway] as Gateway <<API>>
+  [User API] as User <<API>>
+  [Security API] as Security <<API>>
+  [Hangfire] as Hangfire <<Jobs>>
+}
+
+package "Workers (Consola)" {
+  [Verificar Correo Worker] as VerifyEmailWorker <<Worker>>
+  [Bienvenida Worker] as WelcomeWorker <<Worker>>
+  [Actualizar Correo Worker] as UpdateEmailWorker <<Worker>>
+  [Recuperar Contraseña Worker] as RecoverPasswordWorker <<Worker>>
+}
+
+package "Infraestructura" {
+  database "PostgreSQL" as SQL <<DB>>
+  database "PostgreSQLHangFire" as SQLHangFire <<DB>>
+  database "Redis (Tokens)" as Redis <<DB>>
+  queue "RabbitMQ" as RabbitMQ <<Queue>>
+}
+
+' Flujo Clientes a API Gateway (REST)
+ClientWeb --> Gateway : REST (HTTPS)
+ClientMobile --> Gateway : REST (HTTPS)
+ClientDesktop --> Gateway : REST (HTTPS)
+
+' Flujo interno API Gateway a Servicios (síncrono)
+Gateway --> Security : REST (HTTPS)
+Gateway --> User : REST (HTTPS)
+
+' Comunicación interna entre APIs (síncrono gRPC)
+Security --> User : gRPC (Register, UpdateRefreshToken, GetUserById, ValidateCredentials, ForgetPassword, UpdateEmail)
+
+' Persistencia
+User --> SQL : Entity Framework (ORM)
+User --> Hangfire : Job
+Hangfire --> SQLHangFire 
+
+' Comunicación asíncrona con colas y tokens
+Security --> RabbitMQ : Publica tareas (validar correo, actualizar, recuperar)
+Security --> Redis : Guarda tokens de un solo uso (TTL)
+
+' Workers consumen mensajes de RabbitMQ
+RabbitMQ --> VerifyEmailWorker : Envía tarea verificación correo
+RabbitMQ --> WelcomeWorker : Envía tarea bienvenida
+RabbitMQ --> UpdateEmailWorker : Envía tarea actualización correo
+RabbitMQ --> RecoverPasswordWorker : Envía tarea recuperación contraseña
+
+' Confirmación de procesamiento (ACK)
+VerifyEmailWorker --> RabbitMQ : Confirma consumo o reenvío
+WelcomeWorker --> RabbitMQ : Confirma consumo o reenvío
+UpdateEmailWorker --> RabbitMQ : Confirma consumo o reenvío
+RecoverPasswordWorker --> RabbitMQ : Confirma consumo o reenvío
+
+VerifyEmailWorker --> Gateway : Valida el token, actualiza su estado de validacion a true y actualiza el token a usado 
+UpdateEmailWorker --> Gateway :  Valida el token, actualiza su estado de validacion a true y actualiza el token a usado
+RecoverPasswordWorker --> Gateway : valida el token, actualiza la contraseña por una nueva y actualiza el token a usado
+
+' Redis consultado para validación (ejemplo)
+Security --> Redis : Consulta tokens para validar
+
+@enduml
