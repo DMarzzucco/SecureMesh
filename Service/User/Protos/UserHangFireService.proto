@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option csharp_namespace = "UserHangFire.Protos";
+
+import "google/protobuf/empty.proto";
+
+service UserHangFireService {
+    rpc CountedDeleted (UserRequest) returns (google.protobuf.Empty);
+}
+
+message UserRequest { 
+    int32 id = 1 ;
+}

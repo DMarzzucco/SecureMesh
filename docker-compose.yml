@@ -75,9 +75,29 @@ services:
       - ./certs/user/aspnetcert.pfx:/https/aspnetcert.pfx
     networks:
       - compose-bridge
-      - db-hangfire-bridge
     depends_on:
       - db
+      
+  #Hangfire Servies
+  hangfire:
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hanguser.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=3434
+      - ASPNETCORE_HTTPS_PORTS=3434
+    container_name: hangfire_server.net
+    image: ${DOCKER_REGISTRY-}hangfire
+    build:
+      context: .
+      dockerfile: Server/HangfireUserServer/Dockerfile
+    ports:
+      - "3434:3434"
+    volumes:
+      - ./certs/hangfire/hanguser.pfx:/https/hanguser.pfx
+    networks:
+      - db-hangfire-bridge
+    depends_on:
       - db_hangfire
 
   # Security Api Container

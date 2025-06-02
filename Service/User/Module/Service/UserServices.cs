@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using User.Module.DTOs;
 using User.Module.Model;
 using User.Module.Repository.Interface;
 using User.Module.Service.Interface;
 using User.Module.Validations.Interface;
+using User.Server.Interfaces;
 using User.Utils.Exceptions;
 
 namespace User.Module.Service
@@ -15,14 +15,14 @@ namespace User.Module.Service
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUserValidation _validation;
-        private readonly IBackgroundJobClient backgroundJobClient;
+        private readonly IHangFireServices hangFireServices;
 
-        public UserServices(IUserRepository repository, IMapper mapper, IUserValidation validation, IBackgroundJobClient backgroundJobClient)
+        public UserServices(IUserRepository repository, IMapper mapper, IUserValidation validation, IHangFireServices hangFireServices)
         {
             this._repository = repository;
             this._mapper = mapper;
             this._validation = validation;
-            this.backgroundJobClient = backgroundJobClient;
+            this.hangFireServices = hangFireServices;
         }
         /// <summary>
         /// Find User By id
@@ -36,25 +36,7 @@ namespace User.Module.Service
                 throw new NotFoundExceptions("User not found");
             return user;
         }
-        /// <summary>
-        /// Counted Deleted
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="NotFoundExceptions"></exception>
-        public async Task CountedDeleted(int id)
-        {
-            var user = await this._repository.FindByIdAsync(id) ??
-                    throw new NotFoundExceptions("User was not found");
-                    
-            if (!user.IsDeleted || user.DeletedAt == null)
-                return;
-                
-            if (DateTime.UtcNow < user.DeletedAt.Value.AddMinutes(10))
-                return;
 
-            await this._repository.DeleteAsync(user);
-        }
         /// <summary>
         /// Get User Profile By Id
         /// </summary>
@@ -325,7 +307,8 @@ namespace User.Module.Service
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password is Wrong");
 
-            var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeleted(user.Id), TimeSpan.FromMinutes(10));
+            // var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeleted(user.Id), TimeSpan.FromMinutes(10));
+            var jobId = this.hangFireServices.ScheduleIdKey(user.Id);
 
             user.IsDeleted = true;
             user.DeletedAt = DateTime.UtcNow;

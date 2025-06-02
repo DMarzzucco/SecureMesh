@@ -1,5 +1,4 @@
-﻿using Hangfire;
-using User.Module.Stubs;
+﻿using User.Module.Stubs;
 
 namespace User.Extensions;
 
@@ -9,11 +8,12 @@ public static class ApplicationBuilderExtensions
     {
         app.UseHttpsRedirection();
         app.UseRouting();
-        app.UseEndpoints(e => {
+        app.UseEndpoints(e =>
+        {
             e.MapGrpcService<UserServiceGrpcImpl>();
+            e.MapGrpcService<UserHangFireServicesImpl>();
         });
         app.UseStaticFiles();
-        app.UseHangfireDashboard();
         app.UseCors("CorsPolicy");
 
         return app;

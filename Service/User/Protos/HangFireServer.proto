@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "HangfireUserServer.Protos";
+
+service HangFireServicesGrpc {
+  rpc ScheduleDeletion (ScheduleRequest) returns (ScheduleResponse);
+  rpc CancelScheduledJob (CancelRequest) returns (CancelResponse);
+}
+
+message ScheduleRequest {
+  int32 userId = 1;
+}
+
+message ScheduleResponse {
+  string jobId = 1;
+}
+
+message CancelRequest {
+  string jobId = 1;
+}
+
+message CancelResponse {
+  bool success = 1;
+}

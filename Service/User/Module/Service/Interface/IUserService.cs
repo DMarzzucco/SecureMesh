@@ -5,7 +5,6 @@ namespace User.Module.Service.Interface
 {
     public interface IUserService
     {
-        Task CountedDeleted(int id);
         Task<UserDTO> GetUserProfileById(int id);
         Task<UserModel> GetUserByEmail(string email);
         Task<UserModel> RegisterUser(CreateUserDTO body);

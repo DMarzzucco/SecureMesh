@@ -38,10 +38,12 @@ namespace Security.Module.Controller
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDTO body)
         {
-            var user = HttpContext.Items["User"] as UserModel;
-            var newToken = await this._service.GenerateToken(user);
+            var user = HttpContext.Items["User"] as UserModel ??
+                throw new ArgumentNullException();
+                
+            var response = await this._service.GenerateToken(user);
 
-            return StatusCode(StatusCodes.Status200OK, new { token = newToken });
+            return StatusCode(StatusCodes.Status200OK, new { message = response });
         }
         /// <summary>
         /// Get User Profile 

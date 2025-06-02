@@ -1,9 +1,8 @@
+using System;
 using Hangfire;
 using Hangfire.PostgreSql;
-using Microsoft.EntityFrameworkCore;
-using User.Configuration.DbConfiguration.Helper;
 
-namespace User.Configuration;
+namespace HangfireUserServer.Configurations;
 
 public static class HangfireService
 {
@@ -15,13 +14,8 @@ public static class HangfireService
         if (string.IsNullOrEmpty(connectionHangfireString))
             throw new ArgumentNullException(nameof(connectionHangfireString), "Connection String cannot be null or empty");
 
-        using (var serviceProvider = service.BuildServiceProvider())
-        {
-            var logger = serviceProvider.GetRequiredService<ILogger<object>>();
+        //apply wait for it     
 
-            WaitForIt.WaitForDatabaseAsync(connectionHangfireString, logger).GetAwaiter().GetResult();
-        }
-        
         service.AddHangfire(conf => conf
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()

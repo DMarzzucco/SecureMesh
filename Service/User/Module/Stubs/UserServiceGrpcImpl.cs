@@ -1,11 +1,11 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Hangfire;
 using User.Module.DTOs;
 using User.Module.Repository.Interface;
 using User.Module.Service.Interface;
 using User.Module.Stubs.Handlers;
 using User.Module.Stubs.Maps;
+using User.Server.Interfaces;
 using User.Utils.Exceptions;
 namespace User.Module.Stubs
 {
@@ -15,15 +15,15 @@ namespace User.Module.Stubs
         private readonly IUserRepository _repository;
         private readonly MapResponseGrpc _mapper;
         private readonly HandlerGrpcExceptions _handlerGrpcExceptions;
-        private readonly IBackgroundJobClient backgroundJobClient;
+        private readonly IHangFireServices hangFireServices;
 
-        public UserServiceGrpcImpl(IUserService service, IUserRepository repository, MapResponseGrpc mapper, HandlerGrpcExceptions handlerGrpcExceptions, IBackgroundJobClient backgroundJobClient)
+        public UserServiceGrpcImpl(IUserService service, IUserRepository repository, MapResponseGrpc mapper, HandlerGrpcExceptions handlerGrpcExceptions, IHangFireServices hangFireServices)
         {
             this._service = service;
             this._repository = repository;
             this._mapper = mapper;
             this._handlerGrpcExceptions = handlerGrpcExceptions;
-            this.backgroundJobClient = backgroundJobClient;
+            this.hangFireServices = hangFireServices;
         }
 
         /// <summary>
@@ -44,7 +44,8 @@ namespace User.Module.Stubs
             user.IsDeleted = false;
             user.DeletedAt = null;
 
-            this.backgroundJobClient.Delete(user.ScheduledDeletionJobId);
+            // this.backgroundJobClient.Delete(user.ScheduledDeletionJobId);
+            this.hangFireServices.DeletedScheduledJob(user.ScheduledDeletionJobId);
 
             user.ScheduledDeletionJobId = null;
 
