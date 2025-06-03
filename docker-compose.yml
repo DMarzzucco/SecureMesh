@@ -31,30 +31,96 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - db-hangfire-bridge
-
-  # Api Gateway Container
-  securemesh:
+  #Redis
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - redis_network
+  #RabbitMQ Container
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     environment:
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/gate.pfx
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - rabbit_network
+
+  #Worker 1 Verification Email
+  worker1:
+    container_name: worker1_verification_email
+    image: ${DOCKER_REGISTRY}worker1
+    build: 
+      context: .
+      dockerfile: Workers/EmailVerificationWorker/Dockerfile
+    networks:
+      - rabbit_network
+    depends_on:
+      - rabbitmq
+  # Worker 2 Welcome Message   
+  worker2:
+    container_name: worker2_welcome_message
+    image: ${DOCKER_REGISTRY}worker2
+    build: 
+      context: .
+      dockerfile: Workers/WelcomeMessageWorker/Dockerfile
+    networks:
+      - rabbit_network
+    depends_on:
+      - rabbitmq
+  # Worker 3 Account Recuperation   
+  worker3:
+    container_name: worker3_account_recuperation
+    image: ${DOCKER_REGISTRY}worker3
+    build: 
+      context: .
+      dockerfile: Workers/PasswordRecuperation/Dockerfile
+    networks:
+      - rabbit_network
+    depends_on:
+      - rabbitmq
+  worker4:
+    container_name: worker4_verification_new_email
+    image: ${DOCKER_REGISTRY}worker4
+    build: 
+      context: .
+      dockerfile: Workers/NewEmailVerificationWorker/Dockerfile
+    networks:
+      - rabbit_network
+    depends_on:
+      - rabbitmq
+
+  #Hangfire Servies
+  hangfire:
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hanguser.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8888
-      - ASPNETCORE_HTTPS_PORTS=8888
-    container_name: gate.net
-    image: ${DOCKER_REGISTRY-}securemesh
+      - ASPNETCORE_HTTP_PORTS=3434
+      - ASPNETCORE_HTTPS_PORTS=3434
+    container_name: hangfire_server.net
+    image: ${DOCKER_REGISTRY-}hangfire
     build:
       context: .
-      dockerfile: SecureMesh/Dockerfile
+      dockerfile: Server/HangfireUserServer/Dockerfile
     ports:
-      - "8888:8888"
-    depends_on:
-      - auth
+      - "3434:3434"
     volumes:
-      - ./certs/gateway/gate.pfx:/https/gate.pfx
-      - ./scripts/wait-for-it.sh:/wait-for-it.sh
-    entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh auth:5090 -- dotnet SecureMesh.dll" ]
+      - ./certs/hangfire/hanguser.pfx:/https/hanguser.pfx
     networks:
-      - compose-bridge
+      - db-hangfire-bridge
+    depends_on:
+      - db_hangfire
 
   #User Api Container
   user:
@@ -78,28 +144,6 @@ services:
     depends_on:
       - db
       
-  #Hangfire Servies
-  hangfire:
-    environment:
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hanguser.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=3434
-      - ASPNETCORE_HTTPS_PORTS=3434
-    container_name: hangfire_server.net
-    image: ${DOCKER_REGISTRY-}hangfire
-    build:
-      context: .
-      dockerfile: Server/HangfireUserServer/Dockerfile
-    ports:
-      - "3434:3434"
-    volumes:
-      - ./certs/hangfire/hanguser.pfx:/https/hanguser.pfx
-    networks:
-      - db-hangfire-bridge
-    depends_on:
-      - db_hangfire
-
   # Security Api Container
   auth:
     environment:
@@ -127,30 +171,30 @@ services:
       - compose-bridge
       - rabbit_network
       - redis_network
-  #Redis
-  redis:
-    image: redis:latest
-    container_name: redis_container
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - redis_network
-  #RabbitMQ Container
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+
+  # Api Gateway Container
+  securemesh:
     environment:
-      RABBITMQ_DEFAULT_USER: user
-      RABBITMQ_DEFAULT_PASS: password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/gate.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8888
+      - ASPNETCORE_HTTPS_PORTS=8888
+    container_name: gate.net
+    image: ${DOCKER_REGISTRY-}securemesh
+    build:
+      context: .
+      dockerfile: SecureMesh/Dockerfile
+    ports:
+      - "8888:8888"
+    depends_on:
+      - auth
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - ./certs/gateway/gate.pfx:/https/gate.pfx
+      - ./scripts/wait-for-it.sh:/wait-for-it.sh
+    entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh auth:5090 -- dotnet SecureMesh.dll" ]
     networks:
-      - rabbit_network
+      - compose-bridge
 
 volumes:
   redis_data:

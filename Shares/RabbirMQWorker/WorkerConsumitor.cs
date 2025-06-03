@@ -20,7 +20,8 @@ public class WorkerConsumitor<T>
 
         _factory = new ConnectionFactory
         {
-            HostName = "localhost",
+            // HostName = "localhost",
+            HostName = "rabbitmq",
             UserName = "user",
             Password = "password",
             Port = 5672
@@ -56,6 +57,7 @@ public class WorkerConsumitor<T>
         await channel.BasicConsumeAsync(queue: this._queueNames, autoAck: false, consumer: consumer);
 
         Console.WriteLine($"Escuchando la cola '{this._queueNames}. Presino [Enter] para salir...");
-        Console.ReadLine();
+        // Console.ReadLine();
+        await Task.Delay(Timeout.Infinite);
     }
 }

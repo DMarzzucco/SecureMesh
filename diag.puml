@@ -17,25 +17,24 @@ package "Clientes" {
   [Client Desktop] as ClientDesktop <<Client>>
 }
 
-package "API Gateway (Docker)" {
+package "Kubernetes" {
+  package "Workers (Consola)" {
+    [Verificar Correo Worker] as VerifyEmailWorker <<Worker>>
+    [Bienvenida Worker] as WelcomeWorker <<Worker>>
+    [Actualizar Correo Worker] as UpdateEmailWorker <<Worker>>
+    [Recuperar Contraseña Worker] as RecoverPasswordWorker <<Worker>>
+  }
+  
   [API Gateway] as Gateway <<API>>
   [User API] as User <<API>>
   [Security API] as Security <<API>>
   [Hangfire] as Hangfire <<Jobs>>
-}
-
-package "Workers (Consola)" {
-  [Verificar Correo Worker] as VerifyEmailWorker <<Worker>>
-  [Bienvenida Worker] as WelcomeWorker <<Worker>>
-  [Actualizar Correo Worker] as UpdateEmailWorker <<Worker>>
-  [Recuperar Contraseña Worker] as RecoverPasswordWorker <<Worker>>
-}
-
-package "Infraestructura" {
+  
   database "PostgreSQL" as SQL <<DB>>
   database "PostgreSQLHangFire" as SQLHangFire <<DB>>
   database "Redis (Tokens)" as Redis <<DB>>
   queue "RabbitMQ" as RabbitMQ <<Queue>>
+  
 }
 
 ' Flujo Clientes a API Gateway (REST)
@@ -52,7 +51,8 @@ Security --> User : gRPC (Register, UpdateRefreshToken, GetUserById, ValidateCre
 
 ' Persistencia
 User --> SQL : Entity Framework (ORM)
-User --> Hangfire : Job
+User --> Hangfire : gRPC
+Hangfire --> User : gRPC
 Hangfire --> SQLHangFire 
 
 ' Comunicación asíncrona con colas y tokens
