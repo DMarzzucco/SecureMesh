@@ -98,5 +98,11 @@ namespace User.Module.Controller
             await this._service.RemoveUserRegister(id);
             return NoContent();
         }
+
+        // [HttpPut("remove/{id}")]
+        // public async Task<ActionResult<string>> RemoveUser(int id, PasswordDTO dt)
+        // {
+        //     return Ok(await this._service.RemoveUserRegisterForBasicRoles(id, dt));
+        // }
     }
 }

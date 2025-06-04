@@ -1,4 +1,4 @@
-.PHONY: infra workers systems clean purge all logs status rebuild
+.PHONY: infra workers infra-w systems system_wg clean purge all logs status rebuild
 
 # stand up all infrstructure (Rabbitmq and Database)
 infra:
@@ -6,10 +6,19 @@ infra:
 
 # stand up workers
 workers:
-	docker-compose up worker1 worker2 worker3 worker4 --build
+	docker-compose up worker1 worker2 worker3 worker4 
+
+# stand up infrastructure and workers
+infra-w:
+	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 
+
 #stand up all APIs
 systems:
 	docker-compose up user auth hangfire
+
+#stand up system without gateway
+system_wg:
+	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 
 
 # clean all volumes
 clean:
@@ -19,7 +28,7 @@ clean:
 purge:
 	docker builder prune -a -f
 
-all: infra workers systems
+all: infra workers infra-w systems system_wg
 
 # Get All Servers Logs
 logs:

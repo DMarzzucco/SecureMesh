@@ -63,6 +63,7 @@ services:
     build: 
       context: .
       dockerfile: Workers/EmailVerificationWorker/Dockerfile
+    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet EmailVerificationWorker.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -74,6 +75,7 @@ services:
     build: 
       context: .
       dockerfile: Workers/WelcomeMessageWorker/Dockerfile
+    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet WelcomeMessageWorker.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -85,6 +87,7 @@ services:
     build: 
       context: .
       dockerfile: Workers/PasswordRecuperation/Dockerfile
+    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet PasswordRecuperation.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -95,6 +98,7 @@ services:
     build: 
       context: .
       dockerfile: Workers/NewEmailVerificationWorker/Dockerfile
+    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet NewEmailVerificationWorke.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -119,6 +123,7 @@ services:
       - ./certs/hangfire/hanguser.pfx:/https/hanguser.pfx
     networks:
       - db-hangfire-bridge
+      - compose-bridge
     depends_on:
       - db_hangfire
 
@@ -141,6 +146,7 @@ services:
       - ./certs/user/aspnetcert.pfx:/https/aspnetcert.pfx
     networks:
       - compose-bridge
+      - db-hangfire-bridge
     depends_on:
       - db
       

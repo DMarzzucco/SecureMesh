@@ -1,0 +1,42 @@
+@startuml CleanArchitectureDiagram
+left to right direction
+
+
+package "Security API (Clean Architecture)" {
+
+  rectangle "Entidades\n(Dominio)" as Domain #DDFFDD {
+    [User] 
+    [Token]
+    [CorreoElectronico]
+  }
+
+  rectangle "Casos de Uso\n(Application)" as UseCases #FFFFDD {
+    [RegistrarUsuario]
+    [IniciarSesion]
+    [ValidarCredenciales]
+    [ActualizarCorreo]
+    [RecuperarContraseña]
+  }
+
+  rectangle "Interfaces\n(Puertos)" as Interfaces #FFDDDD {
+    [IUserRepository]
+    [ITokenService]
+    [INotificationService]
+  }
+
+  rectangle "Adaptadores / Infraestructura" as Infra #FFCCCC {
+    [EFUserRepository <<EntityFramework>>]
+    [RedisTokenService <<Redis>>]
+    [RabbitMQNotificationService <<RabbitMQ>>]
+    [SecurityController <<HTTP>>]
+  }
+
+  ' Dependencias
+  Domain --> UseCases
+  UseCases --> Interfaces
+  Interfaces <.. Infra
+  Infra --> Interfaces : Implementa
+  Infra --> UseCases : Invoca
+}
+
+@enduml
