@@ -45,17 +45,7 @@ namespace Security.Module.Controller
 
             return StatusCode(StatusCodes.Status200OK, new { message = response });
         }
-        /// <summary>
-        /// Get User Profile 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("profile")]
-        public async Task<ActionResult<UserModel>> GetProfile()
-        {
-            var user = await this._service.GetProfile();
-            return Ok(user);
-        }
-
+        
         /// <summary>
         /// Close Section
         /// </summary>
