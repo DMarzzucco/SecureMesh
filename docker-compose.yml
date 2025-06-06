@@ -61,20 +61,21 @@ services:
     container_name: worker1_verification_email
     image: ${DOCKER_REGISTRY}worker1
     build: 
-      context: .
-      dockerfile: Workers/EmailVerificationWorker/Dockerfile
+      context: ./Workers/verification_email
+      dockerfile: Dockerfile
     # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet EmailVerificationWorker.dll" ]
     networks:
       - rabbit_network
     depends_on:
       - rabbitmq
+
   # Worker 2 Welcome Message   
   worker2:
     container_name: worker2_welcome_message
     image: ${DOCKER_REGISTRY}worker2
     build: 
-      context: .
-      dockerfile: Workers/WelcomeMessageWorker/Dockerfile
+      context: ./Workers/welcome_message
+      dockerfile: Dockerfile
     # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet WelcomeMessageWorker.dll" ]
     networks:
       - rabbit_network
@@ -85,8 +86,8 @@ services:
     container_name: worker3_account_recuperation
     image: ${DOCKER_REGISTRY}worker3
     build: 
-      context: .
-      dockerfile: Workers/PasswordRecuperation/Dockerfile
+      context: ./Workers/password_recuperation
+      dockerfile: Dockerfile
     # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet PasswordRecuperation.dll" ]
     networks:
       - rabbit_network
