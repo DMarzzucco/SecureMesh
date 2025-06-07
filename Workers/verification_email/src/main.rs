@@ -25,7 +25,7 @@ async fn main() {
 
     channel
         .queue_declare(
-            "woker_1",
+            "email_verification_queue",
             QueueDeclareOptions::default(),
             FieldTable::default(),
         )

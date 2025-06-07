@@ -25,7 +25,7 @@ async fn main() {
 
     channel
         .queue_declare(
-            "woker_3",
+            "password_recuperation",
             QueueDeclareOptions::default(),
             FieldTable::default(),
         )

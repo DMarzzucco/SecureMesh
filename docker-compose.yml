@@ -93,12 +93,13 @@ services:
       - rabbit_network
     depends_on:
       - rabbitmq
+  # Worker 4 Account Recuperation  
   worker4:
     container_name: worker4_verification_new_email
     image: ${DOCKER_REGISTRY}worker4
     build: 
-      context: .
-      dockerfile: Workers/NewEmailVerificationWorker/Dockerfile
+      context: ./Workers/verification_new_email
+      dockerfile: Dockerfile
     # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet NewEmailVerificationWorke.dll" ]
     networks:
       - rabbit_network
