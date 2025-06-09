@@ -16,7 +16,7 @@ public static class UserRouter
         {
             RouteId = "update_roles_route",
             ClusterId = "user_cluster",
-            RateLimiterPolicy = Policies.RateLimiterPolicy,
+            RateLimiterPolicy = Policies.BasicLimiterPolicy,
             AuthorizationPolicy = Policies.AdminPolicy,
             Match = new RouteMatch { Path = "/api/User/{id}/rm0x1" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
@@ -28,7 +28,7 @@ public static class UserRouter
         {
             RouteId = "all_register_route",
             ClusterId = "user_cluster",
-            RateLimiterPolicy = Policies.RateLimiterPolicy,
+            RateLimiterPolicy = Policies.BasicLimiterPolicy,
             AuthorizationPolicy = Policies.CreatorPolicy,
             Match = new RouteMatch { Path = "/api/User/list" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
@@ -39,7 +39,7 @@ public static class UserRouter
         {
             RouteId = "update_register_route",
             ClusterId = "user_cluster",
-            RateLimiterPolicy = Policies.RateLimiterPolicy,
+            RateLimiterPolicy = Policies.BasicLimiterPolicy,
             AuthorizationPolicy = Policies.CreatorPolicy,
             Match = new RouteMatch { Path = "/api/User/{id}/e90u" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
@@ -50,9 +50,20 @@ public static class UserRouter
         {
             RouteId = "delete_register_route",
             ClusterId = "user_cluster",
-            RateLimiterPolicy = Policies.RateLimiterPolicy,
+            RateLimiterPolicy = Policies.BasicLimiterPolicy,
             AuthorizationPolicy = Policies.CreatorPolicy,
             Match = new RouteMatch { Path = "/api/User/{id}/r37d" },
+            Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
+        },
+
+        //Update Credentials (ROLES:BASIC)
+        new RouteConfig
+        {
+            RouteId = "update_own_credentials",
+            ClusterId = "user_cluster",
+            RateLimiterPolicy = Policies.UpdateCredentials,
+            AuthorizationPolicy = Policies.BasicPolicy,
+            Match = new RouteMatch { Path = "/api/User/{id}" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
         },
 
@@ -62,7 +73,7 @@ public static class UserRouter
         {
             RouteId = "user_route",
             ClusterId = "user_cluster",
-            RateLimiterPolicy = Policies.RateLimiterPolicy,
+            RateLimiterPolicy = Policies.BasicLimiterPolicy,
             AuthorizationPolicy = Policies.BasicPolicy,
             Match = new RouteMatch { Path = "/api/User/{**catch-all}" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }

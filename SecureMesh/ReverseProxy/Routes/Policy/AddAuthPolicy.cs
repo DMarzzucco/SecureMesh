@@ -10,7 +10,10 @@ public static class AddAuthPolicy
         public const string BasicPolicy = "BasicPolicy";
         public const string AdminPolicy = "AdminPolicy";
         public const string CreatorPolicy = "CreatorPolicy";
-        public const string RateLimiterPolicy = "rt-sl";
+        public const string BasicLimiterPolicy = "rt-sl";
+        public const string PasswordUpdateLimit = "password-update";
+        public const string UpdateCredentials = "update-credentials";
+        public const string WorkerLimiting = "workers-limit";
     }
 }
 
