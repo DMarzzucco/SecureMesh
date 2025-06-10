@@ -6,5 +6,6 @@ namespace Security.Cookies.Interfaces
     {
         void ClearTokenCookies(HttpResponse response);
         void SetTokenCookies(HttpResponse response, TokenPair tokens);
+        void SetCRSFToken(HttpResponse response, string name, string value);
     }
 }

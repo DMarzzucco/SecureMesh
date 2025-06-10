@@ -27,6 +27,21 @@ namespace Security.Cookies
             SetCookie(response, "RefreshToken", tokens.RefreshToken, DateTime.UtcNow.AddDays(5));
         }
         /// <summary>
+        /// SetCRSFToken
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void SetCRSFToken(HttpResponse response, string name, string value)
+        {
+            response.Cookies.Append(name, value, new CookieOptions
+            {
+                HttpOnly = false,
+                Secure = true,
+                SameSite = SameSiteMode.Strict
+            });
+        }
+        /// <summary>
         /// Cookie Template Configuration
         /// </summary>
         private static void SetCookie(

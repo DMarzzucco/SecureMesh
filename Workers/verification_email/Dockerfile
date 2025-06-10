@@ -1,31 +1,33 @@
-# Usa la imagen oficial de Rust como base
+# Etapa 1: builder
 FROM rust:latest as builder
 
+# Añadimos target musl para compilación estática
 RUN rustup target add x86_64-unknown-linux-musl
-RUN apt-get update && apt-get install -y musl-tools
 
-# Establece el directorio de trabajo
+# Instalamos musl-tools para compilación
+RUN apt-get update && apt-get install -y musl-tools && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Copia solo Cargo.toml primero (sin el lock)
+# Copiamos solo Cargo.toml y creamos dummy main.rs para cachear deps
 COPY Cargo.toml .
 RUN mkdir src && echo "fn main() {}" > src/main.rs
+
+# Construimos dummy para cache de deps
 RUN cargo build --release --target x86_64-unknown-linux-musl || true
 
-# Ahora copiá el resto del código (incluye el verdadero src)
+# Copiamos todo el código real
 COPY . .
 
-# Compila tu aplicación en modo release
+# Build real del binario estático
 RUN cargo build --release --target x86_64-unknown-linux-musl
 
-# Segunda etapa: crea una imagen más ligera para correr la app
+# Etapa 2: imagen final, pequeña y limpia
 FROM alpine:latest
 
-# Instala las dependencias necesarias para ejecutar tu binario
 RUN apk add --no-cache ca-certificates
 
-# Copia el binario compilado desde la etapa anterior
+# Copiamos el binario compilado desde builder
 COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/verification_email /usr/local/bin/verification_email
 
-# Define el comando por defecto
 CMD ["verification_email"]

@@ -76,14 +76,35 @@ namespace Security.Module.Services
         /// <exception cref="UnauthorizedAccessException"></exception>
         public async Task<string> GenerateToken(UserModel body)
         {
-            var httpContext = this._context.HttpContext ?? throw new UnauthorizedAccessException("Http Context is null");
+            var httpContext = this._context.HttpContext ??
+                throw new UnauthorizedAccessException("Http Context is null");
 
             var token = this._jwtService.GenerateToken(body);
             await this._userService.UpdateRefreshToken(body.Id, token.RefreshHasherToken);
+
+            var csrfToken = Guid.NewGuid().ToString("N");
+            var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
+            DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
+            // await this._userService.UpdateCsrfToken(body.Id, csrfTokenHashed, csrfTokenExpiration);
+
             this._cookieService.SetTokenCookies(httpContext.Response, token);
+            this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
 
             return $"Welcome {body.FullName}";
         }
+        ///ADD en UserModel {string CsrfToken & DateTime CsrftTokenExpiresAT }
+        /// public async Task UpdateCsrfToken (int id, string token, DateTime expiration)
+        /// {
+        ///     var user = await this._repository.FindById (id) ??
+        ///         throw new NotFoundException("User Not found");
+        /// 
+        ///     user.CsrfToken = token;
+        ///     user.CsrfTokenExpiration = expiration;
+        /// 
+        ///     await this._repository.UpdateAsync (user);
+        /// }
+
+
         /// <summary>
         /// Get Profile
         /// </summary>
@@ -247,6 +268,10 @@ namespace Security.Module.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<UserModel> ValidateUser(LoginDTO body)
         {
+            var httpContext = this._context.HttpContext ??
+                throw new UnauthorizedAccessException("Http Context is null");
+            var csrfFromHeader = httpContext.Request.Headers["X-XSRF-TOKEN"];
+
             var user = await this._userService.FindByValue("Username", body.Username) ??
                 throw new KeyNotFoundException("This Username is wrong or not was registered");
 
@@ -259,8 +284,22 @@ namespace Security.Module.Services
 
             if (!user.EmailVerified)
                 throw new ForbiddenExceptions("You need check your email to login");
-                
-             await this._userService.CancelationOperation(user.Id);
+
+            // if (user.CsrfToken == null || user.CsrfTokenExpiration < DateTime.UtcNow)
+            // {
+            //     var csrfToken = Guid.NewGuid().ToString("N");
+            //     var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
+            //     DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
+            //     await this._userService.UpdateCsrfToken(body.Id, csrfTokenHashed, csrfTokenExpiration);
+            //     this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
+            // }
+            // else
+            // {
+            //     if (string.IsNullOrEmpty(csrfFromHeader) || !BCrypt.Net.BCrypt.Verify(csrfFromHeader, user.CsrfToken))
+            //         throw new ForbiddenExceptions("Token CSRF is required or invalid");
+            // }
+
+            await this._userService.CancelationOperation(user.Id);
 
             return user;
         }
