@@ -46,7 +46,7 @@ namespace SecureMesh.ReverseProxy
                 // basic rate limiting policy
                 options.AddFixedWindowLimiter("rt-sl", op =>
                 {
-                    op.PermitLimit = 1;
+                    op.PermitLimit = 2;
                     op.Window = TimeSpan.FromMinutes(6);
                     //op.QueueLimit = 1;
                     //op.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;

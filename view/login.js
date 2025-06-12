@@ -1,36 +1,42 @@
 const form = document.getElementById('loginForm');
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault(); // Evita que se recargue la página
+function getCookie(name) {
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [key, value] = cookie.trim().split('=');
+    if (key === name) {
+      return decodeURIComponent(value);
+    }
+  }
+  return null;
+}
 
-      const username = form.username.value;
-      const password = form.password.value;
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-      try {
-        const response = await fetch('https://localhost:5090/api/Security/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password })
-        });
+  const username = form.username.value;
+  const password = form.password.value;
 
-        if (!response.ok) {
-          // Si el servidor responde con un error HTTP (ej: 401)
-          throw new Error('Error en la autenticación');
-        }
+  const csrfToken = getCookie('XSRF-TOKEN'); 
 
-        const data = await response.json();
-        console.log('Respuesta del servidor:', data);
-
-        // Aquí podés hacer algo con la respuesta, ej:
-        alert('Login exitoso');
-
-        // Por ejemplo, redireccionar a otra página:
-        // window.location.href = '/dashboard';
-
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error al iniciar sesión: ' + error.message);
-      }
+  try {
+    const response = await fetch('https://localhost:8888/api/Security/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-XSRF-TOKEN': csrfToken 
+      },
+      credentials: 'include', 
+      body: JSON.stringify({ username, password })
     });
+
+    if (!response.ok) throw new Error(response.Error.message);
+
+    const data = await response.json();
+    console.log('Server response:', data);
+    alert(response.value.message);
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error tp start server: ' + error.message);
+  }
+});

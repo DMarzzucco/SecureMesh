@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
 using Security.Server.Helper;
 using Security.Server.Maps;
 using Security.Server.Model;
@@ -19,6 +20,23 @@ namespace Security.Server.Service
             this._requestMapperUserGrpc = requestMapperUserGrpc;
         }
 
+        /// <summary>
+        /// UpdateCsrfToken
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="csrfToken"></param>
+        /// <param name="csrfTokenExpiration"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task UpdateCsrfToken(int id, string csrfToken, DateTime csrfTokenExpiration)
+        {
+            var request = new CsrfTokenRequest { Id = id, CsrfToken = csrfToken, CsrfTokenExpiration = csrfTokenExpiration.ToTimestamp() };
+            try
+            {
+                await this._client.UpdateCsrfTokenAuthAsync(request);
+            }
+            catch (Exception ex) { throw new Exception($"{ex.Message}"); }
+        }
         /// <summary>
         /// Deleted own account 
         /// </summary>

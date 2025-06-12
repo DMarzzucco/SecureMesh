@@ -30,6 +30,12 @@ namespace User.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CsrfToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CsrfTokenExpiration")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 

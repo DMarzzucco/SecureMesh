@@ -27,6 +27,26 @@ namespace User.Module.Stubs
         }
 
         /// <summary>
+        /// Update Csrf Token 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        /// <exception cref="RpcException"></exception>
+        public override async Task<Empty> UpdateCsrfTokenAuth(CsrfTokenRequest request, ServerCallContext context)
+        {
+            var user = await this._repository.FindByIdAsync(request.Id) ??
+                throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
+
+            user.CsrfToken = request.CsrfToken;
+            user.CsrfTokenExpiration = request.CsrfTokenExpiration.ToDateTime();
+
+            await this._repository.UpdateAsync(user);
+
+            return new Empty();
+        }
+
+        /// <summary>
         /// Cancelation Operation
         /// </summary>
         /// <param name="request"></param>

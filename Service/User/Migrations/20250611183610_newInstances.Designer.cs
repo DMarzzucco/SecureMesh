@@ -12,8 +12,8 @@ using User.Context;
 namespace User.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250528182008_NewInstance")]
-    partial class NewInstance
+    [Migration("20250611183610_newInstances")]
+    partial class newInstances
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,12 @@ namespace User.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CsrfToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CsrfTokenExpiration")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");

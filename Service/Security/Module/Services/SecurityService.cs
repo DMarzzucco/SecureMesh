@@ -85,26 +85,13 @@ namespace Security.Module.Services
             var csrfToken = Guid.NewGuid().ToString("N");
             var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
             DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
-            // await this._userService.UpdateCsrfToken(body.Id, csrfTokenHashed, csrfTokenExpiration);
+            await this._userService.UpdateCsrfToken(body.Id, csrfTokenHashed, csrfTokenExpiration);
 
             this._cookieService.SetTokenCookies(httpContext.Response, token);
             this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
 
             return $"Welcome {body.FullName}";
         }
-        ///ADD en UserModel {string CsrfToken & DateTime CsrftTokenExpiresAT }
-        /// public async Task UpdateCsrfToken (int id, string token, DateTime expiration)
-        /// {
-        ///     var user = await this._repository.FindById (id) ??
-        ///         throw new NotFoundException("User Not found");
-        /// 
-        ///     user.CsrfToken = token;
-        ///     user.CsrfTokenExpiration = expiration;
-        /// 
-        ///     await this._repository.UpdateAsync (user);
-        /// }
-
-
         /// <summary>
         /// Get Profile
         /// </summary>
@@ -285,19 +272,20 @@ namespace Security.Module.Services
             if (!user.EmailVerified)
                 throw new ForbiddenExceptions("You need check your email to login");
 
-            // if (user.CsrfToken == null || user.CsrfTokenExpiration < DateTime.UtcNow)
-            // {
-            //     var csrfToken = Guid.NewGuid().ToString("N");
-            //     var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
-            //     DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
-            //     await this._userService.UpdateCsrfToken(body.Id, csrfTokenHashed, csrfTokenExpiration);
-            //     this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
-            // }
-            // else
-            // {
-            //     if (string.IsNullOrEmpty(csrfFromHeader) || !BCrypt.Net.BCrypt.Verify(csrfFromHeader, user.CsrfToken))
-            //         throw new ForbiddenExceptions("Token CSRF is required or invalid");
-            // }
+            if (user.CsrfToken == null || user.CsrfTokenExpiration < DateTime.UtcNow)
+            {
+                var csrfToken = Guid.NewGuid().ToString("N");
+                var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
+                DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
+                
+                await this._userService.UpdateCsrfToken(user.Id, csrfTokenHashed, csrfTokenExpiration);
+                this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(csrfFromHeader) || !BCrypt.Net.BCrypt.Verify(csrfFromHeader, user.CsrfToken))
+                    throw new ForbiddenExceptions("Unauthorized request.");
+            }
 
             await this._userService.CancelationOperation(user.Id);
 

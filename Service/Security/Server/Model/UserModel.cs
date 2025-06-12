@@ -81,6 +81,12 @@ namespace Security.Server.Model
         [SwaggerSchema("User roles")]
         [SwaggerSchemaExample("ADMIN")]
         public required ROLES Roles { get; set; }
+        
+        [SwaggerIgnore]
+        public string? CsrfToken { get; set; }
+
+        [SwaggerIgnore]
+        public DateTime? CsrfTokenExpiration { get; set; } = null;
 
         [SwaggerIgnore]
         public string? RefreshToken { get; set; }

@@ -25,46 +25,54 @@ namespace User {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChtQcm90by9Vc2VyU2VydmljZUdycGMucHJvdG8aG2dvb2dsZS9wcm90b2J1",
-            "Zi9lbXB0eS5wcm90byJiChJWYWxpZGF0aW9uUmVzcG9uc2USIQoEdXNlchgB",
-            "IAEoCzIRLkF1dGhVc2VyUmVzcG9uc2VIABIfCgVlcnJvchgCIAEoCzIOLkVy",
-            "cm9yUmVzcG9uc2VIAEIICgZyZXN1bHQiTwoPTWVzc2FnZVJlc3BvbnNlEhEK",
-            "B21lc3NhZ2UYASABKAlIABIfCgVlcnJvchgCIAEoCzIOLkVycm9yUmVzcG9u",
-            "c2VIAEIICgZyZXN1bHQiIQoQVXNlckVtYWlsUmVxdWVzdBINCgVlbWFpbBgB",
-            "IAEoCSJPChNSZWZyZXNoVG9rZW5SZXF1ZXN0EgoKAmlkGAEgASgFEhoKDXJl",
-            "ZnJlc2hfdG9rZW4YAiABKAlIAIgBAUIQCg5fcmVmcmVzaF90b2tlbiJrChBW",
-            "YWx1ZUtleXNSZXF1ZXN0EgsKA2tleRgBIAEoCRIWCgxzdHJpbmdfdmFsdWUY",
-            "AiABKAlIABITCglpbnRfdmFsdWUYAyABKAVIABIUCgpib29sX3ZhbHVlGAQg",
-            "ASgISABCBwoFdmFsdWUiGQoLVXNlclJlcXVlc3QSCgoCaWQYASABKAUiRQoS",
-            "TmV3RW1haWxEVE9SZXF1ZXN0EgoKAmlkGAEgASgFEhAKCHBhc3N3b3JkGAIg",
-            "ASgJEhEKCW5ld19lbWFpbBgDIAEoCSIyChJQYXNzd29yZERUT1JlcXVlc3QS",
-            "CgoCaWQYASABKAUSEAoIcGFzc3dvcmQYAiABKAkicAoRQ3JlYXRlVXNlclJl",
-            "cXVlc3QSEQoJZnVsbF9uYW1lGAIgASgJEhAKCHVzZXJuYW1lGAMgASgJEg0K",
-            "BWVtYWlsGAQgASgJEhAKCHBhc3N3b3JkGAUgASgJEhUKBXJvbGVzGAYgASgO",
-            "MgYuUk9MRVMiwQEKEEF1dGhVc2VyUmVzcG9uc2USCgoCaWQYASABKAUSEQoJ",
-            "ZnVsbF9uYW1lGAIgASgJEhAKCHVzZXJuYW1lGAMgASgJEg0KBWVtYWlsGAQg",
-            "ASgJEhYKDmVtYWlsX3ZlcmlmaWVkGAUgASgIEhAKCHBhc3N3b3JkGAYgASgJ",
-            "EhUKBXJvbGVzGAcgASgOMgYuUk9MRVMSGgoNcmVmcmVzaF90b2tlbhgIIAEo",
-            "CUgAiAEBQhAKDl9yZWZyZXNoX3Rva2VuIjUKDUVycm9yUmVzcG9uc2USEwoL",
-            "c3RhdHVzX2NvZGUYASABKAUSDwoHbWVzc2FnZRgCIAEoCSoqCgVST0xFUxIJ",
-            "CgVBRE1JThAAEgsKB0NSRUFUT1IQARIJCgVCQVNJQxACMosFCg9Vc2VyU2Vy",
-            "dmljZUdycGMSNwoSR2V0VXNlckJ5SWRGb3JBdXRoEgwuVXNlclJlcXVlc3Qa",
-            "Ey5WYWxpZGF0aW9uUmVzcG9uc2USPwoSVXBkYXRlUmVmcmVzaFRva2VuEhQu",
-            "UmVmcmVzaFRva2VuUmVxdWVzdBoTLlZhbGlkYXRpb25SZXNwb25zZRI8ChJG",
-            "aW5kQnlWYWx1ZUZvckF1dGgSES5WYWx1ZUtleXNSZXF1ZXN0GhMuVmFsaWRh",
-            "dGlvblJlc3BvbnNlEj0KElJlZ2lzdGVyVXNlckluQXV0aBISLkNyZWF0ZVVz",
-            "ZXJSZXF1ZXN0GhMuVmFsaWRhdGlvblJlc3BvbnNlEjgKE01hcmtFbWFpbFZl",
-            "cmlmeUF1dGgSDC5Vc2VyUmVxdWVzdBoTLlZhbGlkYXRpb25SZXNwb25zZRJB",
-            "ChVVcGRhdGVFbWFpbEFkcmVzc0F1dGgSEy5OZXdFbWFpbERUT1JlcXVlc3Qa",
-            "Ey5WYWxpZGF0aW9uUmVzcG9uc2USPwoVR2V0VXNlckJ5RW1haWxGb3JBdXRo",
-            "EhEuVXNlckVtYWlsUmVxdWVzdBoTLlZhbGlkYXRpb25SZXNwb25zZRJBChVS",
-            "ZXR1cm5QYXNzd29yZEZvckF1dGgSEy5QYXNzd29yZERUT1JlcXVlc3QaEy5W",
-            "YWxpZGF0aW9uUmVzcG9uc2USQAoYQ2FuY2VsYXRpb25PcGVyYXRpb25BdXRo",
-            "EgwuVXNlclJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSPgoVRGVs",
-            "ZXRlZE93bkFjY291bnRBdXRoEhMuUGFzc3dvcmREVE9SZXF1ZXN0GhAuTWVz",
-            "c2FnZVJlc3BvbnNlQgeqAgRVc2VyYgZwcm90bzM="));
+            "Zi9lbXB0eS5wcm90bxofZ29vZ2xlL3Byb3RvYnVmL3RpbWVzdGFtcC5wcm90",
+            "byJtChBDc3JmVG9rZW5SZXF1ZXN0EgoKAmlkGAEgASgFEhIKCmNzcmZfdG9r",
+            "ZW4YAiABKAkSOQoVY3NyZl90b2tlbl9leHBpcmF0aW9uGAMgASgLMhouZ29v",
+            "Z2xlLnByb3RvYnVmLlRpbWVzdGFtcCJiChJWYWxpZGF0aW9uUmVzcG9uc2US",
+            "IQoEdXNlchgBIAEoCzIRLkF1dGhVc2VyUmVzcG9uc2VIABIfCgVlcnJvchgC",
+            "IAEoCzIOLkVycm9yUmVzcG9uc2VIAEIICgZyZXN1bHQiTwoPTWVzc2FnZVJl",
+            "c3BvbnNlEhEKB21lc3NhZ2UYASABKAlIABIfCgVlcnJvchgCIAEoCzIOLkVy",
+            "cm9yUmVzcG9uc2VIAEIICgZyZXN1bHQiIQoQVXNlckVtYWlsUmVxdWVzdBIN",
+            "CgVlbWFpbBgBIAEoCSJPChNSZWZyZXNoVG9rZW5SZXF1ZXN0EgoKAmlkGAEg",
+            "ASgFEhoKDXJlZnJlc2hfdG9rZW4YAiABKAlIAIgBAUIQCg5fcmVmcmVzaF90",
+            "b2tlbiJrChBWYWx1ZUtleXNSZXF1ZXN0EgsKA2tleRgBIAEoCRIWCgxzdHJp",
+            "bmdfdmFsdWUYAiABKAlIABITCglpbnRfdmFsdWUYAyABKAVIABIUCgpib29s",
+            "X3ZhbHVlGAQgASgISABCBwoFdmFsdWUiGQoLVXNlclJlcXVlc3QSCgoCaWQY",
+            "ASABKAUiRQoSTmV3RW1haWxEVE9SZXF1ZXN0EgoKAmlkGAEgASgFEhAKCHBh",
+            "c3N3b3JkGAIgASgJEhEKCW5ld19lbWFpbBgDIAEoCSIyChJQYXNzd29yZERU",
+            "T1JlcXVlc3QSCgoCaWQYASABKAUSEAoIcGFzc3dvcmQYAiABKAkicAoRQ3Jl",
+            "YXRlVXNlclJlcXVlc3QSEQoJZnVsbF9uYW1lGAIgASgJEhAKCHVzZXJuYW1l",
+            "GAMgASgJEg0KBWVtYWlsGAQgASgJEhAKCHBhc3N3b3JkGAUgASgJEhUKBXJv",
+            "bGVzGAYgASgOMgYuUk9MRVMikAIKEEF1dGhVc2VyUmVzcG9uc2USCgoCaWQY",
+            "ASABKAUSEQoJZnVsbF9uYW1lGAIgASgJEhAKCHVzZXJuYW1lGAMgASgJEg0K",
+            "BWVtYWlsGAQgASgJEhYKDmVtYWlsX3ZlcmlmaWVkGAUgASgIEhAKCHBhc3N3",
+            "b3JkGAYgASgJEhUKBXJvbGVzGAcgASgOMgYuUk9MRVMSEgoKY3NyZl90b2tl",
+            "bhgIIAEoCRI5ChVjc3JmX3Rva2VuX2V4cGlyYXRpb24YCSABKAsyGi5nb29n",
+            "bGUucHJvdG9idWYuVGltZXN0YW1wEhoKDXJlZnJlc2hfdG9rZW4YCiABKAlI",
+            "AIgBAUIQCg5fcmVmcmVzaF90b2tlbiI1Cg1FcnJvclJlc3BvbnNlEhMKC3N0",
+            "YXR1c19jb2RlGAEgASgFEg8KB21lc3NhZ2UYAiABKAkqKgoFUk9MRVMSCQoF",
+            "QURNSU4QABILCgdDUkVBVE9SEAESCQoFQkFTSUMQAjLNBQoPVXNlclNlcnZp",
+            "Y2VHcnBjEjcKEkdldFVzZXJCeUlkRm9yQXV0aBIMLlVzZXJSZXF1ZXN0GhMu",
+            "VmFsaWRhdGlvblJlc3BvbnNlEj8KElVwZGF0ZVJlZnJlc2hUb2tlbhIULlJl",
+            "ZnJlc2hUb2tlblJlcXVlc3QaEy5WYWxpZGF0aW9uUmVzcG9uc2USPAoSRmlu",
+            "ZEJ5VmFsdWVGb3JBdXRoEhEuVmFsdWVLZXlzUmVxdWVzdBoTLlZhbGlkYXRp",
+            "b25SZXNwb25zZRI9ChJSZWdpc3RlclVzZXJJbkF1dGgSEi5DcmVhdGVVc2Vy",
+            "UmVxdWVzdBoTLlZhbGlkYXRpb25SZXNwb25zZRI4ChNNYXJrRW1haWxWZXJp",
+            "ZnlBdXRoEgwuVXNlclJlcXVlc3QaEy5WYWxpZGF0aW9uUmVzcG9uc2USQQoV",
+            "VXBkYXRlRW1haWxBZHJlc3NBdXRoEhMuTmV3RW1haWxEVE9SZXF1ZXN0GhMu",
+            "VmFsaWRhdGlvblJlc3BvbnNlEj8KFUdldFVzZXJCeUVtYWlsRm9yQXV0aBIR",
+            "LlVzZXJFbWFpbFJlcXVlc3QaEy5WYWxpZGF0aW9uUmVzcG9uc2USQQoVUmV0",
+            "dXJuUGFzc3dvcmRGb3JBdXRoEhMuUGFzc3dvcmREVE9SZXF1ZXN0GhMuVmFs",
+            "aWRhdGlvblJlc3BvbnNlEkAKGENhbmNlbGF0aW9uT3BlcmF0aW9uQXV0aBIM",
+            "LlVzZXJSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Ej4KFURlbGV0",
+            "ZWRPd25BY2NvdW50QXV0aBITLlBhc3N3b3JkRFRPUmVxdWVzdBoQLk1lc3Nh",
+            "Z2VSZXNwb25zZRJAChNVcGRhdGVDc3JmVG9rZW5BdXRoEhEuQ3NyZlRva2Vu",
+            "UmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eUIHqgIEVXNlcmIGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::User.ROLES), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::User.CsrfTokenRequest), global::User.CsrfTokenRequest.Parser, new[]{ "Id", "CsrfToken", "CsrfTokenExpiration" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::User.ValidationResponse), global::User.ValidationResponse.Parser, new[]{ "User", "Error" }, new[]{ "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::User.MessageResponse), global::User.MessageResponse.Parser, new[]{ "Message", "Error" }, new[]{ "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::User.UserEmailRequest), global::User.UserEmailRequest.Parser, new[]{ "Email" }, null, null, null, null),
@@ -74,7 +82,7 @@ namespace User {
             new pbr::GeneratedClrTypeInfo(typeof(global::User.NewEmailDTORequest), global::User.NewEmailDTORequest.Parser, new[]{ "Id", "Password", "NewEmail" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::User.PasswordDTORequest), global::User.PasswordDTORequest.Parser, new[]{ "Id", "Password" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::User.CreateUserRequest), global::User.CreateUserRequest.Parser, new[]{ "FullName", "Username", "Email", "Password", "Roles" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::User.AuthUserResponse), global::User.AuthUserResponse.Parser, new[]{ "Id", "FullName", "Username", "Email", "EmailVerified", "Password", "Roles", "RefreshToken" }, new[]{ "RefreshToken" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::User.AuthUserResponse), global::User.AuthUserResponse.Parser, new[]{ "Id", "FullName", "Username", "Email", "EmailVerified", "Password", "Roles", "CsrfToken", "CsrfTokenExpiration", "RefreshToken" }, new[]{ "RefreshToken" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::User.ErrorResponse), global::User.ErrorResponse.Parser, new[]{ "StatusCode", "Message" }, null, null, null, null)
           }));
     }
@@ -92,6 +100,287 @@ namespace User {
 
   #region Messages
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class CsrfTokenRequest : pb::IMessage<CsrfTokenRequest>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<CsrfTokenRequest> _parser = new pb::MessageParser<CsrfTokenRequest>(() => new CsrfTokenRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<CsrfTokenRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public CsrfTokenRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public CsrfTokenRequest(CsrfTokenRequest other) : this() {
+      id_ = other.id_;
+      csrfToken_ = other.csrfToken_;
+      csrfTokenExpiration_ = other.csrfTokenExpiration_ != null ? other.csrfTokenExpiration_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public CsrfTokenRequest Clone() {
+      return new CsrfTokenRequest(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private int id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "csrf_token" field.</summary>
+    public const int CsrfTokenFieldNumber = 2;
+    private string csrfToken_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string CsrfToken {
+      get { return csrfToken_; }
+      set {
+        csrfToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "csrf_token_expiration" field.</summary>
+    public const int CsrfTokenExpirationFieldNumber = 3;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp csrfTokenExpiration_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp CsrfTokenExpiration {
+      get { return csrfTokenExpiration_; }
+      set {
+        csrfTokenExpiration_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as CsrfTokenRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(CsrfTokenRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (CsrfToken != other.CsrfToken) return false;
+      if (!object.Equals(CsrfTokenExpiration, other.CsrfTokenExpiration)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id != 0) hash ^= Id.GetHashCode();
+      if (CsrfToken.Length != 0) hash ^= CsrfToken.GetHashCode();
+      if (csrfTokenExpiration_ != null) hash ^= CsrfTokenExpiration.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
+      }
+      if (CsrfToken.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(CsrfToken);
+      }
+      if (csrfTokenExpiration_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(CsrfTokenExpiration);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
+      }
+      if (CsrfToken.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(CsrfToken);
+      }
+      if (csrfTokenExpiration_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(CsrfTokenExpiration);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
+      }
+      if (CsrfToken.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CsrfToken);
+      }
+      if (csrfTokenExpiration_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CsrfTokenExpiration);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(CsrfTokenRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Id != 0) {
+        Id = other.Id;
+      }
+      if (other.CsrfToken.Length != 0) {
+        CsrfToken = other.CsrfToken;
+      }
+      if (other.csrfTokenExpiration_ != null) {
+        if (csrfTokenExpiration_ == null) {
+          CsrfTokenExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        CsrfTokenExpiration.MergeFrom(other.CsrfTokenExpiration);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Id = input.ReadInt32();
+            break;
+          }
+          case 18: {
+            CsrfToken = input.ReadString();
+            break;
+          }
+          case 26: {
+            if (csrfTokenExpiration_ == null) {
+              CsrfTokenExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(CsrfTokenExpiration);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Id = input.ReadInt32();
+            break;
+          }
+          case 18: {
+            CsrfToken = input.ReadString();
+            break;
+          }
+          case 26: {
+            if (csrfTokenExpiration_ == null) {
+              CsrfTokenExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(CsrfTokenExpiration);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ValidationResponse : pb::IMessage<ValidationResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -106,7 +395,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[0]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -400,7 +689,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[1]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -695,7 +984,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[2]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -893,7 +1182,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[3]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1142,7 +1431,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[4]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1529,7 +1818,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[5]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1727,7 +2016,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[6]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1999,7 +2288,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[7]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2234,7 +2523,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[8]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2580,7 +2869,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[9]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2607,6 +2896,8 @@ namespace User {
       emailVerified_ = other.emailVerified_;
       password_ = other.password_;
       roles_ = other.roles_;
+      csrfToken_ = other.csrfToken_;
+      csrfTokenExpiration_ = other.csrfTokenExpiration_ != null ? other.csrfTokenExpiration_.Clone() : null;
       refreshToken_ = other.refreshToken_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -2701,8 +2992,32 @@ namespace User {
       }
     }
 
+    /// <summary>Field number for the "csrf_token" field.</summary>
+    public const int CsrfTokenFieldNumber = 8;
+    private string csrfToken_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string CsrfToken {
+      get { return csrfToken_; }
+      set {
+        csrfToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "csrf_token_expiration" field.</summary>
+    public const int CsrfTokenExpirationFieldNumber = 9;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp csrfTokenExpiration_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp CsrfTokenExpiration {
+      get { return csrfTokenExpiration_; }
+      set {
+        csrfTokenExpiration_ = value;
+      }
+    }
+
     /// <summary>Field number for the "refresh_token" field.</summary>
-    public const int RefreshTokenFieldNumber = 8;
+    public const int RefreshTokenFieldNumber = 10;
     private readonly static string RefreshTokenDefaultValue = "";
 
     private string refreshToken_;
@@ -2749,6 +3064,8 @@ namespace User {
       if (EmailVerified != other.EmailVerified) return false;
       if (Password != other.Password) return false;
       if (Roles != other.Roles) return false;
+      if (CsrfToken != other.CsrfToken) return false;
+      if (!object.Equals(CsrfTokenExpiration, other.CsrfTokenExpiration)) return false;
       if (RefreshToken != other.RefreshToken) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -2764,6 +3081,8 @@ namespace User {
       if (EmailVerified != false) hash ^= EmailVerified.GetHashCode();
       if (Password.Length != 0) hash ^= Password.GetHashCode();
       if (Roles != global::User.ROLES.Admin) hash ^= Roles.GetHashCode();
+      if (CsrfToken.Length != 0) hash ^= CsrfToken.GetHashCode();
+      if (csrfTokenExpiration_ != null) hash ^= CsrfTokenExpiration.GetHashCode();
       if (HasRefreshToken) hash ^= RefreshToken.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -2811,8 +3130,16 @@ namespace User {
         output.WriteRawTag(56);
         output.WriteEnum((int) Roles);
       }
-      if (HasRefreshToken) {
+      if (CsrfToken.Length != 0) {
         output.WriteRawTag(66);
+        output.WriteString(CsrfToken);
+      }
+      if (csrfTokenExpiration_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(CsrfTokenExpiration);
+      }
+      if (HasRefreshToken) {
+        output.WriteRawTag(82);
         output.WriteString(RefreshToken);
       }
       if (_unknownFields != null) {
@@ -2853,8 +3180,16 @@ namespace User {
         output.WriteRawTag(56);
         output.WriteEnum((int) Roles);
       }
-      if (HasRefreshToken) {
+      if (CsrfToken.Length != 0) {
         output.WriteRawTag(66);
+        output.WriteString(CsrfToken);
+      }
+      if (csrfTokenExpiration_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(CsrfTokenExpiration);
+      }
+      if (HasRefreshToken) {
+        output.WriteRawTag(82);
         output.WriteString(RefreshToken);
       }
       if (_unknownFields != null) {
@@ -2887,6 +3222,12 @@ namespace User {
       }
       if (Roles != global::User.ROLES.Admin) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Roles);
+      }
+      if (CsrfToken.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CsrfToken);
+      }
+      if (csrfTokenExpiration_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CsrfTokenExpiration);
       }
       if (HasRefreshToken) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RefreshToken);
@@ -2923,6 +3264,15 @@ namespace User {
       }
       if (other.Roles != global::User.ROLES.Admin) {
         Roles = other.Roles;
+      }
+      if (other.CsrfToken.Length != 0) {
+        CsrfToken = other.CsrfToken;
+      }
+      if (other.csrfTokenExpiration_ != null) {
+        if (csrfTokenExpiration_ == null) {
+          CsrfTokenExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        CsrfTokenExpiration.MergeFrom(other.CsrfTokenExpiration);
       }
       if (other.HasRefreshToken) {
         RefreshToken = other.RefreshToken;
@@ -2975,6 +3325,17 @@ namespace User {
             break;
           }
           case 66: {
+            CsrfToken = input.ReadString();
+            break;
+          }
+          case 74: {
+            if (csrfTokenExpiration_ == null) {
+              CsrfTokenExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(CsrfTokenExpiration);
+            break;
+          }
+          case 82: {
             RefreshToken = input.ReadString();
             break;
           }
@@ -3026,6 +3387,17 @@ namespace User {
             break;
           }
           case 66: {
+            CsrfToken = input.ReadString();
+            break;
+          }
+          case 74: {
+            if (csrfTokenExpiration_ == null) {
+              CsrfTokenExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(CsrfTokenExpiration);
+            break;
+          }
+          case 82: {
             RefreshToken = input.ReadString();
             break;
           }
@@ -3051,7 +3423,7 @@ namespace User {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[10]; }
+      get { return global::User.UserServiceGrpcReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -30,6 +30,9 @@ public class UserModelConfiguration:IEntityTypeConfiguration<UserModel>
         builder.Property(r => r.DeletedAt).IsRequired(false);
         builder.Property(r => r.ScheduledDeletionJobId).IsRequired(false);
 
+        builder.Property(r => r.CsrfToken).IsRequired(false);
+        builder.Property(r => r.CsrfTokenExpiration).IsRequired(false);
+
         builder.Property(r => r.RefreshToken).IsRequired(false);
         
         builder.ToTable("User");

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace User.Migrations
 {
     /// <inheritdoc />
-    public partial class NewInstance : Migration
+    public partial class newInstances : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,6 +27,8 @@ namespace User.Migrations
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ScheduledDeletionJobId = table.Column<string>(type: "text", nullable: true),
+                    CsrfToken = table.Column<string>(type: "text", nullable: true),
+                    CsrfTokenExpiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     RefreshToken = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

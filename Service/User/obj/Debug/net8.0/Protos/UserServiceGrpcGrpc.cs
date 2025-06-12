@@ -65,6 +65,8 @@ namespace User {
     static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.MessageResponse> __Marshaller_MessageResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.MessageResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::User.CsrfTokenRequest> __Marshaller_CsrfTokenRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.CsrfTokenRequest.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::User.UserRequest, global::User.ValidationResponse> __Method_GetUserByIdForAuth = new grpc::Method<global::User.UserRequest, global::User.ValidationResponse>(
@@ -146,6 +148,14 @@ namespace User {
         __Marshaller_PasswordDTORequest,
         __Marshaller_MessageResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::User.CsrfTokenRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_UpdateCsrfTokenAuth = new grpc::Method<global::User.CsrfTokenRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "UpdateCsrfTokenAuth",
+        __Marshaller_CsrfTokenRequest,
+        __Marshaller_google_protobuf_Empty);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -216,6 +226,12 @@ namespace User {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> UpdateCsrfTokenAuth(global::User.CsrfTokenRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
@@ -233,7 +249,8 @@ namespace User {
           .AddMethod(__Method_GetUserByEmailForAuth, serviceImpl.GetUserByEmailForAuth)
           .AddMethod(__Method_ReturnPasswordForAuth, serviceImpl.ReturnPasswordForAuth)
           .AddMethod(__Method_CancelationOperationAuth, serviceImpl.CancelationOperationAuth)
-          .AddMethod(__Method_DeletedOwnAccountAuth, serviceImpl.DeletedOwnAccountAuth).Build();
+          .AddMethod(__Method_DeletedOwnAccountAuth, serviceImpl.DeletedOwnAccountAuth)
+          .AddMethod(__Method_UpdateCsrfTokenAuth, serviceImpl.UpdateCsrfTokenAuth).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -253,6 +270,7 @@ namespace User {
       serviceBinder.AddMethod(__Method_ReturnPasswordForAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.PasswordDTORequest, global::User.ValidationResponse>(serviceImpl.ReturnPasswordForAuth));
       serviceBinder.AddMethod(__Method_CancelationOperationAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.CancelationOperationAuth));
       serviceBinder.AddMethod(__Method_DeletedOwnAccountAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.PasswordDTORequest, global::User.MessageResponse>(serviceImpl.DeletedOwnAccountAuth));
+      serviceBinder.AddMethod(__Method_UpdateCsrfTokenAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.CsrfTokenRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.UpdateCsrfTokenAuth));
     }
 
   }

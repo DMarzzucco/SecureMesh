@@ -140,7 +140,6 @@ C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\User.dl
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\User.pdb
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\BCrypt.Net-Next.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Dapper.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Google.Protobuf.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Grpc.AspNetCore.Server.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Grpc.AspNetCore.Server.ClientFactory.dll
@@ -149,10 +148,6 @@ C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Grpc.Co
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Grpc.Net.Client.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Grpc.Net.ClientFactory.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Grpc.Net.Common.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Hangfire.AspNetCore.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Hangfire.Core.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Hangfire.NetCore.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Hangfire.PostgreSql.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Humanizer.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -173,7 +168,6 @@ C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Microso
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Mono.TextTemplating.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Npgsql.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
@@ -186,20 +180,6 @@ C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\System.
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\System.Composition.Hosting.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\System.Composition.TypedParts.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\ca\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\de\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\es\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\fa\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\fr\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\nb\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\nl\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\pt-BR\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\pt-PT\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\pt\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\sv\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\tr-TR\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\zh-TW\Hangfire.Core.resources.dll
-C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\zh\Hangfire.Core.resources.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\darma\Documents\source\SecureMesh\Service\User\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll

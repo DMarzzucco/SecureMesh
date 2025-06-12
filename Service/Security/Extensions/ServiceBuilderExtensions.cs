@@ -105,7 +105,7 @@ namespace Security.Extensions
             {
                 o.AddPolicy("CorsPolicy", c =>
                 {
-                    c.WithOrigins("https:localhost:8888/")
+                    c.WithOrigins("http://localhost:3000")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();

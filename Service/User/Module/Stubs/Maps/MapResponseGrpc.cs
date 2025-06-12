@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using User.Module.Model;
 namespace User.Module.Stubs.Maps
 {
@@ -14,6 +15,10 @@ namespace User.Module.Stubs.Maps
                     EmailVerified = user.EmailVerified,
                     Password = user.Password,
                     Roles = user.Roles,
+                    CsrfToken = user.CsrfToken ?? "",
+                    CsrfTokenExpiration = user.CsrfTokenExpiration.HasValue
+                        ? Timestamp.FromDateTime(user.CsrfTokenExpiration.Value.ToUniversalTime())
+                        : null,
                     RefreshToken = user.RefreshToken ?? ""
             };
         }

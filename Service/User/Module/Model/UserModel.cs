@@ -41,5 +41,11 @@ public class UserModel
     public string? ScheduledDeletionJobId { get; set; }
 
     [SwaggerIgnore]
+    public string? CsrfToken { get; set; }
+
+    [SwaggerIgnore]
+    public DateTime? CsrfTokenExpiration { get; set; } = null;
+
+    [SwaggerIgnore]
     public string? RefreshToken { get; set; }
 }

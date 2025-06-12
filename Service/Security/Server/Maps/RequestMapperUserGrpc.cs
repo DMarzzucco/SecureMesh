@@ -16,6 +16,10 @@ namespace Security.Server.Maps
                 EmailVerified = response.User.EmailVerified,
                 Password = response.User.Password,
                 Roles = (Model.ROLES)response.User.Roles,
+                CsrfToken = response.User.CsrfToken,
+                CsrfTokenExpiration = response.User.CsrfTokenExpiration != null
+                        ? response.User.CsrfTokenExpiration.ToDateTime()
+                        : DateTime.MinValue,
                 RefreshToken = response.User.RefreshToken
             };
             return user;

@@ -12,6 +12,7 @@
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseRateLimiter();
+            app.UseCors("CorsPolicy");
 
             return app;
         }

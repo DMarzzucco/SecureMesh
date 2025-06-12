@@ -13,6 +13,7 @@ namespace Security.Server.Service.Interfaces
         Task<UserModel> MarkEmailAsync (int id );
         Task UpdateRefreshToken(int id, string? refreshToken);
         Task<UserModel> ReturnPassword(int id, PasswordDTO body);
+        Task UpdateCsrfToken(int id, string csrfToken, DateTime csrfTokenExpiration);
         Task<UserModel> FindByValue(string key, object value);
     }
 }

@@ -31,7 +31,7 @@ public static class ServiceBuilderExtensions
         {
             x.AddPolicy("CorsPolicy", c =>
             {
-                c.WithOrigins("https://localhost:8878")
+                c.WithOrigins("http://localhost:3000")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
