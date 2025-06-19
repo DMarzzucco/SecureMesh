@@ -10,6 +10,12 @@ public class HangFireServicesImpl(IBackgroundJobClient backgroundJobClient, IUse
     private readonly IBackgroundJobClient backgroundJobClient = backgroundJobClient;
     private readonly IUserServices userServices = userServices;
 
+    /// <summary>
+    /// Sheduled Delation
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public override Task<ScheduleResponse> ScheduleDeletion(ScheduleRequest request, ServerCallContext context)
     {
         var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeletedSyncWrapp(request.UserId), TimeSpan.FromMinutes(10));

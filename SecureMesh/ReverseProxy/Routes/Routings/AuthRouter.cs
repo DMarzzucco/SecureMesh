@@ -1,5 +1,5 @@
 using Yarp.ReverseProxy.Configuration;
-using static SecureMesh.ReverseProxy.Routes.Policy.AddAuthPolicy;
+using static SecureMesh.ReverseProxy.Policy.AddAuthPolicy;
 
 namespace SecureMesh.ReverseProxy.Routes.Routings;
 
@@ -15,7 +15,7 @@ public static class AuthRouter
         {
             RouteId = "login_route",
             ClusterId = "auth_cluster",
-            RateLimiterPolicy = Policies.BasicLimiterPolicy,
+            RateLimiterPolicy = Policies.LoginPolicy,
             Match = new RouteMatch { Path = "/api/Security/login" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },

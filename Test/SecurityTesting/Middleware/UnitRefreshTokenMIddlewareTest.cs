@@ -90,7 +90,7 @@ public class UnitRefreshTokenMIddlewareTest
         var user = SecurityMock.UserMock;
 
         this._jwtService.Setup(j => j.ValidateToken("validToken")).Returns(true);
-        this._jwtService.Setup(j => j.isTokenExpirationSoon("validToken")).Returns(true);
+        this._jwtService.Setup(j => j.IsTokenExpirationSoon("validToken")).Returns(true);
         this._jwtService.Setup(j => j.ValidateToken("validRefreshToken")).Returns(true);
 
         this._securityService.Setup(s => s.GetUserByCookie()).ReturnsAsync(user);

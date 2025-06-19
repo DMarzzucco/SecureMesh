@@ -159,8 +159,16 @@ namespace Security.Module.Services
         /// <returns></returns>
         public async Task<string> RemoveOwnAccount(int id, PasswordDTO dto)
         {
+            var httpContext = this._context.HttpContext ??
+                throw new UnauthorizedAccessException("HttpContext is null");
+            var user = await this._userService.GetUserById(id);
+
             var response = await this._userService.DeletedOwnAccount(id, dto);
-            await this.LogOut();
+            // await this.LogOut();
+
+            await this._userService.UpdateRefreshToken(user.Id, null);
+            this._cookieService.ClearTokenCookies(httpContext.Response);
+
             return response;
         }
         /// <summary>
@@ -222,7 +230,7 @@ namespace Security.Module.Services
             await this._messagingQueues.SendWelcomeMessage(user.FullName, user.Email, user.Id);
             await this._redisRepository.UpdateStateAsync(token);
 
-            return $" Hello {user.FullName} your account was verificate successfully ";
+            return $"Hello {user.FullName} your account was verificate successfully.";
         }
 
         /// <summary>
@@ -244,7 +252,7 @@ namespace Security.Module.Services
             await this._userService.MarkEmailAsync(id);
             await this._redisRepository.UpdateStateAsync(token);
 
-            return $" {user.Username} your new adress was verificate successfully, now you can login in";
+            return $"{user.Username} your new adress was verificate successfully, now you can login in.";
         }
 
         /// <summary>
@@ -252,7 +260,9 @@ namespace Security.Module.Services
         /// </summary>
         /// <param name="body"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="KeyNotFoundException"></exception>
+        /// <exception cref="ForbiddenExceptions"></exception>
         public async Task<UserModel> ValidateUser(LoginDTO body)
         {
             var httpContext = this._context.HttpContext ??
@@ -277,7 +287,7 @@ namespace Security.Module.Services
                 var csrfToken = Guid.NewGuid().ToString("N");
                 var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
                 DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
-                
+
                 await this._userService.UpdateCsrfToken(user.Id, csrfTokenHashed, csrfTokenExpiration);
                 this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
             }
@@ -300,13 +310,18 @@ namespace Security.Module.Services
         /// <returns></returns>
         public async Task<string> ChangeAddressEmail(int id, NewEmailDTO body)
         {
+            var httpContext = this._context.HttpContext ??
+                throw new UnauthorizedAccessException("HttpContext is null");
+
             var user = await this._userService.UpdateEmailAdress(id, body);
             if (user != null)
             {
                 var token = await this._jwtService.GenerateEmailVerificationToken(user);
                 await this._messagingQueues.SendNewEmailVerificationEvent(user.Email, token, user.Id);
 
-                await this.LogOut();
+                // await this.LogOut();
+                await this._userService.UpdateRefreshToken(user.Id, null);
+                this._cookieService.ClearTokenCookies(httpContext.Response);
             }
 
             return $"Email was updated his new email is {user.Email} ";

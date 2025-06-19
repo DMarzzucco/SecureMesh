@@ -316,7 +316,7 @@ namespace User.Module.Service
 
             await this._repository.UpdateAsync(user);
 
-            return "User was remove successfully";
+            return "Your account will be deleted in the next 10 minutes.";
         }
         /// <summary>
         /// Return Password Async 

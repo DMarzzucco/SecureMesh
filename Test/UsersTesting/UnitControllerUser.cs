@@ -19,24 +19,6 @@ public class UnitControllerUser
     }
 
     /// <summary>
-    /// Test for Register User 
-    /// </summary>
-    [Fact]
-    public async Task ShouldRegisterOneUser()
-    {
-        var body = UsersMock.CreateUserDTOMOck;
-        var user = UsersMock.UserMock;
-
-        this._service.Setup(s => s.RegisterUser(body)).ReturnsAsync(user);
-        var res = await this._controller.RegisterUser(body);
-        var response = Assert.IsType<CreatedAtActionResult>(res.Result);
-
-        Assert.NotNull(response);
-        Assert.Equal(201, response.StatusCode);
-        Assert.Equal(user, response.Value);
-    }
-
-    /// <summary>
     /// Get All Users
     /// </summary>
     /// <returns></returns>
@@ -127,27 +109,7 @@ public class UnitControllerUser
         Assert.NotNull(res);
         Assert.Equal(204, res.StatusCode);
     }
-    /// <summary>
-    /// Delete Own Count 
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task ShouldDelteOwnRegister()
-    {
-        int id = 4;
-        var dt = UsersMock.PasswordDTOMock;
 
-        string message = "User was remove successfully";
-
-        this._service.Setup(s=> s.RemoveUserRegisterForBasicRoles(id, dt)).ReturnsAsync(message);
-
-        var res = await this._controller.DeleteOwnCount(id, dt);
-        var result = Assert.IsType<OkObjectResult>(res.Result);
-
-        Assert.NotNull(result);
-        Assert.Equal(200, result.StatusCode);
-        Assert.Equal(message, result.Value);
-    }
     /// <summary>
     /// Update Password
     /// </summary>

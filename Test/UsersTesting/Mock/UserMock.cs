@@ -13,6 +13,19 @@ namespace UsersTesting.Mock
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
             Email = "marzz77_@gmail.com",
+            EmailVerified = true,
+            Password = "Pr@motheus98",
+            ScheduledDeletionJobId = "1",
+            Roles = ROLES.Admin
+            
+        };
+        public static UserModel UserMockFalseVerify => new UserModel
+        {
+            Id = 4,
+            FullName = "Dario Marzzucco",
+            Username = "derkmarzz77",
+            Email = "marzz77_@gmail.com",
+            EmailVerified = false,
             Password = "Pr@motheus98",
             Roles = ROLES.Admin
         };
@@ -56,7 +69,6 @@ namespace UsersTesting.Mock
         {
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
-            Email = "marzz77_@gmail.com",
         };
         public static RolesDTO RolesDTOMock => new RolesDTO
         {
@@ -64,6 +76,8 @@ namespace UsersTesting.Mock
         };
 
         public static PasswordDTO PasswordDTOMock => new PasswordDTO { Password = "Pr@motheus98" };
+        public static PasswordDTO PasswordReturnMock => new PasswordDTO { Password = "Sr@motheus23" };
+
 
         public static UpdatePasswordDTO UpdatePasswordDTOMock => new UpdatePasswordDTO
         {
@@ -76,7 +90,11 @@ namespace UsersTesting.Mock
             Password = "Pr@motheus98",
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
-            Email = "marzz77_@gmail.com"
+        };
+        public static NewEmailDTO NewEmailMOck => new NewEmailDTO
+        {
+            Password = "Pr@motheus98",
+            NewEmail = "dmarzz_@hotmail.com"
         };
     }
 }

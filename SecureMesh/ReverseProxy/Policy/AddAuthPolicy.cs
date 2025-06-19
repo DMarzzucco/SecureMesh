@@ -1,4 +1,4 @@
-namespace SecureMesh.ReverseProxy.Routes.Policy;
+namespace SecureMesh.ReverseProxy.Policy;
 
 /// <summary>
 /// Template Policy of ReverseProxy Routes
@@ -8,6 +8,7 @@ public static class AddAuthPolicy
     public static class Policies
     {
         public const string BasicPolicy = "BasicPolicy";
+        public const string LoginPolicy = "login-rs";
         public const string AdminPolicy = "AdminPolicy";
         public const string CreatorPolicy = "CreatorPolicy";
         public const string BasicLimiterPolicy = "rt-sl";

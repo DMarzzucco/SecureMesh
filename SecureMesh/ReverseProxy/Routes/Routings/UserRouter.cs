@@ -1,5 +1,5 @@
 using Yarp.ReverseProxy.Configuration;
-using static SecureMesh.ReverseProxy.Routes.Policy.AddAuthPolicy;
+using static SecureMesh.ReverseProxy.Policy.AddAuthPolicy;
 
 namespace SecureMesh.ReverseProxy.Routes.Routings;
 

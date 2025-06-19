@@ -8,6 +8,7 @@ using User.Module.Model;
 using User.Module.Repository.Interface;
 using User.Module.Service;
 using User.Module.Validations.Interface;
+using User.Server.Interfaces;
 using UsersTesting.Mock;
 
 namespace UsersTesting;
@@ -18,7 +19,7 @@ public class IntServicesUser
     private readonly Mock<IUserValidation> _validation;
     private readonly IMapper _mapper;
     private readonly UserServices _service;
-
+    private readonly Mock<IHangFireServices> hangFireServices;
     public IntServicesUser()
     {
         this._repository = new Mock<IUserRepository>();
@@ -29,15 +30,17 @@ public class IntServicesUser
             conf.CreateMap<CreateUserDTO, UserModel>();
             conf.CreateMap<UpdateUserDTO, UserModel>();
             conf.CreateMap<UpdateOwnUserDTO, UserModel>()
-                .ForMember(d=>d.Password, op => op.Ignore());
+                .ForMember(d => d.Password, op => op.Ignore());
             conf.CreateMap<UserModel, UserDTO>();
         });
         this._mapper = conf.CreateMapper();
 
+        this.hangFireServices = new Mock<IHangFireServices>();
         this._service = new UserServices(
             this._repository.Object,
             this._mapper,
-            this._validation.Object
+            this._validation.Object,
+            this.hangFireServices.Object
         );
     }
 
@@ -57,7 +60,21 @@ public class IntServicesUser
         Assert.NotNull(res);
         Assert.Equal(user, res);
     }
+    /// <summary>
+    /// Get User By Email
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldFindAUserByEmail()
+    {
+        string email = "marzz77_@gmail.com";
+        var user = UsersMock.UserMock;
 
+        this._repository.Setup(r => r.FindByEmailAsync(email)).ReturnsAsync(user);
+        var res = await this._service.GetUserByEmail(email);
+
+        Assert.Equal(user, res);
+    }
     /// <summary>
     /// Get User By Id
     /// </summary>
@@ -93,6 +110,23 @@ public class IntServicesUser
         Assert.NotNull(res);
     }
 
+    /// <summary>
+    /// Mark Email like verify
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShoudlMarkEmailLikeVerify()
+    {
+        var user = UsersMock.UserMockFalseVerify;
+        int id = 4;
+
+        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
+
+        var res = await this._service.MarkEmailAsVerifieds(id);
+
+        Assert.Equal(user, res);
+    }
     /// <summary>
     /// Register User
     /// </summary>
@@ -142,11 +176,11 @@ public class IntServicesUser
         int id = 4;
         var dt = UsersMock.PasswordDTOMock;
         var user = UsersMock.UserHashPassMock;
-        string message = "User was remove successfully";
+        string message = "Your account will be deleted in the next 10 minutes.";
 
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
         this._repository.Setup(r => r.DeleteAsync(user)).ReturnsAsync(true);
-
+        this.hangFireServices.Setup(h => h.ScheduleIdKey(user.Id));
         var res = await this._service.RemoveUserRegisterForBasicRoles(id, dt);
 
         Assert.NotNull(res);
@@ -197,6 +231,26 @@ public class IntServicesUser
         Assert.Equal(message, res);
     }
     /// <summary>
+    /// Update Email
+    /// </summary>
+    [Fact]
+    public async Task UpdateEmail()
+    {
+        int id = 4;
+        var body = UsersMock.NewEmailMOck;
+        var user = UsersMock.UserHashPassMock;
+
+        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
+        this._validation.Setup(v => v.ValidationEmail(body.NewEmail));
+        this._validation.Setup(v => v.ValidateEmailDuplicate(body.NewEmail));
+
+        var res = await this._service.UpdateEmail(id, body);
+
+        Assert.Equal(user, res);
+
+    }
+    /// <summary>
     /// Update Roles
     /// </summary>
     /// <returns></returns>
@@ -229,7 +283,6 @@ public class IntServicesUser
         var user = UsersMock.UserMockBasic;
         // When
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._validation.Setup(v => v.ValidationEmail(body.Email));
         this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
         var res = await this._service.UpdateRegister(body, id);
@@ -252,12 +305,31 @@ public class IntServicesUser
         string message = "Your reforms was saved successfully";
 
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._validation.Setup(v => v.ValidationEmail(body.Email));
         this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
         var res = await this._service.UpdateOwnRegister(id, body);
 
         Assert.NotNull(res);
         Assert.Equal(message, res);
+    }
+
+    /// <summary>
+    /// Return Password
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldReturnPassword()
+    {
+        var user = UsersMock.UserHashPassMock;
+        int id = 4;
+        var body = UsersMock.PasswordReturnMock;
+
+        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
+        this._validation.Setup(v => v.ValidateStructurePassword(body.Password));
+        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
+
+        var res = await this._service.ReturnPasswordAsync(id, body);
+
+        Assert.Equal(user, res);
     }
 }

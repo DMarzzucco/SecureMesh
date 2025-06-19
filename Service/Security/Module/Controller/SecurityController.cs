@@ -72,7 +72,7 @@ namespace Security.Module.Controller
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost("elm23019_123mskw_123fnsk")]
-        public async Task<ActionResult<UserModel>> ForgetPassword([FromBody] ForgetPasswordDTO dto)
+        public async Task<ActionResult<string>> ForgetPassword([FromBody] ForgetPasswordDTO dto)
         {
             return Ok(await this._service.ForgetPassword(dto));
         }
