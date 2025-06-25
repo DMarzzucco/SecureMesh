@@ -64,7 +64,7 @@ CREATE TABLE "User"(
 2. Clone repository
 3. Execute in terminal:
 
-   ```bash
+```bash
 # Deploy RabbitMQ, PostgreSQL, and Redis
 make infra
 
@@ -82,7 +82,7 @@ make down
 
 # Purge all builds
 make purge
-   ```
+```
 ---
 
 ## 🔌 Ports
