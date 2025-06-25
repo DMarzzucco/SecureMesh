@@ -14,7 +14,7 @@ infra-w:
 
 #stand up all APIs
 systems:
-	docker-compose up user auth hangfire 
+	docker-compose up user auth hangfire securemesh
 
 #stand up system without gateway
 system_wg:
