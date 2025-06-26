@@ -1,31 +1,23 @@
-# Usa la imagen oficial de Rust como base
-FROM rust:latest as builder
+FROM golang:1.24.4 AS builder
 
-RUN rustup target add x86_64-unknown-linux-musl
-RUN apt-get update && apt-get install -y musl-tools
-
-# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia solo Cargo.toml primero (sin el lock)
-COPY Cargo.toml .
-RUN mkdir src && echo "fn main() {}" > src/main.rs
-RUN cargo build --release --target x86_64-unknown-linux-musl || true
+COPY go.mod ./
+RUN go mod download
 
-# Ahora copiá el resto del código (incluye el verdadero src)
 COPY . .
 
-# Compila tu aplicación en modo release
-RUN cargo build --release --target x86_64-unknown-linux-musl
+RUN go build -o api
 
-# Segunda etapa: crea una imagen más ligera para correr la app
-FROM alpine:latest
+FROM debian:bookworm-slim
 
-# Instala las dependencias necesarias para ejecutar tu binario
-RUN apk add --no-cache ca-certificates
+WORKDIR /app
 
-# Copia el binario compilado desde la etapa anterior
-COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/password_recuperation /usr/local/bin/password_recuperation
+RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/lists/*
 
-# Define el comando por defecto
-CMD ["password_recuperation"]
+COPY --from=builder /app/api .
+COPY wait-for-it.sh ./wait-for-it.sh
+
+RUN chmod +x wait-for-it.sh
+# CMD ["./api"]
+CMD ["./wait-for-it.sh", "rabbitmq:5672", "--", "./api"]

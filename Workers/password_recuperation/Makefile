@@ -1,5 +1,5 @@
 run:
-	cargo run
-	
-worker3:
-	docker build -t password_recuperation .
+	go run .\main.go
+
+deploy:
+	docker build -t go-api .

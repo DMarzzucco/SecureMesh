@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj": {}
+    "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\User.csproj": {}
   },
   "projects": {
-    "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj": {
+    "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\User.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj",
+        "projectUniqueName": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\User.csproj",
         "projectName": "User",
-        "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\User.csproj",
+        "projectPath": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\User.csproj",
         "packagesPath": "C:\\Users\\darma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\User\\obj\\",
+        "outputPath": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\darma\\AppData\\Roaming\\NuGet\\NuGet.Config"

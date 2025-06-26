@@ -1176,11 +1176,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\SecureMesh\\SecureMesh.csproj",
+      "projectUniqueName": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\SecureMesh.csproj",
       "projectName": "SecureMesh",
-      "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\SecureMesh\\SecureMesh.csproj",
+      "projectPath": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\SecureMesh.csproj",
       "packagesPath": "C:\\Users\\darma\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\SecureMesh\\obj\\",
+      "outputPath": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\darma\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -19,7 +19,7 @@ services:
   # Hangfire database
   db_hangfire:
     image: postgres
-    container_name: data_base_pg_hangfire
+    container_name: data_base_pg_hangfired
     restart: always
     environment:
       POSTGRES_USER: hangfire
@@ -63,7 +63,6 @@ services:
     build: 
       context: ./Workers/verification_email
       dockerfile: Dockerfile
-    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet EmailVerificationWorker.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -76,7 +75,6 @@ services:
     build: 
       context: ./Workers/welcome_message
       dockerfile: Dockerfile
-    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet WelcomeMessageWorker.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -88,7 +86,6 @@ services:
     build: 
       context: ./Workers/password_recuperation
       dockerfile: Dockerfile
-    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet PasswordRecuperation.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -100,7 +97,6 @@ services:
     build: 
       context: ./Workers/verification_new_email
       dockerfile: Dockerfile
-    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- dotnet NewEmailVerificationWorke.dll" ]
     networks:
       - rabbit_network
     depends_on:
@@ -174,7 +170,7 @@ services:
     volumes:
       - ./certs/auth/cert.pfx:/https/cert.pfx
       - ./scripts/wait-for-it.sh:/wait-for-it.sh
-    entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh user:4080 -- dotnet Security.dll" ]
+    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh user:4080 -- dotnet Security.dll" ]
     networks:
       - compose-bridge
       - rabbit_network
@@ -200,7 +196,7 @@ services:
     volumes:
       - ./certs/gateway/gate.pfx:/https/gate.pfx
       - ./scripts/wait-for-it.sh:/wait-for-it.sh
-    entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh auth:5090 -- dotnet SecureMesh.dll" ]
+    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh auth:5090 -- dotnet SecureMesh.dll" ]
     networks:
       - compose-bridge
 

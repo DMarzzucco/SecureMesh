@@ -2072,11 +2072,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\Security.csproj",
+      "projectUniqueName": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Security\\Security.csproj",
       "projectName": "Security",
-      "projectPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\Security.csproj",
+      "projectPath": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Security\\Security.csproj",
       "packagesPath": "C:\\Users\\darma\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\darma\\Documents\\source\\SecureMesh\\Service\\Security\\obj\\",
+      "outputPath": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Security\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\darma\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -1,5 +1,5 @@
 run:
-	cargo run
-	
-worker1:
-	docker build -t verification_email .
+	go run .\main.go
+
+deploy:
+	docker build -t go-api .

@@ -1,5 +1,5 @@
 run:
-	cargo run
-	
-worker2:
-	docker build -t welcome_message .
+	go run .\main.go
+
+deploy:
+	docker build -t go-api .

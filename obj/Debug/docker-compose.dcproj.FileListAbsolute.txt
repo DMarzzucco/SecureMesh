@@ -15,3 +15,4 @@ C:\Users\darmarzrold\source\repos\SecureMesh\obj\Debug\docker-compose.dcproj.Ass
 C:\Users\darmarzrold\source\repos\SecureMesh\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\darmarzrold\source\repos\SecureMesh\obj\Debug\docker-c.35A3FFBA.Up2Date
 c:\Users\darma\Documents\source\SecureMesh\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
+c:\Users\darma\Documents\SecureMesh\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
