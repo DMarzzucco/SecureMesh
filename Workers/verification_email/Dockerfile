@@ -18,6 +18,6 @@ RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/l
 COPY --from=builder /app/api .
 COPY wait-for-it.sh ./wait-for-it.sh
 
-RUN chmod +x wait-for-it.sh
-# CMD ["./api"]
+RUN sed -i 's/\r//' wait-for-it.sh && chmod +x wait-for-it.sh
+
 CMD ["./wait-for-it.sh", "rabbitmq:5672", "--", "./api"]

@@ -160,7 +160,7 @@ services:
     image: ${DOCKER_REGISTRY-}auth
     build:
       context: .
-      dockerfile: Service/Security/Dockerfile
+      dockerfile: Service/Auth/Dockerfile
     ports:
       - "5090:5090"
     depends_on:

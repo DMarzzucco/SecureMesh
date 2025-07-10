@@ -12,11 +12,11 @@ workers:
 infra-w:
 	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 
 
-#stand up all APIs
+# stand up all APIs
 systems:
-	docker-compose up user auth hangfire securemesh
+	docker-compose up user hangfire auth securemesh
 
-#stand up system without gateway
+# stand up system without gateway
 system_wg:
 	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 
 

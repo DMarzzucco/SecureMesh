@@ -11,7 +11,7 @@ Secure Mesh is a security, authentication, and authorization testing template de
 The system is composed of the following services:
 
 - `User API`: Manages the full lifecycle of a user.
-- `Security API`: Responsible for validating credentials, generating tokens, and verifying user accounts.
+- `Auth API`: Responsible for validating credentials, generating tokens, and verifying user accounts.
 - `Hangfire Server`: Executes background jobs.
 - `API Gateway`: Centralizes routes and manages authentication, roles and access limits.
 - `Redis`: - `Redis`: Base de datos que se usa para almacenar tokens de un solo uso, los cuales son eliminados con TTL una vez hayan expirados.
@@ -87,7 +87,7 @@ make purge
 
 ## 🔌 Ports
 1. User API ["https://*:4080"]("https://localhost:4080/swagger/index.html") 
-2. Security API ["https://*:5090"]("https://localhost:5090/swagger/index.html")
+2. Auth API ["https://*:5090"]("https://localhost:5090/swagger/index.html")
 3. Hangfire ["https://*:3434"]("https://localhost:3434/hangfire")
 4. API Gateway ["https://*:8888"]("https://localhost:8888/")
 5. RabbitMQ ["https://*:15672"]("http://localhost:15672/#/")
