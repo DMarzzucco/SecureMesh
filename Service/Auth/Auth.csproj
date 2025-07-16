@@ -32,6 +32,7 @@
 
 	<ItemGroup>
 		<Protobuf Include="Proto\UserServiceGrpc.proto" GrpcServices="Client" />
+		<Protobuf Include="Proto\SecurityServicesImpl.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 </Project>

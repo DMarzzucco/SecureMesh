@@ -12,8 +12,8 @@ using User.Context;
 namespace User.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250611183610_newInstances")]
-    partial class newInstances
+    [Migration("20250715132136_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,12 +33,6 @@ namespace User.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CsrfToken")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("CsrfTokenExpiration")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -51,6 +45,9 @@ namespace User.Migrations
                     b.Property<bool>("EmailVerified")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("FirstLogin")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -58,6 +55,9 @@ namespace User.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LockedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -75,11 +75,20 @@ namespace User.Migrations
                     b.Property<string>("ScheduledDeletionJobId")
                         .HasColumnType("text");
 
+                    b.Property<string>("TwoAFCode")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("TwoAFCodeExpiration")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(true)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<int>("VerifyAttempts")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

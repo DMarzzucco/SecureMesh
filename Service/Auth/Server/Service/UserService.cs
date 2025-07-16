@@ -5,6 +5,7 @@ using Auth.Server.Maps;
 using Auth.Server.Model;
 using Auth.Server.Service.Interfaces;
 using User;
+using System.Net.Http.Headers;
 
 namespace Auth.Server.Service
 {
@@ -20,23 +21,35 @@ namespace Auth.Server.Service
             this._requestMapperUserGrpc = requestMapperUserGrpc;
         }
 
+
         /// <summary>
-        /// UpdateCsrfToken
+        /// Update Two Af Code
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="csrfToken"></param>
-        /// <param name="csrfTokenExpiration"></param>
+        /// <param name="code"></param>
+        /// <param name="expiration"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async Task UpdateCsrfToken(int id, string csrfToken, DateTime csrfTokenExpiration)
+        public async Task UpdateTwoAFCode(int id, string code, DateTime expiration)
         {
-            var request = new CsrfTokenRequest { Id = id, CsrfToken = csrfToken, CsrfTokenExpiration = csrfTokenExpiration.ToTimestamp() };
-            try
-            {
-                await this._client.UpdateCsrfTokenAuthAsync(request);
-            }
-            catch (Exception ex) { throw new Exception($"{ex.Message}"); }
+            var request = new TwoFADTO { Id = id, TwoAfCode = code, TwoAfCodeExpiration = expiration.ToTimestamp() };
+            await this._client.UpdateTwoAFCodeAsync(request);
         }
+
+        /// <summary>
+        /// Verify Two Af Code
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public async Task<UserModel> VerifyTwoAF(string email, string code)
+        {
+            var request = new VerifyTwoAFDTO { Email = email, TwoAfCode = code };
+            var response = await this._client.VerifyTwoAFAsync(request);
+
+            var user = this._requestMapperUserGrpc.InvokeUserModel(response);
+            return user;
+        }
+
         /// <summary>
         /// Deleted own account 
         /// </summary>
@@ -92,7 +105,7 @@ namespace Auth.Server.Service
                 if (response.Error is not null && response.Error.StatusCode != 0)
                     this._handleGrpcError.InvokeError(response.Error);
 
-                return this._requestMapperUserGrpc.InvokeMap(response);
+                return this._requestMapperUserGrpc.InvokeValidationResponseMap(response);
             }
             catch (RpcException ex)
             {
@@ -119,7 +132,7 @@ namespace Auth.Server.Service
             if (response.Error is not null && response.Error.StatusCode != 0)
                 this._handleGrpcError.InvokeError(response.Error);
 
-            return this._requestMapperUserGrpc.InvokeMap(response);
+            return this._requestMapperUserGrpc.InvokeValidationResponseMap(response);
         }
         /// <summary>
         /// Mark Email 
@@ -133,7 +146,7 @@ namespace Auth.Server.Service
             if (response.Error is not null && response.Error.StatusCode != 0)
                 this._handleGrpcError.InvokeError(response.Error);
 
-            return this._requestMapperUserGrpc.InvokeMap(response);
+            return this._requestMapperUserGrpc.InvokeValidationResponseMap(response);
         }
         /// <summary>
         /// Find By Value for validate credentials
@@ -150,7 +163,7 @@ namespace Auth.Server.Service
             if (response.ResultCase == ValidationResponse.ResultOneofCase.Error)
                 throw new KeyNotFoundException($"{response.Error.Message}");
 
-            return this._requestMapperUserGrpc.InvokeMap(response);
+            return this._requestMapperUserGrpc.InvokeValidationResponseMap(response);
         }
 
         /// <summary>
@@ -166,7 +179,7 @@ namespace Auth.Server.Service
             if (response.ResultCase == ValidationResponse.ResultOneofCase.Error)
                 throw new KeyNotFoundException($"{response.Error.Message}");
 
-            return this._requestMapperUserGrpc.InvokeMap(response);
+            return this._requestMapperUserGrpc.InvokeValidationResponseMap(response);
 
         }
         /// <summary>
@@ -182,7 +195,7 @@ namespace Auth.Server.Service
             if (response.Error is not null && response.Error.StatusCode != 0)
                 this._handleGrpcError.InvokeError(response.Error);
 
-            return this._requestMapperUserGrpc.InvokeMap(response);
+            return this._requestMapperUserGrpc.InvokeValidationResponseMap(response);
 
         }
         /// <summary>
@@ -199,7 +212,7 @@ namespace Auth.Server.Service
             if (response.Error is not null && response.Error.StatusCode != 0)
                 this._handleGrpcError.InvokeError(response.Error);
 
-            return this._requestMapperUserGrpc.InvokeMap(response);
+            return this._requestMapperUserGrpc.InvokeValidationResponseMap(response);
         }
         /// <summary>
         /// Update Refresh Token

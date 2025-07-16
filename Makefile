@@ -2,15 +2,15 @@
 
 # stand up all infrstructure (Rabbitmq and Database)
 infra:
-	docker-compose up db db_hangfire rabbitmq redis 
+	docker-compose up db db_auth db_hangfire db_security rabbitmq redis 
 
 # stand up workers
 workers:
-	docker-compose up worker1 worker2 worker3 worker4 
+	docker-compose up worker1 worker2 worker3 worker4 worker5 
 
 # stand up infrastructure and workers
 infra-w:
-	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 
+	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 worker5 
 
 # stand up all APIs
 systems:

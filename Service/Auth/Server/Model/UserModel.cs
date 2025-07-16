@@ -83,10 +83,10 @@ namespace Auth.Server.Model
         public required ROLES Roles { get; set; }
         
         [SwaggerIgnore]
-        public string? CsrfToken { get; set; }
+        public string? TwoAFCode { get; set; }
 
         [SwaggerIgnore]
-        public DateTime? CsrfTokenExpiration { get; set; } = null;
+        public DateTime? TwoAFCodeExpiration { get; set; } = null;
 
         [SwaggerIgnore]
         public string? RefreshToken { get; set; }

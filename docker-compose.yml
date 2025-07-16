@@ -1,6 +1,6 @@
 services:
 
-  # Database Container
+  # User Database
   db:
     image: postgres
     container_name: data_base_pg
@@ -15,6 +15,22 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - compose-bridge
+
+ # Authentication Database
+  db_auth:
+    image: postgres
+    container_name: data_base_auth
+    restart: always
+    environment:
+      POSTGRES_USER: auth
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: data_base_auth
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - db-auth-bridge    
 
   # Hangfire database
   db_hangfire:
@@ -31,6 +47,23 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - db-hangfire-bridge
+
+  # Security Data base
+  db_security:
+    image: postgres
+    container_name: data_base_security
+    restart: always
+    environment:
+      POSTGRES_USER: security
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: data_base_security
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - db-security-bridge    
+
   #Redis
   redis:
     image: redis:latest
@@ -101,6 +134,18 @@ services:
       - rabbit_network
     depends_on:
       - rabbitmq
+      
+  # Worker 5 2AF message
+  worker5:
+    container_name: worker5_2AFCode
+    image: ${DOCKER_REGISTRY}worker5
+    build: 
+      context: ./Workers/2AF_message
+      dockerfile: Dockerfile
+    networks:
+      - rabbit_network
+    depends_on:
+      - rabbitmq
 
   #Hangfire Servies
   hangfire:
@@ -166,13 +211,14 @@ services:
     depends_on:
       - user
       - redis
+      - db_auth
       - rabbitmq
     volumes:
       - ./certs/auth/cert.pfx:/https/cert.pfx
       - ./scripts/wait-for-it.sh:/wait-for-it.sh
-    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh user:4080 -- dotnet Security.dll" ]
     networks:
       - compose-bridge
+      - db-auth-bridge
       - rabbit_network
       - redis_network
 
@@ -196,7 +242,6 @@ services:
     volumes:
       - ./certs/gateway/gate.pfx:/https/gate.pfx
       - ./scripts/wait-for-it.sh:/wait-for-it.sh
-    # entrypoint: [ "/bin/sh", "-c", "/wait-for-it.sh auth:5090 -- dotnet SecureMesh.dll" ]
     networks:
       - compose-bridge
 
@@ -219,3 +264,9 @@ networks:
 
   db-hangfire-bridge:
     driver : bridge
+
+  db-security-bridge:
+    driver: bridge
+
+  db-auth-bridge:
+    driver: bridge

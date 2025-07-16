@@ -8,6 +8,6 @@ public partial class MessagingQueues
         public const string WelcomeQueue = "welcome_queue";
         public const string NewEmailVerificationQueue = "new_email_verification";
         public const string PasswordRecuperationQeue = "password_recuperation";
+        public const string TwoAFCodeQeue = "2af_queue";
     }
-
 }

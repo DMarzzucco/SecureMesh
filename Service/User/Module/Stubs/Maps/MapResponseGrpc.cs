@@ -15,10 +15,11 @@ namespace User.Module.Stubs.Maps
                     EmailVerified = user.EmailVerified,
                     Password = user.Password,
                     Roles = user.Roles,
-                    CsrfToken = user.CsrfToken ?? "",
-                    CsrfTokenExpiration = user.CsrfTokenExpiration.HasValue
-                        ? Timestamp.FromDateTime(user.CsrfTokenExpiration.Value.ToUniversalTime())
+                    TwoAfCode = user.TwoAFCode ?? "",
+                    TwoAfCodeExpiration = user.TwoAFCodeExpiration.HasValue
+                        ? Timestamp.FromDateTime(user.TwoAFCodeExpiration.Value.ToUniversalTime())
                         : null,
+                    FirstLogin = user.FirstLogin,
                     RefreshToken = user.RefreshToken ?? ""
             };
         }

@@ -27,6 +27,7 @@ namespace Auth.Utils.Middleware
             var publicPaths = new[] {
                 "/api/Security/login",
                 "/api/Security/registered",
+                "/api/Security/verify-code",
                 "/api/Security/12349smska_wqj1n234msm949401",
                 "/api/Security/elm23019_123mskw_123fnsk",
                 "/api/Security/5413444_dsdn123fS_231_ddf",

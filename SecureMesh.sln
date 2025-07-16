@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{DAD03C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangfireUserServer", "Server\HangfireUserServer\HangfireUserServer.csproj", "{245A5AA2-D858-4EDB-996D-9B12345A59AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Service\Security\Security.csproj", "{5F33C57F-C84D-4A4A-8784-45A264DAF228}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,18 @@ Global
 		{245A5AA2-D858-4EDB-996D-9B12345A59AA}.Release|x64.Build.0 = Release|Any CPU
 		{245A5AA2-D858-4EDB-996D-9B12345A59AA}.Release|x86.ActiveCfg = Release|Any CPU
 		{245A5AA2-D858-4EDB-996D-9B12345A59AA}.Release|x86.Build.0 = Release|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Debug|x64.Build.0 = Debug|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Debug|x86.Build.0 = Debug|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Release|x64.ActiveCfg = Release|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Release|x64.Build.0 = Release|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Release|x86.ActiveCfg = Release|Any CPU
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +139,7 @@ Global
 		{280E9B7B-BBE0-4A0A-8F81-737E6BCD7CBE} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 		{E2C5DEBE-1505-4093-B406-ED8A06BD88CC} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 		{245A5AA2-D858-4EDB-996D-9B12345A59AA} = {DAD03CFC-D5FA-AC94-41C7-9ABAB326F09E}
+		{5F33C57F-C84D-4A4A-8784-45A264DAF228} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45E6A590-AF82-4DE8-92C1-FA2247E7B867}

@@ -16,13 +16,19 @@ service UserServiceGrpc {
     rpc ReturnPasswordForAuth (PasswordDTORequest) returns (ValidationResponse);
     rpc CancelationOperationAuth (UserRequest) returns (google.protobuf.Empty);
     rpc DeletedOwnAccountAuth (PasswordDTORequest) returns (MessageResponse);
-    rpc UpdateCsrfTokenAuth (CsrfTokenRequest) returns (google.protobuf.Empty);
+    rpc UpdateTwoAFCode (TwoFADTO) returns (google.protobuf.Empty);
+    rpc VerifyTwoAF (VerifyTwoAFDTO) returns (AuthUserResponse);
 }
 
-message CsrfTokenRequest {
+message VerifyTwoAFDTO{
+    string email = 1;
+    string two_af_code = 2;
+}
+
+message TwoFADTO{
     int32 id = 1;
-    string csrf_token = 2;
-    google.protobuf.Timestamp csrf_token_expiration = 3;
+    string two_af_code = 8;
+    google.protobuf.Timestamp two_af_code_expiration = 9;
 }
 
 message ValidationResponse {
@@ -83,9 +89,10 @@ message AuthUserResponse {
     bool email_verified = 5;
     string password = 6;
     ROLES roles = 7;
-    string csrf_token = 8;
-    google.protobuf.Timestamp csrf_token_expiration = 9;
-    optional string refresh_token = 10;
+    string two_af_code = 8;
+    google.protobuf.Timestamp two_af_code_expiration = 9;
+    bool first_login = 10;
+    optional string refresh_token = 11;
 }
 
 message ErrorResponse {

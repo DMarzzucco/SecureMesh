@@ -53,7 +53,7 @@ func main() {
 	)
 	failOnError(err, "no could consume the queue")
 
-	fmt.Println("🐇 wait for the message...")
+	fmt.Println("🔶 wait for the message...")
 
 	// channel to wait forever
 	forever := make(chan bool)
@@ -64,7 +64,7 @@ func main() {
 			if err := json.Unmarshal(d.Body, &msg); err != nil {
 				log.Printf("❌ Error to deserialize message: %s", err)
 			} else {
-				fmt.Printf("📤 Hello %s to Recuperation your account, you need inside in this adress: https://localhost:8888/api/Security/8382fd_1231sfw13312saeDAs12?hmk12=%s\n", msg.Email, msg.Token)
+				fmt.Printf("✅ Hello %s to Recuperation your account, you need inside in this adress: https://localhost:8888/api/Security/8382fd_1231sfw13312saeDAs12?hmk12=%s\n", msg.Email, msg.Token)
 			}
 
 			d.Ack(false)

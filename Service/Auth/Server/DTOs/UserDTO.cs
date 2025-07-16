@@ -4,6 +4,16 @@ using Auth.Server.Model;
 
 namespace Auth.Server.DTOs
 {
+    public class VerifyCodeDTO
+    {
+        [SwaggerSchema("User email")]
+        [SwaggerSchemaExample("marzz77_@gmail.com")]
+        public required string Email { get; set; }  
+        
+        [SwaggerSchema("Code 2FA")]
+        [SwaggerSchemaExample("0")]
+        public required string TwoAfCode { get; set; }
+    }
     public class UserDTO
     {
         [SwaggerSchema("User Id")]

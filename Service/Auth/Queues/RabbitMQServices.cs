@@ -16,8 +16,8 @@ public class RabbitMQServices : IRabbitMQServices
     {
         _factory = new ConnectionFactory
         { 
-            // HostName = "localhost",
-            HostName = "rabbitmq",
+            HostName = "localhost",
+            // HostName = "rabbitmq",
             UserName = "user",
             Password = "password",
             Port = 5672

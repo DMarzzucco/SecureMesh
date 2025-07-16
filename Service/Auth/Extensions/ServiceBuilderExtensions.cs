@@ -23,6 +23,7 @@ using Auth.Server.Maps;
 using Auth.Configuration.Redis;
 using Auth.Configuration.Redis.Repository.Interfaces;
 using Auth.Configuration.Redis.Repository;
+using Auth.Utils.Helper;
 
 namespace Auth.Extensions
 {
@@ -78,7 +79,9 @@ namespace Auth.Extensions
             //rabbitMQ
             service.AddScoped<IRabbitMQServices, RabbitMQServices>();
             service.AddScoped<IMessagingQueues, MessagingQueues>();
-
+            //code generation
+            service.AddScoped<CodeGeneration>();
+            
             service.AddScoped<RequestMapperUserGrpc>();
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<HandleGrpcError>();

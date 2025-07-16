@@ -4,6 +4,8 @@ namespace Auth.Server.Service.Interfaces
 {
     public interface IUserService
     {
+        Task<UserModel> VerifyTwoAF(string email, string code);
+        Task UpdateTwoAFCode(int id, string code, DateTime expiration);
         Task CancelationOperation(int id);
         Task<string> DeletedOwnAccount(int id, PasswordDTO dto);
         Task<UserModel> RegisterUser(CreateUserDTO body);
@@ -13,7 +15,6 @@ namespace Auth.Server.Service.Interfaces
         Task<UserModel> MarkEmailAsync (int id );
         Task UpdateRefreshToken(int id, string? refreshToken);
         Task<UserModel> ReturnPassword(int id, PasswordDTO body);
-        Task UpdateCsrfToken(int id, string csrfToken, DateTime csrfTokenExpiration);
         Task<UserModel> FindByValue(string key, object value);
     }
 }

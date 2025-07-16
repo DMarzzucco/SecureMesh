@@ -4,6 +4,7 @@ using Auth.Module.DTOs;
 using Auth.Module.Filter;
 using Auth.Module.Services.Interfaces;
 using Auth.Server.Model;
+using Auth.Server.DTOs;
 
 namespace Auth.Module.Controller
 {
@@ -35,17 +36,27 @@ namespace Auth.Module.Controller
         /// <param name="body"></param>
         /// <returns></returns>
         [ServiceFilter(typeof(LocalAuthFilter))]
-        [HttpPost("login")]
+        [HttpPut("login")]
         public async Task<ActionResult> Login([FromBody] LoginDTO body)
         {
             var user = HttpContext.Items["User"] as UserModel ??
                 throw new ArgumentNullException();
                 
-            var response = await this._service.GenerateToken(user);
+            var response = await this._service.Login(user);
 
             return StatusCode(StatusCodes.Status200OK, new { message = response });
         }
-        
+
+        /// <summary>
+        /// Verify code 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPost("verify-code")]
+        public async Task<ActionResult<string>> VerifyTwoAF([FromBody] VerifyCodeDTO body)
+        {
+            return Ok(await this._service.VerifyTowAFCode(body));
+        }
         /// <summary>
         /// Close Section
         /// </summary>

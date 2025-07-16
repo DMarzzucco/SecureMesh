@@ -151,4 +151,3 @@ C:\Users\darma\Documents\SecureMesh\SecureMesh\obj\Debug\net8.0\rjimswa.dswa.cac
 C:\Users\darma\Documents\SecureMesh\SecureMesh\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\darma\Documents\SecureMesh\SecureMesh\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
 C:\Users\darma\Documents\SecureMesh\SecureMesh\obj\Debug\net8.0\staticwebassets.build.json.cache
-C:\Users\darma\Documents\SecureMesh\SecureMesh\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

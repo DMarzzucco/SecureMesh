@@ -87,4 +87,20 @@ public partial class MessagingQueues(IRabbitMQServices services) : IMessagingQue
 
         await this._services.SendMessageAsync(message, QueuesNames.PasswordRecuperationQeue);
     }
+
+    /// <summary>
+    /// Sen a code to validate login
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task TowAfCodeMessage(string email, string code)
+    {
+        var message = new TowAFMessage { Email = email, TwoAFCode = code };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await this._services.SendMessageAsync(message, QueuesNames.TwoAFCodeQeue);
+    }
 }

@@ -27,20 +27,62 @@ namespace User.Module.Stubs
         }
 
         /// <summary>
-        /// Update Csrf Token 
+        /// VerifyTwoAF
         /// </summary>
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
         /// <exception cref="RpcException"></exception>
-        public override async Task<Empty> UpdateCsrfTokenAuth(CsrfTokenRequest request, ServerCallContext context)
+        public override async Task<AuthUserResponse> VerifyTwoAF(VerifyTwoAFDTO request, ServerCallContext context)
+        {
+            if (string.IsNullOrEmpty(request.TwoAfCode))
+                throw new RpcException(new Status(StatusCode.Cancelled, "The code not be empty"));
+
+            var user = await this._repository.FindByEmailAsync(request.Email) ??
+                throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
+
+            if (user.LockedAt != null && DateTime.UtcNow < user.LockedAt)
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "Account locked due to multiple failed attemps. Try again later"));
+
+            if (user.TwoAFCode != request.TwoAfCode || user.TwoAFCodeExpiration < DateTime.UtcNow)
+            {
+                user.VerifyAttempts++;
+                
+                if (user.VerifyAttempts <= 3)
+                {
+                    user.LockedAt = DateTime.UtcNow.AddMinutes(10);
+                    user.VerifyAttempts = 0;
+                }
+                await this._repository.UpdateAsync(user);
+                throw new RpcException(new Status(StatusCode.PermissionDenied, "Code is invalid or is expired"));
+            }
+            user.FirstLogin = false;
+            user.TwoAFCode = Guid.NewGuid().ToString();
+            user.TwoAFCodeExpiration = null;
+            user.VerifyAttempts = 0;
+            user.LockedAt = null;
+
+            await this._repository.UpdateAsync(user);
+
+            var response = this._mapper.InvokeMap(user);
+            return response;
+        }
+        
+        /// <summary>
+        /// Update 2AF Code
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        /// <exception cref="RpcException"></exception>
+        public override async Task<Empty> UpdateTwoAFCode(TwoFADTO request, ServerCallContext context)
         {
             var user = await this._repository.FindByIdAsync(request.Id) ??
                 throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
 
-            user.CsrfToken = request.CsrfToken;
-            user.CsrfTokenExpiration = request.CsrfTokenExpiration.ToDateTime();
-
+            user.TwoAFCode = request.TwoAfCode;
+            user.TwoAFCodeExpiration = request.TwoAfCodeExpiration.ToDateTime();
+            
             await this._repository.UpdateAsync(user);
 
             return new Empty();

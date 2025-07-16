@@ -26,18 +26,18 @@ public static class WaitForIt
             {
                 using var connection = new NpgsqlConnection(connectionString);
                 await connection.OpenAsync();
-                logger.LogInformation("Database is ready to use");
+                logger.LogInformation("connection successufully");
                 return true;
             }
             catch (NpgsqlException)
             {
                 logger.LogWarning($"Attempt {i}/{maxRetries} fails: Retry in {delay.Value.TotalSeconds} seconds.");
-               await Task.Delay(delay.Value);
+                await Task.Delay(delay.Value);
             }
             catch (Exception ex)
             {
-             logger.LogError($"Attemp {i}/{maxRetries} fails: Exception: {ex.Message}");
-             throw;
+                logger.LogError($"Attemp {i}/{maxRetries} fails: Exception: {ex.Message}");
+                throw;
             }
         }
         logger.LogError($"Could not connect to database after {maxRetries} retries.");

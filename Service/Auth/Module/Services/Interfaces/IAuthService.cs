@@ -1,13 +1,15 @@
 ﻿using Auth.Module.DTOs;
+using Auth.Server.DTOs;
 using Auth.Server.Model;
 
 namespace Auth.Module.Services.Interfaces
 {
     public interface IAuthService
     {
+        Task<string> Login(UserModel body);
+        Task<string> VerifyTowAFCode(VerifyCodeDTO dto);
         Task<string> ChangeAddressEmail(int id, NewEmailDTO body);
         Task<string> RegisteredUser(CreateUserDTO body);
-        Task<string> GenerateToken(UserModel body);
         Task<string> GenerateRefreshToken();
         Task<object> GetProfile();
         Task<UserModel> GetUserByCookie();

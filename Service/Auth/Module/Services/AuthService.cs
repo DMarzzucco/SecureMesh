@@ -9,6 +9,7 @@ using Auth.Server.Service.Interfaces;
 using Auth.Utils.Exceptions;
 using Auth.Queues.Messaging.Interfaces;
 using Auth.Configuration.Redis.Repository.Interfaces;
+using Auth.Utils.Helper;
 
 namespace Auth.Module.Services
 {
@@ -20,7 +21,9 @@ namespace Auth.Module.Services
         private readonly IUserService _userService;
         private readonly IMessagingQueues _messagingQueues;
         private readonly IRedisRepository _redisRepository;
-        public AuthService(IHttpContextAccessor context, IJwtService jwtService, ICookieService cookieService, IUserService userService, IMessagingQueues messagingQueues, IRedisRepository redisRepository)
+        private readonly CodeGeneration codeGeneration;
+
+        public AuthService(IHttpContextAccessor context, IJwtService jwtService, ICookieService cookieService, IUserService userService, IMessagingQueues messagingQueues, IRedisRepository redisRepository, CodeGeneration codeGeneration)
         {
             this._context = context;
             this._jwtService = jwtService;
@@ -28,6 +31,7 @@ namespace Auth.Module.Services
             this._userService = userService;
             this._messagingQueues = messagingQueues;
             this._redisRepository = redisRepository;
+            this.codeGeneration = codeGeneration;
         }
         /// <summary>
         /// Registered of user
@@ -67,31 +71,96 @@ namespace Auth.Module.Services
             this._cookieService.SetTokenCookies(httpContext.Response, token);
             return token.AccessToken;
         }
+
         /// <summary>
-        /// Generate Token 
+        /// Login
         /// </summary>
-        /// <param name="body"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
-        /// <exception cref="ForbiddenExceptions"></exception>
-        /// <exception cref="UnauthorizedAccessException"></exception>
-        public async Task<string> GenerateToken(UserModel body)
+        public async Task<string> Login(UserModel user)
         {
             var httpContext = this._context.HttpContext ??
                 throw new UnauthorizedAccessException("Http Context is null");
 
-            var token = this._jwtService.GenerateToken(body);
-            await this._userService.UpdateRefreshToken(body.Id, token.RefreshHasherToken);
+            var code = this.codeGeneration.InvokeCodeGeneration();
+            var expiration = DateTime.UtcNow.AddMinutes(10);
 
-            var csrfToken = Guid.NewGuid().ToString("N");
-            var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
-            DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
-            await this._userService.UpdateCsrfToken(body.Id, csrfTokenHashed, csrfTokenExpiration);
+            var currentIp = httpContext.Connection.RemoteIpAddress?.ToString();
+            var currentUserAgent = httpContext.Request.Headers.UserAgent.ToString();
+
+            /// var relation = await this.securityService.FindSessionByUserId(body.Id);
+
+            ///if(relation != null)
+            ///{
+            /// if (realtion.Ip != currentIp || realtion.UserAent != currentUserAgent)
+            /// {
+            /// 
+            ///  var token = await this._jwtService.GenerateTokenRBA(user);
+            ///  await this._messagingQueues.SendRBAMessage(token, email, realation.IP, relation.UserAgent, etc);
+            /// 
+            ///  return $"Check your email if you are really IP {currentIp} UserAgent {currentUserAgent}";
+            /// }
+            ///} 
+
+            await this._userService.UpdateTwoAFCode(user.Id, code, expiration);
+            await this._messagingQueues.TowAfCodeMessage(user.Email, code);
+
+
+            return $"Check your email to singing code";
+        }
+
+        /// <summary>
+        /// Verify 2AF Code
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        public async Task<string> VerifyTowAFCode(VerifyCodeDTO dto)
+        {
+            var httpContext = this._context.HttpContext ??
+                throw new UnauthorizedAccessException("Http Context is null");
+
+            var user = await this._userService.VerifyTwoAF(dto.Email, dto.TwoAfCode);
+
+            var token = this._jwtService.GenerateToken(user);
+            await this._userService.UpdateRefreshToken(user.Id, token.RefreshHasherToken);
 
             this._cookieService.SetTokenCookies(httpContext.Response, token);
-            this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
 
-            return $"Welcome {body.FullName}";
+            // await this.securityService.SaveSession(user.Id);
+
+            return $"Welcome {user.FullName}";
         }
+
+        /// public async Task<string> VerifySession (string token)
+        /// {
+        ///  var jwt = await this._jwtService.ValidateVerifyToken(token);
+        ///  var userId = jwt?.Claims.FirstOrDefault(c=> c.Type == "sub")?.Value ??
+        ///     throw new UnathorizedAccessException ("Invalid Token");
+        /// 
+        ///  int id = int.Parse(userId);
+        /// 
+        ///  await this.securityService.SaveSession (id);
+        ///  await this._redisRepository.UpdateStateAsync(token);
+        ///  
+        ///  return "Your new session was saved successfully";
+        /// }
+        /// NOT ALLOWEED
+        /// 
+        /// public async Task<string> NotAllowedSession (string token)
+        /// {
+        ///  var jwt = await this._jwtService.ValidateVerifyToken(token);
+        ///  var userId = jwt?.Claims.FirstOrDefault(c=> c.Type == "sub")?.Value ??
+        ///     throw new UnathorizedAccessException ("Invalid Token");
+        /// 
+        ///  int id = int.Parse(userId);
+        ///  
+        ///  await this.securityService.DenegatePermision(id);
+        ///  await this.redisRepository.UpdateStateAsync(token);
+        ///  return "Session denegate, you must be change your password";
+        /// }
+        
+        
         /// <summary>
         /// Get Profile
         /// </summary>
@@ -265,9 +334,10 @@ namespace Auth.Module.Services
         /// <exception cref="ForbiddenExceptions"></exception>
         public async Task<UserModel> ValidateUser(LoginDTO body)
         {
-            var httpContext = this._context.HttpContext ??
-                throw new UnauthorizedAccessException("Http Context is null");
-            var csrfFromHeader = httpContext.Request.Headers["X-XSRF-TOKEN"];
+            // var httpContext = this._context.HttpContext ??
+            //     throw new UnauthorizedAccessException("Http Context is null");
+
+            // var csrfFromHeader = httpContext.Request.Headers["X-XSRF-TOKEN"];
 
             var user = await this._userService.FindByValue("Username", body.Username) ??
                 throw new KeyNotFoundException("This Username is wrong or not was registered");
@@ -282,20 +352,20 @@ namespace Auth.Module.Services
             if (!user.EmailVerified)
                 throw new ForbiddenExceptions("You need check your email to login");
 
-            if (user.CsrfToken == null || user.CsrfTokenExpiration < DateTime.UtcNow)
-            {
-                var csrfToken = Guid.NewGuid().ToString("N");
-                var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
-                DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
+            // if (user.CsrfToken == null || user.CsrfTokenExpiration < DateTime.UtcNow)
+            // {
+            //     var csrfToken = Guid.NewGuid().ToString("N");
+            //     var csrfTokenHashed = BCrypt.Net.BCrypt.HashPassword(csrfToken);
+            //     DateTime csrfTokenExpiration = DateTime.UtcNow.AddMinutes(30);
 
-                await this._userService.UpdateCsrfToken(user.Id, csrfTokenHashed, csrfTokenExpiration);
-                this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(csrfFromHeader) || !BCrypt.Net.BCrypt.Verify(csrfFromHeader, user.CsrfToken))
-                    throw new ForbiddenExceptions("Unauthorized request.");
-            }
+            //     await this._userService.UpdateCsrfToken(user.Id, csrfTokenHashed, csrfTokenExpiration);
+            //     this._cookieService.SetCRSFToken(httpContext.Response, "XSRF-TOKEN", csrfToken);
+            // }
+            // else
+            // {
+            //     if (string.IsNullOrEmpty(csrfFromHeader) || !BCrypt.Net.BCrypt.Verify(csrfFromHeader, user.CsrfToken))
+            //         throw new ForbiddenExceptions("Unauthorized request.");
+            // }
 
             await this._userService.CancelationOperation(user.Id);
 

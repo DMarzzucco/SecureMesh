@@ -8,4 +8,5 @@ public interface IMessagingQueues
     Task SendNewEmailVerificationEvent(string email, string token, int id);
     Task SendEmailVerificactionEvent(string email, string token, int id);
     Task PasswordRecuperationMessage(string email, string token, int id);
+    Task TowAfCodeMessage(string email, string code);
 }

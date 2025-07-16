@@ -41,10 +41,19 @@ public class UserModel
     public string? ScheduledDeletionJobId { get; set; }
 
     [SwaggerIgnore]
-    public string? CsrfToken { get; set; }
+    public string? TwoAFCode { get; set; }
+    
+    [SwaggerIgnore]
+    public DateTime? TwoAFCodeExpiration { get; set; } = null;
 
     [SwaggerIgnore]
-    public DateTime? CsrfTokenExpiration { get; set; } = null;
+    public int VerifyAttempts { get; set; } = 0;
+
+    [SwaggerIgnore]
+    public DateTime? LockedAt { get; set; } = null;
+
+    [SwaggerIgnore]
+    public bool FirstLogin { get; set; } = true;
 
     [SwaggerIgnore]
     public string? RefreshToken { get; set; }
