@@ -13,6 +13,8 @@ public static class AddAuthPolicy
 
         //rate limiting Policy
         public const string LoginPolicy = "login-rs";
+        public const string InitSessionPolicy = "init-session-rs";
+        public const string Generate2FACodePolicy = "gen-2fa-code";
         public const string LogOutPolicy = "logout";
         public const string RegisterPolicy = "register";
         public const string PasswordUpdateLimit = "password-update";
@@ -21,9 +23,11 @@ public static class AddAuthPolicy
         public const string UpdateEmailPolicy = "update-email";
         public const string UpdateCredentials = "update-credentials";
         public const string UpdateAnyCredentials = "update-any-credentials";
+        public const string VerifyRBAPolicy = "verify-rba";
         public const string VerifyEmailPolicy = "verify-email";
         public const string VerifyNewEmailPolicy = "verify-new-email";
         public const string RemoveUserPolicy = "remove-user";
+        public const string RemoveSessionPolicy = "remove-sessions";
 
     }
 }

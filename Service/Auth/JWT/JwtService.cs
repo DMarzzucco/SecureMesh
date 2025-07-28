@@ -2,12 +2,13 @@
 using Auth.Configuration.Redis.Repository.Interfaces;
 using Auth.JWT.DTOs;
 using Auth.JWT.Interfaces;
-using Auth.Server.Model;
 using Auth.Utils.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Auth.Server.Users.Model;
+using Microsoft.OpenApi.Expressions;
 
 namespace Auth.JWT
 {
@@ -47,6 +48,41 @@ namespace Auth.JWT
             return tk;
 
         }
+
+        /// <summary>
+        /// Generate RBA Token
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="ip"></param>
+        /// <param name="userAgent"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        public async Task<string> GenerateRBAToken(UserModel user, string ip, string userAgent, string location)
+        {
+            var key = Encoding.UTF8.GetBytes(this._secretKey);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescription = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(
+                [
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim ("sub", user.Id.ToString()),
+                    new Claim ("ip", ip),
+                    new Claim ("ua", userAgent),
+                    new Claim ("location", location),
+                ]),
+                Expires = DateTime.UtcNow.AddMinutes(10),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescription);
+            var tk = tokenHandler.WriteToken(token);
+
+            await this._redisRepository.SetAsync(tk);
+
+            return tk;
+        }
+
         /// <summary>
         /// Generate Recuperation Password Token
         /// </summary>
@@ -69,7 +105,7 @@ namespace Auth.JWT
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public int GetIdFromToken()
+        public IEnumerable<Claim> GetClaimFromToken()
         {
             var httpContext = this._context.HttpContext ??
                 throw new UnauthorizedAccessException("Http Context is null");
@@ -80,20 +116,22 @@ namespace Auth.JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
 
-            var idClaim = jwtToken?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ??
+            var claim = jwtToken?.Claims ??
                 throw new UnauthorizedAccessException("Invalid Token");
 
-            return int.Parse(idClaim);
+            return claim;
         }
+
         /// <summary>
         /// Generate Token 
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public TokenPair GenerateToken(UserModel user)
+        public TokenPair GenerateToken(int sessionId, UserModel user)
         {
             return CreateTokenPair(
+                sessionId,
                 user,
                 DateTime.UtcNow.AddHours(5),
                 DateTime.UtcNow.AddDays(5)
@@ -105,9 +143,10 @@ namespace Auth.JWT
         /// <param name="user"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public TokenPair RefreshToken(UserModel user)
+        public TokenPair RefreshToken(int sessionId, UserModel user)
         {
             return CreateTokenPair(
+                sessionId,
                 user,
                 DateTime.UtcNow.AddDays(5),
                 DateTime.UtcNow.AddDays(5)
@@ -216,7 +255,7 @@ namespace Auth.JWT
         /// <param name="refreshTokenExpiration"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public TokenPair CreateTokenPair(UserModel user, DateTime accessTokenExpiration, DateTime refreshTokenExpiration)
+        public TokenPair CreateTokenPair(int sessionId, UserModel user, DateTime accessTokenExpiration, DateTime refreshTokenExpiration)
         {
             var keyBytes = Encoding.UTF8.GetBytes(this._secretKey);
             var credentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature);
@@ -225,6 +264,7 @@ namespace Auth.JWT
             {
                 new ("sub", user.Id.ToString()),
                 new (ClaimTypes.Role, user.Roles.ToString()),
+                new ("sessionId", sessionId.ToString())
             };
 
             var accessToken = CreateToken(claims, credentials, accessTokenExpiration);
@@ -253,18 +293,36 @@ namespace Auth.JWT
             var key = Encoding.UTF8.GetBytes(this._secretKey);
             var tokenDescription = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
+                Subject = new ClaimsIdentity(
+                [
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim ("sub", user.Id.ToString()),
                     new Claim ("purpose", purpose)
-                }),
+                ]),
                 Expires = expiration,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 
             };
             return tokenDescription;
         }
+
+        /// <summary>
+        /// Get Claims Values
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        public string GetClaimsValue(IEnumerable<Claim> claims, string type)
+        {
+            var value = claims.FirstOrDefault(c => c.Type == type)?.Value;
+
+            if (string.IsNullOrEmpty(value))
+                throw new UnauthorizedAccessException($"Invalid tokne, missing claim: {type}");
+
+            return value;
+        }
+
         /// <summary>
         /// Template to create token
         /// </summary>

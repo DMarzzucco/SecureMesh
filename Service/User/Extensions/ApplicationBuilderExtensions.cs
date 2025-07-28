@@ -11,7 +11,6 @@ public static class ApplicationBuilderExtensions
         app.UseEndpoints(e =>
         {
             e.MapGrpcService<UserServiceGrpcImpl>();
-            e.MapGrpcService<UserHangFireServicesImpl>();
         });
         app.UseStaticFiles();
         app.UseCors("CorsPolicy");

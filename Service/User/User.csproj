@@ -35,8 +35,6 @@
 
 	<ItemGroup>
 		<Protobuf Include="Protos\UserServiceGrpc.proto" GrpcServices="Server" />
-		<Protobuf Include="Protos\UserHangFireService.proto" GrpcServices="Server" />
-		<Protobuf Include="Protos\HangFireServer.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 </Project>

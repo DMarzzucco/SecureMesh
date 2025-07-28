@@ -14,8 +14,6 @@ using User.Module.Validations.Interface;
 using User.Module.Stubs.Maps;
 using User.Module.Stubs.Handlers;
 using User.Configuration;
-using User.Server.Interfaces;
-using User.Server;
 
 namespace User.Extensions;
 
@@ -27,7 +25,7 @@ public static partial class ServiceBuilderExtensions
         //database connection
         services.AddDatabaseConnection(configuration);
         //gRPC
-        services.AddServiceGrpcClient();
+        services.AddGrpc();
         //controller configuration
         services.AddControllers(static op =>
         {
@@ -43,7 +41,6 @@ public static partial class ServiceBuilderExtensions
         services.AddScoped<GlobalFilterExceptions>();
         services.AddScoped<MapResponseGrpc>();
         services.AddScoped<HandlerGrpcExceptions>();
-        services.AddScoped<IHangFireServices, HangFireService>();
         services.AddScoped<IUserValidation, UserValidation>();
         services.AddScoped<IUserService, UserServices>();
         services.AddScoped<IUserRepository, UserRepository>();

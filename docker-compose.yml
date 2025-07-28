@@ -146,6 +146,17 @@ services:
       - rabbit_network
     depends_on:
       - rabbitmq
+# Worker 6 RBA
+  worker6:
+    container_name: worker6_RBA
+    image: ${DOCKER_REGISTRY}worker6
+    build: 
+      context: ./Workers/RBA_message
+      dockerfile: Dockerfile
+    networks:
+      - rabbit_network
+    depends_on:
+      - rabbitmq
 
   #Hangfire Servies
   hangfire:
@@ -192,8 +203,30 @@ services:
       - db-hangfire-bridge
     depends_on:
       - db
+    
+  # Security Api
+  security:
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ser.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=dos123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=6070
+      - ASPNETCORE_HTTPS_PORTS=6070
+    container_name: security.net
+    image: ${DOCKER_REGISTRY-}security
+    build:
+      context: .
+      dockerfile: Service/Security/Dockerfile
+    ports:
+      - "6070:6070"
+    volumes:
+      - ./certs/security/ser.pfx:/https/ser.pfx
+    networks:
+      - db-security-bridge
+    depends_on:
+      - db_security
       
-  # Security Api Container
+  # Ips Service
   auth:
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.pfx
@@ -201,7 +234,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5090
       - ASPNETCORE_HTTPS_PORTS=5090
-    container_name: auth.net
+    container_name: ips.net
     image: ${DOCKER_REGISTRY-}auth
     build:
       context: .
@@ -211,6 +244,8 @@ services:
     depends_on:
       - user
       - redis
+      - security
+      - hangfire
       - db_auth
       - rabbitmq
     volumes:
@@ -218,7 +253,9 @@ services:
       - ./scripts/wait-for-it.sh:/wait-for-it.sh
     networks:
       - compose-bridge
+      - db-security-bridge
       - db-auth-bridge
+      - db-hangfire-bridge
       - rabbit_network
       - redis_network
 

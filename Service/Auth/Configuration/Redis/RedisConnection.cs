@@ -11,8 +11,8 @@ public static class RedisConnection
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
             
-            var redisConnect = configuration.GetConnectionString("RedisLocal");
-            // var redisConnect = configuration.GetConnectionString("RedisCont");
+            // var redisConnect = configuration.GetConnectionString("RedisLocal");
+            var redisConnect = configuration.GetConnectionString("RedisCont");
 
             if (string.IsNullOrEmpty(redisConnect))
                 throw new ArgumentNullException(nameof(redisConnect) + " redis connect could not must be null");

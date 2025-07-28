@@ -3,32 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\darma\\Documents\\SecureMesh\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5F33C57F-C84D-4A4A-8784-45A264DAF228}|Service\\Security\\Security.csproj|c:\\users\\darma\\documents\\securemesh\\service\\security\\module\\repository\\securityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5F33C57F-C84D-4A4A-8784-45A264DAF228}|Service\\Security\\Security.csproj|solutionrelative:service\\security\\module\\repository\\securityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\module\\controller\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\module\\controller\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darma\\documents\\securemesh\\securemesh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\module\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\module\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darma\\documents\\securemesh\\securemesh\\configuration\\jwtbearerconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\configuration\\jwtbearerconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darma\\documents\\securemesh\\securemesh\\reverseproxy\\reverseproxyconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\reverseproxy\\reverseproxyconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darma\\documents\\securemesh\\securemesh\\extensions\\applcationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\extensions\\applcationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darma\\documents\\securemesh\\securemesh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,26 +34,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SecurityRepository.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Security\\Module\\Repository\\SecurityRepository.cs",
-              "RelativeDocumentMoniker": "Service\\Security\\Module\\Repository\\SecurityRepository.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Security\\Module\\Repository\\SecurityRepository.cs",
-              "RelativeToolTip": "Service\\Security\\Module\\Repository\\SecurityRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T10:52:27.154Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Module\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Service\\Auth\\Module\\Services\\AuthService.cs",
               "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Module\\Services\\AuthService.cs",
               "RelativeToolTip": "Service\\Auth\\Module\\Services\\AuthService.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAowD8AAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAN0AAAAAAAAAAAAwwPAAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-10T13:23:48.158Z",
               "EditorCaption": ""
@@ -81,18 +56,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-10T12:25:46.581Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ReverseProxyConfig.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
-              "RelativeDocumentMoniker": "SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
-              "RelativeToolTip": "SecureMesh\\ReverseProxy\\ReverseProxyConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T21:22:32.386Z"
             }
           ]
         },
@@ -102,40 +65,29 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "JwtBearerConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "RelativeDocumentMoniker": "SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "RelativeToolTip": "SecureMesh\\Configuration\\JwtBearerConfiguration.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwDkAAAABAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Module\\Controller\\AuthController.cs",
+              "RelativeDocumentMoniker": "Service\\Auth\\Module\\Controller\\AuthController.cs",
+              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Module\\Controller\\AuthController.cs",
+              "RelativeToolTip": "Service\\Auth\\Module\\Controller\\AuthController.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwBIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T21:30:45.577Z",
+              "WhenOpened": "2025-07-28T15:51:24.909Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Program.cs",
               "RelativeDocumentMoniker": "SecureMesh\\Program.cs",
               "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Program.cs",
               "RelativeToolTip": "SecureMesh\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T13:53:19.363Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ApplcationBuilderExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
-              "RelativeDocumentMoniker": "SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
-              "RelativeToolTip": "SecureMesh\\Extensions\\ApplcationBuilderExtensions.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAzwCQAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T13:53:40.515Z"
+              "WhenOpened": "2025-04-05T13:53:19.363Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -1,3 +1,4 @@
+using Auth.Configuration.PostgreSQL.Helper;
 using Auth.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.ApplyAutoMigration();
 app.UseApplicationBuilderExtensions();
 app.MapControllers();
 app.Run();

@@ -5,62 +5,78 @@ Secure Mesh is a security, authentication, and authorization testing template de
 > [!NOTE]
 > The project is currently orchestrated with docker-compose, but it will soon be migrated to Kubernetes.
 
-
 ## 🧱 General Architecture
 
-The system is composed of the following services:
+### Overall Vision
 
-- `User API`: Manages the full lifecycle of a user.
-- `Auth API`: Responsible for validating credentials, generating tokens, and verifying user accounts.
+This system is built following the principles of Clean Architecture, Hexagonal Architecture, and Domain-Driven Design (DDD). Each microservice is developed as an independent bounded context, speaking its own domain language, and adhering to patterns that ensure separation of concerns, scalability, and maintainability.
+
+The system includes multiple microservices, each focused on a specific domain such as user management, security, sessions, etc.
+
+---
+
+### Key Components
+
+#### 1. Microservices
+
+- `API Gateway`: A unified entry point for clients (web, mobile, desktop). It exposes REST endpoints for consumption, encapsulates routing logic, and implements CORS policies, Rate Limiting, Role Hierarchies, and OAuth2 protocols.
+- `Identity Service`: Manages user identity and data. Implements business logic related to profiles, authentication, and permissions.
+- `User API`: Manages the full lifecycle of users.
+- `Security API`: Manages the full lifecycle of user sessions.
 - `Hangfire Server`: Executes background jobs.
-- `API Gateway`: Centralizes routes and manages authentication, roles and access limits.
-- `Redis`: - `Redis`: Base de datos que se usa para almacenar tokens de un solo uso, los cuales son eliminados con TTL una vez hayan expirados.
-- `RabbitMQ`: Asynchronous messaging system used for email verification, welcome messages, and account recovery.
-- `PostgreSQL`: Relation database for persisten storage.
+- `Redis`: A key-value store used to hold one-time tokens, which are discarded after TTL expiration.
+- `RabbitMQ`: An asynchronous messaging system used for email verification, welcome messages, and account recovery.
+- `PostgreSQL`: Relational database for persistent storage.
 
+#### 2. Microservice Architecture
+
+Each microservice follows a structure based on:
+
+- **Clean Architecture**:
+  - **Domain Models**: Represent core concepts (e.g., UserModel, SessionModel).
+  - **Use Cases**: Implement business logic.
+  - **Repository and Service Interfaces**: Define abstract data access and external service integrations.
+
+- **Hexagonal Architecture**:
+  - **Ports (Interfaces)**: Define how use cases interact with the outside world.
+  - **Adapters**: Implement ports using technologies like Entity Framework, gRPC, or REST.
+
+#### 3. Communication Between Components
+- **REST**: Primarily used for client-to-microservice and inter-microservice communication in specific scenarios.
+- **gRPC**: Used for internal calls between microservices.
+- **RabbitMQ**: For asynchronous tasks (e.g., sending emails, notifications).
+
+#### 4. Databases
+
+![Models](/img/db_usermodel.png)
+
+---
+
+## Architecture Diagram
 ![Models](/img/arch23.png)
-
-All services are independent, self-contained, and communicate using `gRPC` when necessary.
 
 ---
 
 ## 🔒 Security and Authentication
 
-- **JWT**: Uses both accessToken and refreshToken for secure session handling.
-- **Secure cookies**: HTTP-only and SSL-protected.
-- **CSRF Tokens**: Temporarily implemented as a per-session protection mechanism.
+- **JWT**: Utilizes both access tokens and refresh tokens for secure session handling.
+- **Secure Cookies**: HTTP-only and SSL-protected.
+- **2FA**: Implements two-factor authentication on routes such as password change or account deletion.
+- **RBA (Risk-Based Authentication)**: A mechanism to validate and manage each user session.
 - **Account Verification**: Users must verify their email before logging in.
-- **Token renewal**: Performed automatically via middleware before expiration.
-- **Roles**: Hierarchy integrated and validated at the `gateway-api` level.
-- **Authorization policies**: Based on role and resource accessed.
-- **Rate limiting**: Protects sensitive routes from brute-force and malicious attempts.
+- **Token Renewal**: Performed automatically via middleware before token expiration.
+- **OTT (One-Time Tokens)**: Used for secure transactions like session verification.
+- **Roles**: Hierarchical roles are integrated and validated at the API Gateway level.
+- **Authorization Policies**: Based on role and resource access.
+- **Rate Limiting**: Protects sensitive routes from brute-force attacks and malicious activities.
 
 > [!WARNING]
 > The SSL certificates used as tests are self-signed, so in certain parts of the source code, you can find code that allows them to be used exclusively for development.
+
+
 ---
-## 🟦 Database - User Model
-
-```SQL
-CREATE TABLE "User"(
-    "Id" integer GENERATED ALWAYS AS IDENTITY NOT NULL,
-    "FullName" varchar(50) NOT NULL,
-    "Username" varchar(50) NOT NULL,
-    "Email" varchar(50) NOT NULL,
-    "EmailVerified" boolean NOT NULL,
-    "Password" text NOT NULL,
-    "Roles" varchar(20) NOT NULL,
-    "IsDeleted" boolean NOT NULL,
-    "DeletedAt" timestamp with time zone,
-    "ScheduledDeletionJobId" text,
-    "CsrfToken" text,
-    "CsrfTokenExpiration" timestamp with time zone,
-    "RefreshToken" text,
-    PRIMARY KEY(Id)
-);
-```
-
 ## 🚀 Deployment
-1. You must have Docker Desktop and Makefile installed.
+1. You must have Docker Desktop and Makefile (optional) installed.
 2. Clone repository
 3. Execute in terminal:
 
@@ -87,7 +103,7 @@ make purge
 
 ## 🔌 Ports
 1. User API ["https://*:4080"]("https://localhost:4080/swagger/index.html") 
-2. Auth API ["https://*:5090"]("https://localhost:5090/swagger/index.html")
+2. IPS ["https://*:5090"]("https://localhost:5090/swagger/index.html")
 3. Hangfire ["https://*:3434"]("https://localhost:3434/hangfire")
 4. API Gateway ["https://*:8888"]("https://localhost:8888/")
 5. RabbitMQ ["https://*:15672"]("http://localhost:15672/#/")

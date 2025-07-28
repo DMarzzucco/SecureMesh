@@ -22,7 +22,7 @@ builder.Services.AddGrpcSerivceClient();
 builder.Services.AddHangfireServices(builder.Configuration);
 builder.Services.AddGrpc();
 
-builder.Services.AddScoped<IUserServices, UserService>();
+builder.Services.AddScoped<IAuthServices, AuthService>();
 
 var app = builder.Build();
 

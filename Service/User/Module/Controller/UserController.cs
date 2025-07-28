@@ -63,18 +63,6 @@ namespace User.Module.Controller
         }
 
         /// <summary>
-        /// Update Password
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        [HttpPatch("{id}/password")]
-        public async Task<ActionResult<string>> UpdatePassword(int id, [FromBody] UpdatePasswordDTO dt)
-        {
-            return Ok(await this._service.UpdatePassword(id, dt));
-        }
-
-        /// <summary>
         /// Update Roles
         /// </summary>
         /// <param name="id"></param>
@@ -98,11 +86,5 @@ namespace User.Module.Controller
             await this._service.RemoveUserRegister(id);
             return NoContent();
         }
-
-        // [HttpPut("remove/{id}")]
-        // public async Task<ActionResult<string>> RemoveUser(int id, PasswordDTO dt)
-        // {
-        //     return Ok(await this._service.RemoveUserRegisterForBasicRoles(id, dt));
-        // }
     }
 }

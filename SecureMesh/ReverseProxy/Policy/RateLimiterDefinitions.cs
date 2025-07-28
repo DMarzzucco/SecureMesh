@@ -24,6 +24,20 @@ public static class RateLimiterDefinitions
             op.Window = TimeSpan.FromMinutes(30);
         }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
+        //init session
+        options.AddFixedWindowLimiter("init-session-rs", op =>
+        {
+            op.PermitLimit = 2;
+            op.Window = TimeSpan.FromMinutes(30);
+        }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+        //generate 2FA code
+        options.AddFixedWindowLimiter("gen-2fa-code", op =>
+        {
+            op.PermitLimit = 2;
+            op.Window = TimeSpan.FromMinutes(30);
+        }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
         // forget password
         options.AddFixedWindowLimiter("forget-password", op =>
         {
@@ -36,6 +50,13 @@ public static class RateLimiterDefinitions
         {
             op.PermitLimit = 1;
             op.Window = TimeSpan.FromMinutes(20);
+        }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        
+        // Verify RBA
+        options.AddFixedWindowLimiter("verify-rba", op =>
+        {
+            op.PermitLimit = 2;
+            op.Window = TimeSpan.FromMinutes(30);
         }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
         // Verify Email 
@@ -56,6 +77,15 @@ public static class RateLimiterDefinitions
         
         /// //logout
         options.AddFixedWindowLimiter("logout", op =>
+        {
+            op.PermitLimit = 4;
+            op.Window = TimeSpan.FromMinutes(6);
+            op.QueueLimit = 1;
+            op.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+        /// Remove Sessin
+        options.AddFixedWindowLimiter("remove-sessions", op =>
         {
             op.PermitLimit = 4;
             op.Window = TimeSpan.FromMinutes(6);
@@ -100,8 +130,8 @@ public static class RateLimiterDefinitions
         // remove user
         options.AddFixedWindowLimiter("remove-user", op =>
         {
-            op.PermitLimit = 1;
-            op.Window = TimeSpan.FromMinutes(30);
+            op.PermitLimit = 2;
+            op.Window = TimeSpan.FromMinutes(10);
         }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
     }
 }

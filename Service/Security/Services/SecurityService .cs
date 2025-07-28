@@ -1,33 +1,55 @@
-using System.Reflection.Metadata.Ecma335;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Security;
 using Security.Module.Model;
 using Security.Module.Repository.Interfaces;
 using Security.Protos;
 
 namespace Security.Services;
 
-public class SecurityService : SecurityServiceGrpc.SecurityServiceGrpcBase
+public class SecurityService(ISecurityRepository repository) : SecurityServiceGrpc.SecurityServiceGrpcBase
 {
-    private readonly ISecurityRepository repository;
-    private readonly IHttpContextAccessor httpContext;
-
-    public SecurityService(ISecurityRepository repository, IHttpContextAccessor httpContext)
-    {
-        this.repository = repository;
-        this.httpContext = httpContext;
-    }
+    private readonly ISecurityRepository repository = repository;
 
     /// <summary>
-    /// Find session by user id
+    /// Remove all sessions by user Id
     /// </summary>
     /// <param name="request"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public override async Task<SessionResponse> FindSessionByUser(UserIdRequest request, ServerCallContext context)
+    public override async Task<Empty> DeleteAllSessionsByUserId(UserIdRequest request, ServerCallContext context)
     {
-        var session = await this.repository.FindByUserId(request.UserId);
+        await this.repository.RemoveAllSessionsByUserId(request.UserId);
+        
+        return new Empty();
+    }
+
+    /// <summary>
+    /// Remove all session except current
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public override async Task<Empty> DeleteAllSessionsExceptCurrent(DeleteAllSessionExceptCurrentRequest request, ServerCallContext context)
+    {
+        await this.repository.RemoveAllSessionsExceptCurrent(request.UserId, request.CurrentSessionId);
+        return new Empty();
+    }
+
+    /// <summary>
+    /// Find Sessions by props
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="RpcException"></exception>
+    public override async Task<FindResponse> FindSessionByProps(SessionsPropsRequest request, ServerCallContext context)
+    {
+        var session = await this.repository.FindSession(request.UserId, request.Ip, request.UserAgent, request.Location);
+
+        if (session == null) return new FindResponse
+        {
+            Reason = new NotFoundResponse { Reason = "Not found session in this user" }
+        };
 
         var response = new SessionResponse
         {
@@ -38,9 +60,56 @@ public class SecurityService : SecurityServiceGrpc.SecurityServiceGrpcBase
             Location = session.Location,
             IsActive = session.IsActive
         };
+
+        return new FindResponse { Session = response };
+    }
+
+    /// <summary>
+    /// Remove session by Id
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="RpcException"></exception>
+    public override async Task<Empty> DeleteSessionById(IdRequest request, ServerCallContext context)
+    {
+        var session = await this.repository.FindSessionById(request.Id) ??
+            throw new RpcException(new Status(StatusCode.NotFound, "Session not found"));
+
+        await this.repository.RemoveSessionAsync(session);
+
+        return new Empty();
+    }
+
+    /// <summary>
+    /// Find session by user id
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public override async Task<FindListResponse> FindListSessionsByUser(UserIdRequest request, ServerCallContext context)
+    {
+        var session = await this.repository.FindAllSessionsByUserId(request.UserId);
+
+        if (session == null) return new FindListResponse
+        {
+            Reason = new NotFoundResponse { Reason = "Not found session in this user" }
+        };
+
+        var response = new FindListResponse();
+        response.Sessions.AddRange(session.Select(s => new SessionResponse
+        {
+            Id = s.Id,
+            UserId = s.UserId,
+            Ip = s.Ip,
+            UserAgent = s.UserAgent,
+            Location = s.Location,
+            IsActive = s.IsActive
+        }));
+
         return response;
     }
-    
+
     /// <summary>
     /// Save Session
     /// </summary>
@@ -48,21 +117,19 @@ public class SecurityService : SecurityServiceGrpc.SecurityServiceGrpcBase
     /// <param name="context"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public override async Task<Empty> SaveSession(UserIdRequest request, ServerCallContext context)
+    public override async Task<IdResponse> SaveSession(SaveSessionRequest request, ServerCallContext context)
     {
-        var httpContexts = this.httpContext.HttpContext ??
-            throw new Exception();
-
-        var session = new SecurityModel
+        var session = new SessionModel
         {
             UserId = request.UserId,
-            Ip = httpContexts.Connection.RemoteIpAddress?.ToString(),
-            UserAgent = httpContexts.Request.Headers.UserAgent.ToString(),
-            Location = ""
+            Ip = request.Ip,
+            UserAgent = request.UserAgent,
+            Location = request.Location,
+            IsActive = true
         };
 
         await this.repository.SaveSession(session);
 
-        return new Empty();
+        return new IdResponse { Id = session.Id };
     }
 }

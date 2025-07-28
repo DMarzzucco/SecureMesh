@@ -1,4 +1,6 @@
-﻿using Auth.Utils.Middleware;
+﻿using Auth.Module.Stub.Hangfire;
+using Auth.Utils.Middleware;
+using AuthHangFire.Proto;
 
 namespace Auth.Extensions
 {
@@ -14,6 +16,8 @@ namespace Auth.Extensions
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMiddleware<RefreshTokenMiddleware>();
+            app.UseRouting();
+            app.UseEndpoints(e => { e.MapGrpcService<AuthHangfireServiceGrpc>();  });
             app.UseCors("CorsPolicy");
             return app;
         }

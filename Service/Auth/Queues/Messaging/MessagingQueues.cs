@@ -103,4 +103,34 @@ public partial class MessagingQueues(IRabbitMQServices services) : IMessagingQue
 
         await this._services.SendMessageAsync(message, QueuesNames.TwoAFCodeQeue);
     }
+
+    /// <summary>
+    /// Verify Sessions RBA
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="email"></param>
+    /// <param name="ip"></param>
+    /// <param name="userAgent"></param>
+    /// <param name="location"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task RiskBasedAuthenticationMessage(
+        string token,
+        string email,
+        string userAgent,
+        string location
+     )
+    {
+        var message = new VerifySessionsMessage
+        {
+            Token = token,
+            Email = email,
+            UserAgent = userAgent,
+            Location = location
+        };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await this._services.SendMessageAsync(message, QueuesNames.VerifySessionQueue);
+    }
 }

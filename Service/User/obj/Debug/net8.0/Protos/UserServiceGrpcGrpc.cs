@@ -50,8 +50,6 @@ namespace User {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.ValidationResponse> __Marshaller_ValidationResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.ValidationResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::User.RefreshTokenRequest> __Marshaller_RefreshTokenRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.RefreshTokenRequest.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.ValueKeysRequest> __Marshaller_ValueKeysRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.ValueKeysRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.CreateUserRequest> __Marshaller_CreateUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.CreateUserRequest.Parser));
@@ -64,13 +62,9 @@ namespace User {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::User.UpdatePasswordDTORequest> __Marshaller_UpdatePasswordDTORequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.UpdatePasswordDTORequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.MessageResponse> __Marshaller_MessageResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.MessageResponse.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::User.TwoFADTO> __Marshaller_TwoFADTO = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.TwoFADTO.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::User.VerifyTwoAFDTO> __Marshaller_VerifyTwoAFDTO = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.VerifyTwoAFDTO.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::User.AuthUserResponse> __Marshaller_AuthUserResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.AuthUserResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::User.UserRequest, global::User.ValidationResponse> __Method_GetUserByIdForAuth = new grpc::Method<global::User.UserRequest, global::User.ValidationResponse>(
@@ -78,14 +72,6 @@ namespace User {
         __ServiceName,
         "GetUserByIdForAuth",
         __Marshaller_UserRequest,
-        __Marshaller_ValidationResponse);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.RefreshTokenRequest, global::User.ValidationResponse> __Method_UpdateRefreshToken = new grpc::Method<global::User.RefreshTokenRequest, global::User.ValidationResponse>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "UpdateRefreshToken",
-        __Marshaller_RefreshTokenRequest,
         __Marshaller_ValidationResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -102,14 +88,6 @@ namespace User {
         __ServiceName,
         "RegisterUserInAuth",
         __Marshaller_CreateUserRequest,
-        __Marshaller_ValidationResponse);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.UserRequest, global::User.ValidationResponse> __Method_MarkEmailVerifyAuth = new grpc::Method<global::User.UserRequest, global::User.ValidationResponse>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "MarkEmailVerifyAuth",
-        __Marshaller_UserRequest,
         __Marshaller_ValidationResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -137,36 +115,20 @@ namespace User {
         __Marshaller_ValidationResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_CancelationOperationAuth = new grpc::Method<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
+    static readonly grpc::Method<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_DeleteAccount = new grpc::Method<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "CancelationOperationAuth",
+        "DeleteAccount",
         __Marshaller_UserRequest,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.PasswordDTORequest, global::User.MessageResponse> __Method_DeletedOwnAccountAuth = new grpc::Method<global::User.PasswordDTORequest, global::User.MessageResponse>(
+    static readonly grpc::Method<global::User.UpdatePasswordDTORequest, global::User.MessageResponse> __Method_UpdatePasswordAuth = new grpc::Method<global::User.UpdatePasswordDTORequest, global::User.MessageResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "DeletedOwnAccountAuth",
-        __Marshaller_PasswordDTORequest,
+        "UpdatePasswordAuth",
+        __Marshaller_UpdatePasswordDTORequest,
         __Marshaller_MessageResponse);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.TwoFADTO, global::Google.Protobuf.WellKnownTypes.Empty> __Method_UpdateTwoAFCode = new grpc::Method<global::User.TwoFADTO, global::Google.Protobuf.WellKnownTypes.Empty>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "UpdateTwoAFCode",
-        __Marshaller_TwoFADTO,
-        __Marshaller_google_protobuf_Empty);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.VerifyTwoAFDTO, global::User.AuthUserResponse> __Method_VerifyTwoAF = new grpc::Method<global::User.VerifyTwoAFDTO, global::User.AuthUserResponse>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "VerifyTwoAF",
-        __Marshaller_VerifyTwoAFDTO,
-        __Marshaller_AuthUserResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -185,12 +147,6 @@ namespace User {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::User.ValidationResponse> UpdateRefreshToken(global::User.RefreshTokenRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::User.ValidationResponse> FindByValueForAuth(global::User.ValueKeysRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
@@ -198,12 +154,6 @@ namespace User {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::User.ValidationResponse> RegisterUserInAuth(global::User.CreateUserRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::User.ValidationResponse> MarkEmailVerifyAuth(global::User.UserRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -227,25 +177,13 @@ namespace User {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> CancelationOperationAuth(global::User.UserRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> DeleteAccount(global::User.UserRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::User.MessageResponse> DeletedOwnAccountAuth(global::User.PasswordDTORequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> UpdateTwoAFCode(global::User.TwoFADTO request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::User.AuthUserResponse> VerifyTwoAF(global::User.VerifyTwoAFDTO request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::User.MessageResponse> UpdatePasswordAuth(global::User.UpdatePasswordDTORequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -259,17 +197,13 @@ namespace User {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetUserByIdForAuth, serviceImpl.GetUserByIdForAuth)
-          .AddMethod(__Method_UpdateRefreshToken, serviceImpl.UpdateRefreshToken)
           .AddMethod(__Method_FindByValueForAuth, serviceImpl.FindByValueForAuth)
           .AddMethod(__Method_RegisterUserInAuth, serviceImpl.RegisterUserInAuth)
-          .AddMethod(__Method_MarkEmailVerifyAuth, serviceImpl.MarkEmailVerifyAuth)
           .AddMethod(__Method_UpdateEmailAdressAuth, serviceImpl.UpdateEmailAdressAuth)
           .AddMethod(__Method_GetUserByEmailForAuth, serviceImpl.GetUserByEmailForAuth)
           .AddMethod(__Method_ReturnPasswordForAuth, serviceImpl.ReturnPasswordForAuth)
-          .AddMethod(__Method_CancelationOperationAuth, serviceImpl.CancelationOperationAuth)
-          .AddMethod(__Method_DeletedOwnAccountAuth, serviceImpl.DeletedOwnAccountAuth)
-          .AddMethod(__Method_UpdateTwoAFCode, serviceImpl.UpdateTwoAFCode)
-          .AddMethod(__Method_VerifyTwoAF, serviceImpl.VerifyTwoAF).Build();
+          .AddMethod(__Method_DeleteAccount, serviceImpl.DeleteAccount)
+          .AddMethod(__Method_UpdatePasswordAuth, serviceImpl.UpdatePasswordAuth).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -280,17 +214,13 @@ namespace User {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, UserServiceGrpcBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_GetUserByIdForAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.UserRequest, global::User.ValidationResponse>(serviceImpl.GetUserByIdForAuth));
-      serviceBinder.AddMethod(__Method_UpdateRefreshToken, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.RefreshTokenRequest, global::User.ValidationResponse>(serviceImpl.UpdateRefreshToken));
       serviceBinder.AddMethod(__Method_FindByValueForAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.ValueKeysRequest, global::User.ValidationResponse>(serviceImpl.FindByValueForAuth));
       serviceBinder.AddMethod(__Method_RegisterUserInAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.CreateUserRequest, global::User.ValidationResponse>(serviceImpl.RegisterUserInAuth));
-      serviceBinder.AddMethod(__Method_MarkEmailVerifyAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.UserRequest, global::User.ValidationResponse>(serviceImpl.MarkEmailVerifyAuth));
       serviceBinder.AddMethod(__Method_UpdateEmailAdressAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.NewEmailDTORequest, global::User.ValidationResponse>(serviceImpl.UpdateEmailAdressAuth));
       serviceBinder.AddMethod(__Method_GetUserByEmailForAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.UserEmailRequest, global::User.ValidationResponse>(serviceImpl.GetUserByEmailForAuth));
       serviceBinder.AddMethod(__Method_ReturnPasswordForAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.PasswordDTORequest, global::User.ValidationResponse>(serviceImpl.ReturnPasswordForAuth));
-      serviceBinder.AddMethod(__Method_CancelationOperationAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.CancelationOperationAuth));
-      serviceBinder.AddMethod(__Method_DeletedOwnAccountAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.PasswordDTORequest, global::User.MessageResponse>(serviceImpl.DeletedOwnAccountAuth));
-      serviceBinder.AddMethod(__Method_UpdateTwoAFCode, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.TwoFADTO, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.UpdateTwoAFCode));
-      serviceBinder.AddMethod(__Method_VerifyTwoAF, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.VerifyTwoAFDTO, global::User.AuthUserResponse>(serviceImpl.VerifyTwoAF));
+      serviceBinder.AddMethod(__Method_DeleteAccount, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.UserRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.DeleteAccount));
+      serviceBinder.AddMethod(__Method_UpdatePasswordAuth, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.UpdatePasswordDTORequest, global::User.MessageResponse>(serviceImpl.UpdatePasswordAuth));
     }
 
   }

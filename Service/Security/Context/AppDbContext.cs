@@ -13,7 +13,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         if (!optionsBuilder.IsConfigured)
             optionsBuilder.EnableSensitiveDataLogging();
     }
-    public DbSet<SecurityModel> SecurityModel { get; set; }
+    public DbSet<SessionModel> SessionModel { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

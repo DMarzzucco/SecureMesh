@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\HangFireServer.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\UserHangFireService.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\AuthHangFireService.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>

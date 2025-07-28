@@ -20,9 +20,6 @@ public class UserModel
     [SwaggerSchemaExample("marzz77_@gmail.com")]
     public required string Email { get; set; }
 
-    [SwaggerIgnore]
-    public bool EmailVerified { get; set; } = false;
-
     [SwaggerSchema("User password")]
     [SwaggerSchemaExample("passmort243")]
     public required string Password { get; set; }
@@ -32,29 +29,5 @@ public class UserModel
     public required ROLES Roles { get; set; }
 
     [SwaggerIgnore]
-    public bool IsDeleted { get; set; } = false;
-
-    [SwaggerIgnore]
-    public DateTime? DeletedAt { get; set; } = null;
-
-    [SwaggerIgnore]
-    public string? ScheduledDeletionJobId { get; set; }
-
-    [SwaggerIgnore]
-    public string? TwoAFCode { get; set; }
-    
-    [SwaggerIgnore]
-    public DateTime? TwoAFCodeExpiration { get; set; } = null;
-
-    [SwaggerIgnore]
-    public int VerifyAttempts { get; set; } = 0;
-
-    [SwaggerIgnore]
-    public DateTime? LockedAt { get; set; } = null;
-
-    [SwaggerIgnore]
-    public bool FirstLogin { get; set; } = true;
-
-    [SwaggerIgnore]
-    public string? RefreshToken { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

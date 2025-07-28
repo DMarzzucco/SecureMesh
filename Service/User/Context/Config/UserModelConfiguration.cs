@@ -18,23 +18,11 @@ public class UserModelConfiguration : IEntityTypeConfiguration<UserModel>
         builder.Property(r => r.Username).IsUnicode().IsRequired().HasMaxLength(50);
         builder.Property(r => r.Email).IsUnicode().IsRequired().HasMaxLength(50);
 
-        builder.Property(r => r.EmailVerified).IsRequired();
-
         builder.Property(r => r.Password).IsRequired();
 
         builder.Property(r => r.Roles)
             .HasConversion(EnumConversionHelper.GetEnumConverter<ROLES>())
             .HasMaxLength(20).IsUnicode(false).IsRequired();
-
-        builder.Property(r => r.IsDeleted).IsRequired();
-        builder.Property(r => r.DeletedAt).IsRequired(false);
-        builder.Property(r => r.ScheduledDeletionJobId).IsRequired(false);
-
-        builder.Property(r => r.TwoAFCode).IsRequired(false);
-        builder.Property(r => r.TwoAFCodeExpiration).IsRequired(false);
-        builder.Property(r => r.LockedAt).IsRequired(false);
-
-        builder.Property(r => r.RefreshToken).IsRequired(false);
 
         builder.ToTable("User");
     }

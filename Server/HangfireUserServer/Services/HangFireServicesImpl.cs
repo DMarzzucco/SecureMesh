@@ -5,10 +5,10 @@ using HangfireUserServer.Server.Interfaces;
 
 namespace HangfireUserServer.Services;
 
-public class HangFireServicesImpl(IBackgroundJobClient backgroundJobClient, IUserServices userServices) : HangFireServicesGrpc.HangFireServicesGrpcBase
+public class HangFireServicesImpl(IBackgroundJobClient backgroundJobClient, IAuthServices authServices) : HangFireServicesGrpc.HangFireServicesGrpcBase
 {
     private readonly IBackgroundJobClient backgroundJobClient = backgroundJobClient;
-    private readonly IUserServices userServices = userServices;
+    private readonly IAuthServices authServices = authServices;
 
     /// <summary>
     /// Sheduled Delation
@@ -18,7 +18,7 @@ public class HangFireServicesImpl(IBackgroundJobClient backgroundJobClient, IUse
     /// <returns></returns>
     public override Task<ScheduleResponse> ScheduleDeletion(ScheduleRequest request, ServerCallContext context)
     {
-        var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeletedSyncWrapp(request.UserId), TimeSpan.FromMinutes(10));
+        var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeletedSyncWrapp(request.AuthId), TimeSpan.FromMinutes(10));
 
         return Task.FromResult(new ScheduleResponse { JobId = jobId });
     }
@@ -41,6 +41,6 @@ public class HangFireServicesImpl(IBackgroundJobClient backgroundJobClient, IUse
     /// <param name="id"></param>
     public void CountedDeletedSyncWrapp(int id)
     {
-        this.userServices.CountedDeletedAsync(id).GetAwaiter().GetResult();
+        this.authServices.CountedDeletedAsync(id).GetAwaiter().GetResult();
     } 
 }

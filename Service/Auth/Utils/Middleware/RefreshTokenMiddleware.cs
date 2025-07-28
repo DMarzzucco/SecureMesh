@@ -26,12 +26,14 @@ namespace Auth.Utils.Middleware
         {
             var publicPaths = new[] {
                 "/api/Security/login",
+                "/api/Security/lskda_2312sd2000123sdaSD",
                 "/api/Security/registered",
-                "/api/Security/verify-code",
+                "/api/Security/init-session",
                 "/api/Security/12349smska_wqj1n234msm949401",
                 "/api/Security/elm23019_123mskw_123fnsk",
                 "/api/Security/5413444_dsdn123fS_231_ddf",
-                "/api/Security/8382fd_1231sfw13312saeDAs12"
+                "/api/Security/8382fd_1231sfw13312saeDAs12",
+                "/AuthHangFireService/CountedDeleted"
                   };
 
             var path = context.Request.Path.Value;
@@ -59,7 +61,7 @@ namespace Auth.Utils.Middleware
                 }
                 if (tokenService.IsTokenExpirationSoon(accessToken))
                 {
-                    var user = await authService.GetUserByCookie();
+                    var payload = await authService.GetValueByCookie();
 
                     var refreshToken = context.Request.Cookies["RefreshToken"];
                     if (string.IsNullOrEmpty(refreshToken))
@@ -74,7 +76,7 @@ namespace Auth.Utils.Middleware
                         await context.Response.WriteAsJsonAsync(new { message = "Invalid refresh Token" });
                         return;
                     }
-                    var newAccessToken = tokenService.RefreshToken(user);
+                    var newAccessToken = tokenService.RefreshToken(payload.SessionId, payload.User);
                     cookieService.SetTokenCookies(context.Response, newAccessToken);
                 }
             }

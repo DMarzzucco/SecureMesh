@@ -7,28 +7,13 @@ import "google/protobuf/timestamp.proto";
 
 service UserServiceGrpc {
     rpc GetUserByIdForAuth (UserRequest) returns (ValidationResponse);
-    rpc UpdateRefreshToken (RefreshTokenRequest) returns (ValidationResponse);
     rpc FindByValueForAuth (ValueKeysRequest) returns (ValidationResponse);
     rpc RegisterUserInAuth (CreateUserRequest) returns (ValidationResponse);
-    rpc MarkEmailVerifyAuth (UserRequest) returns (ValidationResponse);
     rpc UpdateEmailAdressAuth (NewEmailDTORequest) returns (ValidationResponse);
     rpc GetUserByEmailForAuth (UserEmailRequest) returns (ValidationResponse);
     rpc ReturnPasswordForAuth (PasswordDTORequest) returns (ValidationResponse);
-    rpc CancelationOperationAuth (UserRequest) returns (google.protobuf.Empty);
-    rpc DeletedOwnAccountAuth (PasswordDTORequest) returns (MessageResponse);
-    rpc UpdateTwoAFCode (TwoFADTO) returns (google.protobuf.Empty);
-    rpc VerifyTwoAF (VerifyTwoAFDTO) returns (AuthUserResponse);
-}
-
-message VerifyTwoAFDTO{
-    string email = 1;
-    string two_af_code = 2;
-}
-
-message TwoFADTO{
-    int32 id = 1;
-    string two_af_code = 8;
-    google.protobuf.Timestamp two_af_code_expiration = 9;
+    rpc DeleteAccount (UserRequest) returns (google.protobuf.Empty);
+    rpc UpdatePasswordAuth (UpdatePasswordDTORequest) returns (MessageResponse);
 }
 
 message ValidationResponse {
@@ -46,10 +31,6 @@ message MessageResponse {
 
 message UserEmailRequest {
     string email = 1;
-}
-message RefreshTokenRequest {
-    int32 id = 1;
-    optional string refresh_token = 2;
 }
 
 message ValueKeysRequest{
@@ -73,6 +54,11 @@ message PasswordDTORequest {
     int32 id = 1;
     string password= 2;
 }
+message UpdatePasswordDTORequest{
+    int32 id = 1;
+    string password = 2;
+    string new_password = 3;
+}
 message CreateUserRequest {
     string full_name = 2;
     string username = 3;
@@ -86,13 +72,8 @@ message AuthUserResponse {
     string full_name = 2;
     string username = 3;
     string email = 4;
-    bool email_verified = 5;
-    string password = 6;
-    ROLES roles = 7;
-    string two_af_code = 8;
-    google.protobuf.Timestamp two_af_code_expiration = 9;
-    bool first_login = 10;
-    optional string refresh_token = 11;
+    string password = 5;
+    ROLES roles = 6;
 }
 
 message ErrorResponse {

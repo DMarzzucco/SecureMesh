@@ -64,18 +64,6 @@ public static class UserRouter
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
         },
 
-
-        //Update password (ROLES:BASIC)
-        new RouteConfig
-        {
-            RouteId = "update_own_password",
-            ClusterId = "user_cluster",
-            RateLimiterPolicy = Policies.PasswordUpdateLimit,
-            AuthorizationPolicy = Policies.BasicPolicy,
-            Match = new RouteMatch { Path = "/api/User/{id}" },
-            Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/user" } } }
-        },
-
         // (ROLES:BASIC)
         // User EP
         new RouteConfig

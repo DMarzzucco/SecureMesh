@@ -12,15 +12,8 @@ namespace User.Module.Stubs.Maps
                     FullName = user.FullName,
                     Username = user.Username,
                     Email = user.Email,
-                    EmailVerified = user.EmailVerified,
                     Password = user.Password,
-                    Roles = user.Roles,
-                    TwoAfCode = user.TwoAFCode ?? "",
-                    TwoAfCodeExpiration = user.TwoAFCodeExpiration.HasValue
-                        ? Timestamp.FromDateTime(user.TwoAFCodeExpiration.Value.ToUniversalTime())
-                        : null,
-                    FirstLogin = user.FirstLogin,
-                    RefreshToken = user.RefreshToken ?? ""
+                    Roles = user.Roles
             };
         }
     }

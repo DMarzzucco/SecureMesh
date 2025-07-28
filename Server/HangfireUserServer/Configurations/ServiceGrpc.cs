@@ -1,5 +1,5 @@
 using System;
-using UserHangFire.Protos;
+using AuthHangFire.Proto;
 
 namespace HangfireUserServer.Configurations;
 
@@ -13,11 +13,19 @@ public static class ServiceGrpc
         {
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
-        service.AddGrpcClient<UserHangFireService.UserHangFireServiceClient>(x =>
+        service.AddGrpcClient<AuthHangFireService.AuthHangFireServiceClient>(x =>
         {
-            //x.Address = new Uri("https://172.31.64.1:4080");
-            // x.Address = new Uri("https://localhost:4080");
-            x.Address = new Uri("https://user:4080");
+            var inCont = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+
+            var grpcAddress = inCont ?
+                new Uri("https://auth:5090") :
+                new Uri("https://localhost:5090");
+
+            x.Address = grpcAddress;
+            // x.Address = new Uri("https://localhost:5090");
+            
+            // x.Address = new Uri("https://auth:5090");
+
             x.ChannelOptionsActions.Add(op =>
             {
                 op.HttpHandler = httpClientHandler;

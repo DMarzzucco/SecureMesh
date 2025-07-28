@@ -11,12 +11,12 @@ namespace AuthTesting;
 public class UnitSecurityTest
 {
     private readonly Mock<IAuthService> _service;
-    private readonly SecurityController _controller;
+    private readonly AuthController _controller;
 
     public UnitSecurityTest()
     {
         this._service = new Mock<IAuthService>();
-        this._controller = new SecurityController(this._service.Object);
+        this._controller = new AuthController(this._service.Object);
     }
 
     /// <summary>

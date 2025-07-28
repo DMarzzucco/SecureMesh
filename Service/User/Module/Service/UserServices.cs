@@ -5,7 +5,6 @@ using User.Module.Model;
 using User.Module.Repository.Interface;
 using User.Module.Service.Interface;
 using User.Module.Validations.Interface;
-using User.Server.Interfaces;
 using User.Utils.Exceptions;
 
 namespace User.Module.Service
@@ -15,14 +14,12 @@ namespace User.Module.Service
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUserValidation _validation;
-        private readonly IHangFireServices hangFireServices;
 
-        public UserServices(IUserRepository repository, IMapper mapper, IUserValidation validation, IHangFireServices hangFireServices)
+        public UserServices(IUserRepository repository, IMapper mapper, IUserValidation validation)
         {
             this._repository = repository;
             this._mapper = mapper;
             this._validation = validation;
-            this.hangFireServices = hangFireServices;
         }
         /// <summary>
         /// Find User By id
@@ -73,24 +70,6 @@ namespace User.Module.Service
         }
 
         /// <summary>
-        /// MarkEmailAsVerified
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="NotFoundExceptions"></exception>
-        public async Task<UserModel> MarkEmailAsVerifieds(int id)
-        {
-            var user = await this._repository.FindByIdAsync(id) ??
-                throw new NotFoundExceptions("User not found");
-
-            user.EmailVerified = true;
-
-            await this._repository.UpdateAsync(user);
-
-            return user;
-        }
-
-        /// <summary>
         /// Register User
         /// </summary>
         /// <param name="body"></param>
@@ -125,22 +104,6 @@ namespace User.Module.Service
                 throw new ForbiddenExceptions("Could not delete a user Admin");
 
             await this._repository.DeleteAsync(user);
-        }
-        /// <summary>
-        /// Refresh Token
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="RefreshToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<UserModel> UpdateRefreshToken(int id, string RefreshToken)
-        {
-            var user = await this._repository.FindByIdAsync(id) ??
-                throw new NotFoundExceptions("User not found");
-
-            user.RefreshToken = RefreshToken;
-            await this._repository.UpdateAsync(user);
-            return user;
         }
 
         /// <summary>
@@ -179,6 +142,7 @@ namespace User.Module.Service
 
             return "Password updated successfully";
         }
+        
         /// <summary>
         /// Update Email Adress
         /// </summary>
@@ -209,7 +173,6 @@ namespace User.Module.Service
             await this._validation.ValidateEmailDuplicate(dt.NewEmail);
 
             user.Email = dt.NewEmail;
-            user.EmailVerified = false;
 
             await this._repository.UpdateAsync(user);
             return user;
@@ -228,8 +191,6 @@ namespace User.Module.Service
 
             if (user.Roles == ROLES.Admin)
                 throw new ForbiddenExceptions("Could not edit a user Admin");
-
-            // this._validation.ValidationEmail(body.Email);
 
             this._mapper.Map(body, user);
             await this._repository.UpdateAsync(user);
@@ -284,40 +245,6 @@ namespace User.Module.Service
             return "Roles were updated successfully";
         }
 
-        /// <summary>
-        /// Remove user for own acount
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        /// <exception cref="BadRequestExceptions"></exception>
-        /// <exception cref="NotFoundExceptions"></exception>
-        /// <exception cref="ForbiddenExceptions"></exception>
-        public async Task<string> RemoveUserRegisterForBasicRoles(int id, PasswordDTO dt)
-        {
-            if (string.IsNullOrEmpty(dt.Password))
-                throw new BadRequestExceptions("Password is required");
-
-            var user = await this._repository.FindByIdAsync(id) ??
-                throw new NotFoundExceptions("User not found");
-
-            var passwordHasher = new PasswordHasher<UserModel>();
-
-            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, dt.Password);
-            if (verificationPass == PasswordVerificationResult.Failed)
-                throw new ForbiddenExceptions("Password is Wrong");
-
-            // var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeleted(user.Id), TimeSpan.FromMinutes(10));
-            var jobId = this.hangFireServices.ScheduleIdKey(user.Id);
-
-            user.IsDeleted = true;
-            user.DeletedAt = DateTime.UtcNow;
-            user.ScheduledDeletionJobId = jobId;
-
-            await this._repository.UpdateAsync(user);
-
-            return "Your account will be deleted in the next 10 minutes.";
-        }
         /// <summary>
         /// Return Password Async 
         /// </summary>
