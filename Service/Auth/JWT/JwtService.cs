@@ -100,6 +100,7 @@ namespace Auth.JWT
             /// save token in redis
             return tk;
         }
+
         /// <summary>
         /// Get Id From Token
         /// </summary>

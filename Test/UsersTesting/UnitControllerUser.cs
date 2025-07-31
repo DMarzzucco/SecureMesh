@@ -111,28 +111,6 @@ public class UnitControllerUser
     }
 
     /// <summary>
-    /// Update Password
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task ShouldUpdateThePassword()
-    {
-        int id = 4;
-        var dt = UsersMock.UpdatePasswordDTOMock;
-        
-        string message = "Password updated successfully";
-
-        this._service.Setup(s => s.UpdatePassword(id, dt)).ReturnsAsync(message);
-
-        var res = await this._controller.UpdatePassword(id, dt);
-        var response = Assert.IsType<OkObjectResult>(res.Result);
-
-        Assert.NotNull(response);
-        Assert.Equal(200, response.StatusCode);
-        Assert.Equal(message, response.Value);
-    }
-
-    /// <summary>
     /// Update Roles
     /// </summary>
     /// <returns></returns>

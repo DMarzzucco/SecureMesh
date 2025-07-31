@@ -10,15 +10,6 @@ public class SecurityRepository(AppDbContext context) : ISecurityRepository
 {
     private readonly AppDbContext context = context;
 
-    /// <summary>
-    /// Find Security relations by user id key
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public async Task<SessionModel?> FindByUserId(int id)
-    {
-        return await this.context.SessionModel.FirstOrDefaultAsync(s => s.UserId == id); ;
-    }
 
     /// <summary>
     /// Find Session
@@ -68,18 +59,6 @@ public class SecurityRepository(AppDbContext context) : ISecurityRepository
     {
         this.context.SessionModel.Add(body);
         await this.context.SaveChangesAsync();
-    }
-
-    /// <summary>
-    /// Update Session
-    /// </summary>
-    /// <param name="body"></param>
-    /// <returns></returns>
-    public async Task<bool> UpdateState(SessionModel body)
-    {
-        this.context.SessionModel.Entry(body).State = EntityState.Modified;
-        await this.context.SaveChangesAsync();
-        return true;
     }
 
     /// <summary>

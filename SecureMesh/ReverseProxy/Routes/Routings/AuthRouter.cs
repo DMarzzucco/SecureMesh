@@ -16,7 +16,7 @@ public static class AuthRouter
             RouteId = "register_route",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.RegisterPolicy,
-            Match = new RouteMatch { Path = "/api/Security/registered" },
+            Match = new RouteMatch { Path = "/api/Auth/registered" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         //Login 
@@ -25,7 +25,7 @@ public static class AuthRouter
             RouteId = "login_route",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.LoginPolicy,
-            Match = new RouteMatch { Path = "/api/Security/login" },
+            Match = new RouteMatch { Path = "/api/Auth/login" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         // start session
@@ -34,7 +34,7 @@ public static class AuthRouter
             RouteId = "init_sessions_route",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.InitSessionPolicy,
-            Match = new RouteMatch { Path = "/api/Security/init-session" },
+            Match = new RouteMatch { Path = "/api/Auth/init-session" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         // session list
@@ -43,7 +43,7 @@ public static class AuthRouter
             RouteId = "list_session_route",
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
-            Match = new RouteMatch { Path = "/api/Security/sessions-list" },
+            Match = new RouteMatch { Path = "/api/Auth/sessions-list" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         // Delete Session by Id
@@ -53,7 +53,7 @@ public static class AuthRouter
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
             RateLimiterPolicy = Policies.RemoveSessionPolicy,
-            Match = new RouteMatch { Path = "/api/Security/session-delete" },
+            Match = new RouteMatch { Path = "/api/Auth/session-delete" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         // logout
@@ -63,7 +63,7 @@ public static class AuthRouter
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
             RateLimiterPolicy = Policies.LogOutPolicy,
-            Match = new RouteMatch { Path = "/api/Security/logout" },
+            Match = new RouteMatch { Path = "/api/Auth/logout" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         // remove user
@@ -73,7 +73,7 @@ public static class AuthRouter
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
             RateLimiterPolicy = Policies.RemoveUserPolicy,
-            Match = new RouteMatch { Path = "/api/Security/remove_ownaccount" },
+            Match = new RouteMatch { Path = "/api/Auth/remove_ownaccount" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         ///Forget Password
@@ -82,7 +82,7 @@ public static class AuthRouter
             RouteId = "forget_password",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.ForgetPasswordPolicy,
-            Match = new RouteMatch { Path = "/api/Security/elm23019_123mskw_123fnsk" },
+            Match = new RouteMatch { Path = "/api/Auth/elm23019_123mskw_123fnsk" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         // Generate 2FA Code
@@ -92,7 +92,7 @@ public static class AuthRouter
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
             RateLimiterPolicy = Policies.Generate2FACodePolicy,
-            Match = new RouteMatch { Path = "/api/Security/2faC@d363n3r4t3" },
+            Match = new RouteMatch { Path = "/api/Auth/2faC@d363n3r4t3" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         ///Update Email
@@ -102,7 +102,7 @@ public static class AuthRouter
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
             RateLimiterPolicy = Policies.UpdateEmailPolicy,
-            Match = new RouteMatch { Path = "/api/Security/r3f1orm@2-ema1l@213" },
+            Match = new RouteMatch { Path = "/api/Auth/r3f1orm@2-ema1l@213" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         ///Update password
@@ -112,7 +112,7 @@ public static class AuthRouter
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
             RateLimiterPolicy = Policies.PasswordUpdateLimit,
-            Match = new RouteMatch { Path = "/api/Security/upd4t3-p455w@rd" },
+            Match = new RouteMatch { Path = "/api/Auth/upd4t3-p455w@rd" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         /// Worker (RBA Verification)
@@ -121,7 +121,7 @@ public static class AuthRouter
             RouteId = "init_session_route",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.VerifyRBAPolicy,
-            Match = new RouteMatch { Path = "/api/Security/lskda_2312sd2000123sdaSD" },
+            Match = new RouteMatch { Path = "/api/Auth/lskda_2312sd2000123sdaSD" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         /// Worker (verification email)
@@ -130,7 +130,7 @@ public static class AuthRouter
             RouteId = "verification email",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.VerifyEmailPolicy,
-            Match = new RouteMatch { Path = "/api/Security/12349smska_wqj1n234msm949401" },
+            Match = new RouteMatch { Path = "/api/Auth/12349smska_wqj1n234msm949401" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         /// Worker (verification new email)
@@ -139,7 +139,7 @@ public static class AuthRouter
             RouteId = "verification new email",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.VerifyNewEmailPolicy,
-            Match = new RouteMatch { Path = "/api/Security/5413444_dsdn123fS_231_ddf" },
+            Match = new RouteMatch { Path = "/api/Auth/5413444_dsdn123fS_231_ddf" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
         /// Worker (reset password)
@@ -148,16 +148,16 @@ public static class AuthRouter
             RouteId = "reset password",
             ClusterId = "auth_cluster",
             RateLimiterPolicy = Policies.ResetPasswordPolicy,
-            Match = new RouteMatch { Path = "/api/Security/8382fd_1231sfw13312saeDAs12" },
+            Match = new RouteMatch { Path = "/api/Auth/8382fd_1231sfw13312saeDAs12" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
-        //Security EP
+        //Auth EP
         new RouteConfig
         {
             RouteId = "auth_route",
             ClusterId = "auth_cluster",
             AuthorizationPolicy = Policies.BasicPolicy,
-            Match = new RouteMatch { Path = "/api/Security/{**catch-all}" },
+            Match = new RouteMatch { Path = "/api/Auth/{**catch-all}" },
             Transforms = new[] { new Dictionary<string, string> { { "PathRemovePrefix", "/auth" } } }
         },
 

@@ -7,30 +7,27 @@ namespace UsersTesting.Mock
     public static class UsersMock
     {
 
-        public static UserModel UserMock => new UserModel
+        public static UserModel UserMock => new()
         {
             Id = 4,
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
             Email = "marzz77_@gmail.com",
-            EmailVerified = true,
             Password = "Pr@motheus98",
-            ScheduledDeletionJobId = "1",
             Roles = ROLES.Admin
             
         };
-        public static UserModel UserMockFalseVerify => new UserModel
+        public static UserModel UserMockFalseVerify => new()
         {
             Id = 4,
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
             Email = "marzz77_@gmail.com",
-            EmailVerified = false,
             Password = "Pr@motheus98",
             Roles = ROLES.Admin
         };
 
-        public static UserModel UserMockBasic => new UserModel
+        public static UserModel UserMockBasic => new()
         {
             Id = 5,
             FullName = "Dario Marzzucco",
@@ -39,7 +36,7 @@ namespace UsersTesting.Mock
             Password = "Pr@motheus98",
             Roles = ROLES.Basic
         };
-        public static UserDTO UserMockDTO => new UserDTO
+        public static UserDTO UserMockDTO => new()
         {
             Id = 4,
             FullName = "Dario Marzzucco",
@@ -47,7 +44,7 @@ namespace UsersTesting.Mock
             Email = "marzz77_@gmail.com",
             Roles = ROLES.Admin
         };
-        public static UserModel UserHashPassMock => new UserModel
+        public static UserModel UserHashPassMock => new()
         {
             Id = 4,
             FullName = "Dario Marzzucco",
@@ -57,7 +54,7 @@ namespace UsersTesting.Mock
             Roles = ROLES.Admin
         };
 
-        public static CreateUserDTO CreateUserDTOMOck => new CreateUserDTO
+        public static CreateUserDTO CreateUserDTOMOck => new()
         {
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
@@ -65,33 +62,33 @@ namespace UsersTesting.Mock
             Password = "Pr@motheus98",
             Roles = ROLES.Admin
         };
-        public static UpdateUserDTO UpdateUserDTOMOck => new UpdateUserDTO
+        public static UpdateUserDTO UpdateUserDTOMOck => new()
         {
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
         };
-        public static RolesDTO RolesDTOMock => new RolesDTO
+        public static RolesDTO RolesDTOMock => new()
         {
             Roles = ROLES.Creator
         };
 
-        public static PasswordDTO PasswordDTOMock => new PasswordDTO { Password = "Pr@motheus98" };
-        public static PasswordDTO PasswordReturnMock => new PasswordDTO { Password = "Sr@motheus23" };
+        public static PasswordDTO PasswordDTOMock => new() { Password = "Pr@motheus98" };
+        public static PasswordDTO PasswordReturnMock => new() { Password = "Sr@motheus23" };
 
 
-        public static UpdatePasswordDTO UpdatePasswordDTOMock => new UpdatePasswordDTO
+        public static UpdatePasswordDTO UpdatePasswordDTOMock => new()
         {
             OldPassword = "Pr@motheus98",
             NewPassword = "Sr@motheus23"
         };
 
-        public static UpdateOwnUserDTO UpdateOwnUserDTOMock => new UpdateOwnUserDTO
+        public static UpdateOwnUserDTO UpdateOwnUserDTOMock => new()
         {
             Password = "Pr@motheus98",
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
         };
-        public static NewEmailDTO NewEmailMOck => new NewEmailDTO
+        public static NewEmailDTO NewEmailMOck => new()
         {
             Password = "Pr@motheus98",
             NewEmail = "dmarzz_@hotmail.com"

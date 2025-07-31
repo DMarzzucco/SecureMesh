@@ -64,7 +64,7 @@ func main() {
 			if err := json.Unmarshal(d.Body, &msg); err != nil {
 				log.Printf("❌ Error to deserialize message: %s", err)
 			} else {
-				fmt.Printf("✅ Hello %s to verificate your new email, you need inside in this adress:  https://localhost:8888/api/Security/5413444_dsdn123fS_231_ddf?klt1276=%s\n", msg.Email, msg.Token)
+				fmt.Printf("✅ Hello %s to verificate your new email, you need inside in this adress:  https://localhost:8888/api/Auth/5413444_dsdn123fS_231_ddf?klt1276=%s\n", msg.Email, msg.Token)
 			}
 
 			d.Ack(false)

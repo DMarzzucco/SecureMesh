@@ -8,7 +8,6 @@ using User.Module.Model;
 using User.Module.Repository.Interface;
 using User.Module.Service;
 using User.Module.Validations.Interface;
-using User.Server.Interfaces;
 using UsersTesting.Mock;
 
 namespace UsersTesting;
@@ -19,7 +18,6 @@ public class IntServicesUser
     private readonly Mock<IUserValidation> _validation;
     private readonly IMapper _mapper;
     private readonly UserServices _service;
-    private readonly Mock<IHangFireServices> hangFireServices;
     public IntServicesUser()
     {
         this._repository = new Mock<IUserRepository>();
@@ -35,12 +33,10 @@ public class IntServicesUser
         });
         this._mapper = conf.CreateMapper();
 
-        this.hangFireServices = new Mock<IHangFireServices>();
         this._service = new UserServices(
             this._repository.Object,
             this._mapper,
-            this._validation.Object,
-            this.hangFireServices.Object
+            this._validation.Object
         );
     }
 
@@ -110,23 +106,7 @@ public class IntServicesUser
         Assert.NotNull(res);
     }
 
-    /// <summary>
-    /// Mark Email like verify
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task ShoudlMarkEmailLikeVerify()
-    {
-        var user = UsersMock.UserMockFalseVerify;
-        int id = 4;
 
-        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
-
-        var res = await this._service.MarkEmailAsVerifieds(id);
-
-        Assert.Equal(user, res);
-    }
     /// <summary>
     /// Register User
     /// </summary>
@@ -166,47 +146,8 @@ public class IntServicesUser
 
         Assert.NotNull(res);
     }
-    /// <summary>
-    /// Delete Own Register
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task ShouldRemoveOwnRegister()
-    {
-        int id = 4;
-        var dt = UsersMock.PasswordDTOMock;
-        var user = UsersMock.UserHashPassMock;
-        string message = "Your account will be deleted in the next 10 minutes.";
 
-        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._repository.Setup(r => r.DeleteAsync(user)).ReturnsAsync(true);
-        this.hangFireServices.Setup(h => h.ScheduleIdKey(user.Id));
-        var res = await this._service.RemoveUserRegisterForBasicRoles(id, dt);
 
-        Assert.NotNull(res);
-        Assert.Equal(message, res);
-    }
-
-    /// <summary>
-    /// Update Refresh Token
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task ShouldUpdateToken()
-    {
-        int id = 4;
-        string refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sIjoiMSIsIm5iZiI6MTc0NTA2OTczMSwiZXhwIjoxNzQ1NTAxNzMxLCJpYXQiOjE3NDUwNjk3MzF9.8Lxp0P4ePIAO9sCHXM8-xO_GUrF-oPQV7__T8Ufz36w";
-
-        var user = UsersMock.UserMock;
-
-        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
-
-        var res = await this._service.UpdateRefreshToken(id, refreshToken);
-
-        Assert.NotNull(res);
-        Assert.Equal(refreshToken, user.RefreshToken);
-    }
     /// <summary>
     /// Update the password 
     /// </summary>

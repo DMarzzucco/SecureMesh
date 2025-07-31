@@ -15,16 +15,9 @@ public static class ServiceGrpc
         };
         service.AddGrpcClient<AuthHangFireService.AuthHangFireServiceClient>(x =>
         {
-            var inCont = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
-
-            var grpcAddress = inCont ?
-                new Uri("https://auth:5090") :
-                new Uri("https://localhost:5090");
-
-            x.Address = grpcAddress;
             // x.Address = new Uri("https://localhost:5090");
-            
-            // x.Address = new Uri("https://auth:5090");
+
+            x.Address = new Uri("https://auth:5090");
 
             x.ChannelOptionsActions.Add(op =>
             {

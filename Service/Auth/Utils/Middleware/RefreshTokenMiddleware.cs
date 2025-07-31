@@ -25,14 +25,14 @@ namespace Auth.Utils.Middleware
         public async Task InvokeAsync(HttpContext context, IJwtService tokenService, IAuthService authService, ICookieService cookieService)
         {
             var publicPaths = new[] {
-                "/api/Security/login",
-                "/api/Security/lskda_2312sd2000123sdaSD",
-                "/api/Security/registered",
-                "/api/Security/init-session",
-                "/api/Security/12349smska_wqj1n234msm949401",
-                "/api/Security/elm23019_123mskw_123fnsk",
-                "/api/Security/5413444_dsdn123fS_231_ddf",
-                "/api/Security/8382fd_1231sfw13312saeDAs12",
+                "/api/Auth/login",
+                "/api/Auth/lskda_2312sd2000123sdaSD",
+                "/api/Auth/registered",
+                "/api/Auth/init-session",
+                "/api/Auth/12349smska_wqj1n234msm949401",
+                "/api/Auth/elm23019_123mskw_123fnsk",
+                "/api/Auth/5413444_dsdn123fS_231_ddf",
+                "/api/Auth/8382fd_1231sfw13312saeDAs12",
                 "/AuthHangFireService/CountedDeleted"
                   };
 
