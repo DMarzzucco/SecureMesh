@@ -303,7 +303,7 @@ public class InterSecurityTest
 
         this._userService.Setup(u => u.FindByValue("Username", body.Username)).ReturnsAsync(user);
 
-        var res = this._service.ValidateUser(body);
+        var res = this._service.ValidateUserCredentials(body);
 
         Assert.NotNull(res);
         Assert.Equal(user, res.Result);

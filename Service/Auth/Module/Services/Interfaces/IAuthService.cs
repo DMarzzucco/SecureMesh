@@ -23,7 +23,7 @@ namespace Auth.Module.Services.Interfaces
         Task<string> TwoFactorAuthenticationCodeGeneration();
         Task RefreshTokenValidate(string refreshToken, int id);
         Task<string> ResetPassword(string token, PasswordDTO body);
-        Task<UserModel> ValidateUser(LoginDTO body);
+        Task<UserModel> ValidateUserCredentials(LoginDTO body);
         Task<string> VerificationEmail(string token);
         Task<string> VerificationNewEmail(string token);
     }

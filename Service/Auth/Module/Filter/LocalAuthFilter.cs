@@ -17,7 +17,7 @@ namespace Auth.Module.Filter
         {
             if (context.ActionArguments.TryGetValue("body", out var bodyObj) && bodyObj is LoginDTO body)
             {
-                var user = await this._service.ValidateUser(body);
+                var user = await this._service.ValidateUserCredentials(body);
                 context.HttpContext.Items["User"] = user;
             }
             else

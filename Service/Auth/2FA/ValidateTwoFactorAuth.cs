@@ -28,7 +28,7 @@ public class ValidateTwoFactorAuth(IAuthRepository repository) : IValidateTwoFac
             throw new UnauthorizedAccessException();
 
         if (auth.LockedAt != null && DateTime.UtcNow < auth.LockedAt)
-            throw new ForbiddenExceptions("Account locked due to multiple failed attemps. Try again later");
+            throw new TooManyRequestsException("Account locked due to multiple failed attemps. Try again later");
 
         if (auth.TwoFACode != code || auth.TwoFACodeExpiration < DateTime.UtcNow)
         {

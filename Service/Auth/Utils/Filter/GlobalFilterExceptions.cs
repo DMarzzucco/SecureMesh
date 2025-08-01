@@ -29,6 +29,7 @@ namespace Auth.Utils.Filter
                     _ => 500
                 },
                 ConflictExceptions => 409,
+                TooManyRequestsException => 429,
                 _ => 500
             };
 
@@ -47,6 +48,7 @@ namespace Auth.Utils.Filter
                     },
                     404 => context.Exception.Message,
                     409=> context.Exception.Message,
+                    429=> context.Exception.Message,
                     _ => context.Exception.Message
                 },
                 Details = statusCode == 500 ?

@@ -258,9 +258,9 @@ namespace Auth.Module.Services
             var claim = this._jwtService.GetClaimFromToken();
             int userId = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
 
-            var session = await this.sessionService.FindAllSessionsByUserId(userId);
+            var sessions = await this.sessionService.FindAllSessionsByUserId(userId);
 
-            if (!session.Any(s => s?.Id == id))
+            if (!sessions.Any(s => s?.Id == id))
                 throw new UnauthorizedAccessException("Your not allowed to deleted this session");
 
             if (id == int.Parse(this._jwtService.GetClaimsValue(claim, "sessionId")))
@@ -439,45 +439,6 @@ namespace Auth.Module.Services
         }
 
         /// <summary>
-        /// Validate User
-        /// </summary>
-        /// <param name="body"></param>
-        /// <returns></returns>
-        /// <exception cref="UnauthorizedAccessException"></exception>
-        /// <exception cref="KeyNotFoundException"></exception>
-        /// <exception cref="ForbiddenExceptions"></exception>
-        public async Task<UserModel> ValidateUser(LoginDTO body)
-        {
-            var user = await this._userService.FindByValue("Username", body.Username) ??
-                throw new KeyNotFoundException("This Username is wrong or not was registered");
-
-            var auth = await this.repository.FindAuthByUserId(user.Id) ?? throw new UnauthorizedAccessException();
-
-            var passwordHaser = new PasswordHasher<UserModel>();
-            var verificationResult = passwordHaser.VerifyHashedPassword(user, user.Password, body.Password);
-
-            if (verificationResult == PasswordVerificationResult.Failed)
-                throw new UnauthorizedAccessException("Password is wrong");
-
-            if (!auth.EmailVerify)
-                throw new ForbiddenExceptions("You need check your email to login");
-
-            if (auth.IsDeleted)
-            {
-                auth.IsDeleted = false;
-                auth.DeletedAt = null;
-
-                this.hangFireService.DeletedScheduledJob(auth.ScheduledDeletionJobId);
-
-                auth.ScheduledDeletionJobId = null;
-
-                await this.repository.UpdateAsync(auth);
-            }
-
-            return user;
-        }
-
-        /// <summary>
         /// Generate 2FA Code
         /// </summary>
         /// <returns></returns>
@@ -542,8 +503,8 @@ namespace Auth.Module.Services
             var user = await this._userService.UpdateEmailAddress(id, body) ?? 
                 throw new BadRequestExceptions("The email could not be updated.");
 
-            var token = await this._jwtService.GenerateEmailVerificationToken(user);
-            await this._messagingQueues.SendNewEmailVerificationEvent(user.Email, token, user.Id);
+            var ott = await this._jwtService.GenerateEmailVerificationToken(user);
+            await this._messagingQueues.SendNewEmailVerificationEvent(user.Email, ott, user.Id);
 
             await this.sessionService.RemoveAllSessionExceptCurrent(id, sessionId);
 
@@ -554,6 +515,70 @@ namespace Auth.Module.Services
             this._cookieService.ClearTokenCookies(httpContext.Response);
 
             return $"Email was updated his new email is {user?.Email} ";
+        }
+
+        /// <summary>
+        /// Validate User Credentials
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="TooManyRequestsException"></exception>
+        /// <exception cref="ForbiddenExceptions"></exception>
+        public async Task<UserModel> ValidateUserCredentials(LoginDTO body)
+        {
+            var user = await this._userService.FindByValue("Username", body.Username) ??
+                throw new KeyNotFoundException("This Username is wrong or not was registered");
+
+            var auth = await this.repository.FindAuthByUserId(user.Id) ?? throw new UnauthorizedAccessException();
+
+            var passwordHaser = new PasswordHasher<UserModel>();
+            var verificationResult = passwordHaser.VerifyHashedPassword(user, user.Password, body.Password);
+
+            var shouldUpdate = false;
+
+            if (auth.LockedAt != null && DateTime.UtcNow < auth.LockedAt)
+                throw new TooManyRequestsException("Account locked due to multiple failed attemps. Try again later");
+
+            if (verificationResult == PasswordVerificationResult.Failed)
+            {
+                auth.VerifyAttempts++;
+
+                if (auth.VerifyAttempts >= 3)
+                {
+                    auth.LockedAt = DateTime.UtcNow.AddMinutes(10);
+                    auth.VerifyAttempts = 0;
+                }
+                await this.repository.UpdateAsync(auth);
+                throw new UnauthorizedAccessException("Password is wrong");
+            }
+
+            if (auth.VerifyAttempts > 0 || auth.LockedAt != null)
+            {
+                auth.VerifyAttempts = 0;
+                auth.LockedAt = null;
+                shouldUpdate = true;
+            }
+
+            if (!auth.EmailVerify)
+                throw new ForbiddenExceptions("You need check your email to login");
+
+            if (auth.IsDeleted)
+            {
+                auth.IsDeleted = false;
+                auth.DeletedAt = null;
+
+                this.hangFireService.DeletedScheduledJob(auth.ScheduledDeletionJobId);
+                auth.ScheduledDeletionJobId = null;
+
+                shouldUpdate = true;
+            }
+
+            if (shouldUpdate)
+                await this.repository.UpdateAsync(auth);
+
+            return user;
         }
     }
 }

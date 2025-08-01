@@ -20,7 +20,7 @@ public static class RateLimiterDefinitions
         //login
         options.AddFixedWindowLimiter("login-rs", op =>
         {
-            op.PermitLimit = 2;
+            op.PermitLimit = 5;
             op.Window = TimeSpan.FromMinutes(30);
         }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 

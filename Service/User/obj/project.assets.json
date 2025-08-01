@@ -3356,11 +3356,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\darma\\Desktop\\SecureMesh\\Service\\User\\User.csproj",
+      "projectUniqueName": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\User.csproj",
       "projectName": "User",
-      "projectPath": "C:\\Users\\darma\\Desktop\\SecureMesh\\Service\\User\\User.csproj",
+      "projectPath": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\User.csproj",
       "packagesPath": "C:\\Users\\darma\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\darma\\Desktop\\SecureMesh\\Service\\User\\obj\\",
+      "outputPath": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\User\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

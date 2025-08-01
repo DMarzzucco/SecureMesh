@@ -25,7 +25,7 @@ public class UnitLocalAuthFilter
         var body = SecurityMock.LoginDTOMock;
         var user = SecurityMock.UserHashPassMock;
 
-        service.Setup(s => s.ValidateUser(It.IsAny<LoginDTO>())).ReturnsAsync(user);
+        service.Setup(s => s.ValidateUserCredentials(It.IsAny<LoginDTO>())).ReturnsAsync(user);
 
         var filter = new LocalAuthFilter(service.Object);
         var httpContext = new DefaultHttpContext();

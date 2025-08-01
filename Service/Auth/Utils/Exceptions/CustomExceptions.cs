@@ -19,3 +19,9 @@ public class BadRequestExceptions(string message) : Exception(message) { }
 /// 404
 /// </summary>
 public class NotFoundExceptions(string message) : Exception(message) { }
+
+/// <summary>
+/// 429
+/// </summary>
+/// <param name="message"></param>
+public class TooManyRequestsException(string message) : Exception(message) { }
