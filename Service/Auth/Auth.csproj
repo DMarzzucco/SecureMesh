@@ -31,8 +31,8 @@
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
 		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
 		<PackageReference Include="StackExchange.Redis" Version="2.8.37" />
+		<PackageReference Include="SwaggerSchemaExample.Nuget" Version="1.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.2.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
 	</ItemGroup>
 

@@ -6,7 +6,7 @@
     "version": "0.1"
   },
   "paths": {
-    "/api/User": {
+    "/api/User/list": {
       "get": {
         "tags": [
           "User"
@@ -19,7 +19,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserModel"
+                    "$ref": "#/components/schemas/UserDTO"
                   }
                 }
               },
@@ -27,7 +27,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserModel"
+                    "$ref": "#/components/schemas/UserDTO"
                   }
                 }
               },
@@ -35,54 +35,8 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserModel"
+                    "$ref": "#/components/schemas/UserDTO"
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserModel"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserModel"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserModel"
                 }
               }
             }
@@ -112,23 +66,82 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserModel"
+                  "$ref": "#/components/schemas/UserDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserModel"
+                  "$ref": "#/components/schemas/UserDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserModel"
+                  "$ref": "#/components/schemas/UserDTO"
                 }
               }
             }
           }
         }
       },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOwnUserDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOwnUserDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOwnUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/{id}/e90u": {
       "put": {
         "tags": [
           "User"
@@ -168,7 +181,68 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/User/{id}/rm0x1": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolesDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolesDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolesDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/{id}/r37d": {
       "delete": {
         "tags": [
           "User"
@@ -194,16 +268,39 @@
   },
   "components": {
     "schemas": {
-      "CreateUserDTO": {
+      "ROLES": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "RolesDTO": {
         "required": [
-          "Email",
-          "FullName",
-          "Password",
-          "Roles",
-          "Username"
+          "Roles"
         ],
         "type": "object",
         "properties": {
+          "Roles": {
+            "$ref": "#/components/schemas/ROLES"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateOwnUserDTO": {
+        "required": [
+          "Password"
+        ],
+        "type": "object",
+        "properties": {
+          "Password": {
+            "type": "string",
+            "description": "User password",
+            "nullable": true,
+            "example": "Pr@motheus98"
+          },
           "FullName": {
             "type": "string",
             "description": "User name",
@@ -215,33 +312,9 @@
             "description": "User username",
             "nullable": true,
             "example": "derkmarzz77"
-          },
-          "Email": {
-            "type": "string",
-            "description": "User email",
-            "nullable": true,
-            "example": "marzz77_@gmail.com"
-          },
-          "Password": {
-            "type": "string",
-            "description": "User password",
-            "nullable": true,
-            "example": "passmort243"
-          },
-          "Roles": {
-            "$ref": "#/components/schemas/ROLES"
           }
         },
         "additionalProperties": false
-      },
-      "ROLES": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "UpdateUserDTO": {
         "type": "object",
@@ -257,30 +330,14 @@
             "description": "User username",
             "nullable": true,
             "example": "derkmarzz77"
-          },
-          "Email": {
-            "type": "string",
-            "description": "User email",
-            "nullable": true,
-            "example": "marzz77_@gmail.com"
-          },
-          "Password": {
-            "type": "string",
-            "description": "User password",
-            "nullable": true,
-            "example": "passmort243"
-          },
-          "Roles": {
-            "$ref": "#/components/schemas/ROLES"
           }
         },
         "additionalProperties": false
       },
-      "UserModel": {
+      "UserDTO": {
         "required": [
           "Email",
           "FullName",
-          "Password",
           "Roles",
           "Username"
         ],
@@ -308,12 +365,6 @@
             "description": "User email",
             "nullable": true,
             "example": "marzz77_@gmail.com"
-          },
-          "Password": {
-            "type": "string",
-            "description": "User password",
-            "nullable": true,
-            "example": "passmort243"
           },
           "Roles": {
             "$ref": "#/components/schemas/ROLES"

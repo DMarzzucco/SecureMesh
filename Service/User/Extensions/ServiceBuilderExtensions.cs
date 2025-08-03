@@ -4,7 +4,6 @@ using User.Configuration.DbConfiguration;
 using User.Mapper;
 using User.Utils.Filters;
 using System.Text.Json.Serialization;
-using User.Configuration.Swagger.Filter;
 using User.Module.Service.Interface;
 using User.Module.Service;
 using User.Module.Repository;
@@ -13,7 +12,7 @@ using User.Module.Validations;
 using User.Module.Validations.Interface;
 using User.Module.Stubs.Maps;
 using User.Module.Stubs.Handlers;
-using User.Configuration;
+using SwaggerSchemaExample.Nuget;
 
 namespace User.Extensions;
 
@@ -55,7 +54,7 @@ public static partial class ServiceBuilderExtensions
                 Version = "0.1",
                 Description = "User API"
             });
-            e.SchemaFilter<SwaggerSchemaFilter>();
+            e.SchemaFilter<SwaggerSchemaExampleFilter>();
         });
         //CorsPolicy
         services.AddCors(p =>

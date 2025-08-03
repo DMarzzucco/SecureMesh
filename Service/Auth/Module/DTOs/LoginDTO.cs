@@ -1,4 +1,4 @@
-﻿using Auth.Configuration.Swagger;
+﻿using SwaggerSchemaExample.Nuget;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Auth.Module.DTOs

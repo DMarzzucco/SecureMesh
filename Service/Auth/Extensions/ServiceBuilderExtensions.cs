@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
 using System.Text;
-using Auth.Configuration.Swagger;
 using Auth.Utils.Filter;
 using Auth.Cookies.Interfaces;
 using Auth.Cookies;
@@ -34,6 +33,7 @@ using Auth._2FA;
 using Auth.Server.Hangfire.Interfaces;
 using Auth.Server.Hangfire;
 using System.Reflection;
+using SwaggerSchemaExample.Nuget;
 
 namespace Auth.Extensions
 {
@@ -116,7 +116,7 @@ namespace Auth.Extensions
                     Title = "Security API",
                     Description = " Api of Security"
                 });
-                o.SchemaFilter<SwaggerSchemaFilter>();
+                o.SchemaFilter<SwaggerSchemaExampleFilter>();
 
             });
             //Cors Policy

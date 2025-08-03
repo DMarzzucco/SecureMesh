@@ -1,6 +1,6 @@
 using System;
+using SwaggerSchemaExample.Nuget;
 using Swashbuckle.AspNetCore.Annotations;
-using User.Configuration.Swagger.Attributes;
 using User.Module.Enums;
 
 namespace User.Module.DTOs;

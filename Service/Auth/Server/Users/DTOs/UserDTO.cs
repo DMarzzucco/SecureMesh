@@ -1,6 +1,6 @@
-﻿using Auth.Configuration.Swagger;
-using Swashbuckle.AspNetCore.Annotations;
+﻿using Swashbuckle.AspNetCore.Annotations;
 using Auth.Server.Users.Model;
+using SwaggerSchemaExample.Nuget;
 
 namespace Auth.Server.Users.DTOs
 {

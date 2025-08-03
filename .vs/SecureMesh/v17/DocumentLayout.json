@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\darma\\Documents\\SecureMesh\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\module\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\module\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\configuration\\redis\\redisconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\configuration\\redis\\redisconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5F33C57F-C84D-4A4A-8784-45A264DAF228}|Service\\Security\\Security.csproj|c:\\users\\darma\\documents\\securemesh\\service\\security\\module\\repository\\interfaces\\isecurityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5F33C57F-C84D-4A4A-8784-45A264DAF228}|Service\\Security\\Security.csproj|solutionrelative:service\\security\\module\\repository\\interfaces\\isecurityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\queues\\rabbitmqservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\queues\\rabbitmqservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\configuration\\postgresql\\postgresqlconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\configuration\\postgresql\\postgresqlconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|c:\\users\\darma\\documents\\securemesh\\securemesh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{19EA62F8-4A7D-427B-A64C-2DB6BAC61DF6}|SecureMesh\\SecureMesh.csproj|solutionrelative:securemesh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|c:\\users\\darma\\documents\\securemesh\\service\\auth\\configuration\\servicegrpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11224087-B99E-46DB-89E3-67BBB0619F55}|Service\\Auth\\Auth.csproj|solutionrelative:service\\auth\\configuration\\servicegrpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,68 +26,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 770,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Module\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "Service\\Auth\\Module\\Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Module\\Services\\AuthService.cs",
-              "RelativeToolTip": "Service\\Auth\\Module\\Services\\AuthService.cs",
-              "ViewState": "AgIAAPUBAAAAAAAAAAAAAAgCAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T14:22:06.204Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "JwtService.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\JWT\\JwtService.cs",
-              "RelativeDocumentMoniker": "Service\\Auth\\JWT\\JwtService.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\JWT\\JwtService.cs",
-              "RelativeToolTip": "Service\\Auth\\JWT\\JwtService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T12:25:46.581Z",
-              "EditorCaption": ""
             }
           ]
         },
         {
           "DockedWidth": 770,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ISecurityRepository.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Security\\Module\\Repository\\Interfaces\\ISecurityRepository.cs",
-              "RelativeDocumentMoniker": "Service\\Security\\Module\\Repository\\Interfaces\\ISecurityRepository.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Security\\Module\\Repository\\Interfaces\\ISecurityRepository.cs",
-              "RelativeToolTip": "Service\\Security\\Module\\Repository\\Interfaces\\ISecurityRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ServiceGrpc.cs",
+              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Configuration\\ServiceGrpc.cs",
+              "RelativeDocumentMoniker": "Service\\Auth\\Configuration\\ServiceGrpc.cs",
+              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Configuration\\ServiceGrpc.cs",
+              "RelativeToolTip": "Service\\Auth\\Configuration\\ServiceGrpc.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAiwBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T15:29:26.507Z",
+              "WhenOpened": "2025-08-03T17:59:42.396Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Program.cs",
-              "RelativeDocumentMoniker": "SecureMesh\\Program.cs",
-              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\SecureMesh\\Program.cs",
-              "RelativeToolTip": "SecureMesh\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "PostgreSQLConnection.cs",
+              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Configuration\\PostgreSQL\\PostgreSQLConnection.cs",
+              "RelativeDocumentMoniker": "Service\\Auth\\Configuration\\PostgreSQL\\PostgreSQLConnection.cs",
+              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Configuration\\PostgreSQL\\PostgreSQLConnection.cs",
+              "RelativeToolTip": "Service\\Auth\\Configuration\\PostgreSQL\\PostgreSQLConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T13:53:19.363Z"
+              "WhenOpened": "2025-08-03T17:59:34.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RabbitMQServices.cs",
+              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Queues\\RabbitMQServices.cs",
+              "RelativeDocumentMoniker": "Service\\Auth\\Queues\\RabbitMQServices.cs",
+              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Queues\\RabbitMQServices.cs",
+              "RelativeToolTip": "Service\\Auth\\Queues\\RabbitMQServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T17:59:28.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RedisConnection.cs",
+              "DocumentMoniker": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Configuration\\Redis\\RedisConnection.cs",
+              "RelativeDocumentMoniker": "Service\\Auth\\Configuration\\Redis\\RedisConnection.cs",
+              "ToolTip": "C:\\Users\\darma\\Documents\\SecureMesh\\Service\\Auth\\Configuration\\Redis\\RedisConnection.cs",
+              "RelativeToolTip": "Service\\Auth\\Configuration\\Redis\\RedisConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T17:59:18.376Z",
+              "EditorCaption": ""
             }
           ]
         }

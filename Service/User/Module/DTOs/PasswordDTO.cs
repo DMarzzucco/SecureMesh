@@ -1,5 +1,5 @@
+using SwaggerSchemaExample.Nuget;
 using Swashbuckle.AspNetCore.Annotations;
-using User.Configuration.Swagger.Attributes;
 
 namespace User.Module.DTOs;
 

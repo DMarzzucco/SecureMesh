@@ -522,3 +522,7 @@ C:\Users\darma\Desktop\SecureMesh\Service\User\obj\Debug\net8.0\refint\User.dll
 C:\Users\darma\Desktop\SecureMesh\Service\User\obj\Debug\net8.0\User.pdb
 C:\Users\darma\Desktop\SecureMesh\Service\User\obj\Debug\net8.0\User.genruntimeconfig.cache
 C:\Users\darma\Desktop\SecureMesh\Service\User\obj\Debug\net8.0\ref\User.dll
+C:\Users\darma\Documents\SecureMesh\Service\User\bin\Debug\net8.0\Swagger\obj\project.assets.json
+C:\Users\darma\Documents\SecureMesh\Service\User\bin\Debug\net8.0\Swagger\obj\Swagger.csproj.nuget.dgspec.json
+C:\Users\darma\Documents\SecureMesh\Service\User\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\darma\Documents\SecureMesh\Service\User\bin\Debug\net8.0\SwaggerSchemaExample.Nuget.dll

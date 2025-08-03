@@ -1,52 +1,6 @@
 [
   {
     "ContainingType": "User.Module.Controller.UserController",
-    "Method": "GetAllRegister",
-    "RelativePath": "api/User",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[User.Module.Model.UserModel, User, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "User.Module.Controller.UserController",
-    "Method": "RegisterUser",
-    "RelativePath": "api/User",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "body",
-        "Type": "User.Module.DTOs.CreateUserDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "User.Module.Model.UserModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "User.Module.Controller.UserController",
     "Method": "GetUserById",
     "RelativePath": "api/User/{id}",
     "HttpMethod": "GET",
@@ -61,7 +15,38 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "User.Module.Model.UserModel",
+        "Type": "User.Module.DTOs.UserDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "User.Module.Controller.UserController",
+    "Method": "EditOwnCount",
+    "RelativePath": "api/User/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "body",
+        "Type": "User.Module.DTOs.UpdateOwnUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -74,7 +59,7 @@
   {
     "ContainingType": "User.Module.Controller.UserController",
     "Method": "EditUser",
-    "RelativePath": "api/User/{id}",
+    "RelativePath": "api/User/{id}/e90u",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -95,7 +80,7 @@
   {
     "ContainingType": "User.Module.Controller.UserController",
     "Method": "DeleteRegister",
-    "RelativePath": "api/User/{id}",
+    "RelativePath": "api/User/{id}/r37d",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -107,5 +92,56 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "User.Module.Controller.UserController",
+    "Method": "UpdateRoles",
+    "RelativePath": "api/User/{id}/rm0x1",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newRoles",
+        "Type": "User.Module.DTOs.RolesDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "User.Module.Controller.UserController",
+    "Method": "GetAllRegister",
+    "RelativePath": "api/User/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[User.Module.DTOs.UserDTO, User, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]
