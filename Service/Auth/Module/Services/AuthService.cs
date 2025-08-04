@@ -189,9 +189,9 @@ namespace Auth.Module.Services
 
             using var client = new HttpClient();
 
-            var ip = httpContext.Connection.RemoteIpAddress.ToString();
+            var ip = httpContext?.Connection?.RemoteIpAddress?.ToString();
             // var ip = "8.8.8.8";
-            var userAgent = httpContext.Request.Headers.UserAgent.ToString();
+            var userAgent = httpContext?.Request.Headers.UserAgent.ToString();
             var response = await client.GetFromJsonAsync<IpInfoResponse>($"https://ipinfo.io/{ip}/json");
             var location = response.City ?? "Unkown";
 

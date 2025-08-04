@@ -7,7 +7,7 @@ using System;
 
 namespace Auth.Utils.Filter
 {
-    public class GlobalFilterExceptions (ILogger<GlobalFilterExceptions> logger) : IExceptionFilter
+    public class GlobalFilterExceptions(ILogger<GlobalFilterExceptions> logger) : IExceptionFilter
     {
         private readonly ILogger<GlobalFilterExceptions> _logger = logger;
 
@@ -38,13 +38,13 @@ namespace Auth.Utils.Filter
                 BadRequestExceptions ex => ex.Message,
                 UnauthorizedAccessException ex => ex.Message,
                 ForbiddenExceptions ex => ex.Message,
-                SecurityTokenExpiredException => "El token ha expirado",
-                SecurityTokenSignatureKeyNotFoundException => "Token inválido",
+                SecurityTokenExpiredException => "Token is expired",
+                SecurityTokenSignatureKeyNotFoundException => "Token is invalid",
                 RpcException grpcEx => grpcEx.StatusCode switch
                 {
-                    StatusCode.NotFound => "No encontrado",
-                    StatusCode.Unauthenticated => "No autenticado",
-                    StatusCode.InvalidArgument => "Argumento inválido",
+                    StatusCode.NotFound => context.Exception.Message,
+                    StatusCode.Unauthenticated => context.Exception.Message,
+                    StatusCode.InvalidArgument => context.Exception.Message,
                     _ => context.Exception.Message
                 },
                 KeyNotFoundException ex => ex.Message,

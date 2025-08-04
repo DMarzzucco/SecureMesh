@@ -111,7 +111,7 @@ namespace User.Module.Stubs
         {
             try
             {
-                var user = await this._service.FindUserById(request.Id) ??
+                var user = await this._repository.FindByIdAsync(request.Id) ??
                     throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
 
                 var response = this._mapper.InvokeMap(user);
@@ -131,7 +131,8 @@ namespace User.Module.Stubs
         {
             try
             {
-                var user = await this._service.GetUserByEmail(request.Email);
+                var user = await this._repository.FindByEmailAsync(request.Email) ??
+                    throw new RpcException(new Status(StatusCode.NotFound, "User was not found"));
 
                 var response = this._mapper.InvokeMap(user);
 

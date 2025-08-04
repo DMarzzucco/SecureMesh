@@ -42,37 +42,6 @@ public class IntServicesUser
     }
 
     /// <summary>
-    /// Find User By Id
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task ShouldFindUserByValue()
-    {
-        int id = 4;
-        var user = UsersMock.UserMock;
-
-        this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        var res = await this._service.FindUserById(id);
-
-        Assert.NotNull(res);
-        Assert.Equal(user, res);
-    }
-    /// <summary>
-    /// Get User By Email
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task ShouldFindAUserByEmail()
-    {
-        string email = "marzz77_@gmail.com";
-        var user = UsersMock.UserMock;
-
-        this._repository.Setup(r => r.FindByEmailAsync(email)).ReturnsAsync(user);
-        var res = await this._service.GetUserByEmail(email);
-
-        Assert.Equal(user, res);
-    }
-    /// <summary>
     /// Get User By Id
     /// </summary>
     /// <returns></returns>

@@ -6,9 +6,7 @@ using Auth.Utils.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Auth.Server.Users.Model;
-using Microsoft.OpenApi.Expressions;
 using Auth.JWT.Helper.Interfaces;
 
 namespace Auth.JWT
@@ -18,7 +16,7 @@ namespace Auth.JWT
         private readonly string _secretKey;
         private readonly IHttpContextAccessor _context;
         private readonly IRedisRepository _redisRepository;
-        private readonly ITokenCreationServices tokenCreation;
+        private readonly ITokenCreationServices _tokenCreation;
 
         public JwtService(IConfiguration configuration, IHttpContextAccessor context, IRedisRepository redisRepository, ITokenCreationServices tokenCreation)
         {
@@ -30,7 +28,7 @@ namespace Auth.JWT
             _secretKey = secretKeySection;
             _context = context;
             this._redisRepository = redisRepository;
-            this.tokenCreation = tokenCreation;
+            this._tokenCreation = tokenCreation;
         }
 
         /// <summary>
@@ -42,7 +40,7 @@ namespace Auth.JWT
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var tokenDescription = this.tokenCreation.TokenDescriptionTemplate(user, "email_verification", DateTime.UtcNow.AddMinutes(10));
+            var tokenDescription = this._tokenCreation.TokenDescriptionTemplate(user, "email_verification", DateTime.UtcNow.AddMinutes(10));
 
             var token = tokenHandler.CreateToken(tokenDescription);
             var ott = tokenHandler.WriteToken(token);
@@ -94,7 +92,7 @@ namespace Auth.JWT
         public async Task<string> GenerateRecuperationPasswordOTT(UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescription = this.tokenCreation.TokenDescriptionTemplate(user, "password_recuperation", DateTime.UtcNow.AddMinutes(10));
+            var tokenDescription = this._tokenCreation.TokenDescriptionTemplate(user, "password_recuperation", DateTime.UtcNow.AddMinutes(10));
 
             var token = tokenHandler.CreateToken(tokenDescription);
             var ott = tokenHandler.WriteToken(token);
@@ -133,7 +131,7 @@ namespace Auth.JWT
         /// <exception cref="NotImplementedException"></exception>
         public TokenPair GenerateAuthenticationToken(int sessionId, UserModel user)
         {
-            return this.tokenCreation.CreateTokenPair(
+            return this._tokenCreation.CreateTokenPair(
                 sessionId,
                 user,
                 DateTime.UtcNow.AddHours(5),
@@ -149,7 +147,7 @@ namespace Auth.JWT
         /// <exception cref="NotImplementedException"></exception>
         public TokenPair GenerateRefreshToken(int sessionId, UserModel user)
         {
-            return this.tokenCreation.CreateTokenPair(
+            return this._tokenCreation.CreateTokenPair(
                 sessionId,
                 user,
                 DateTime.UtcNow.AddDays(5),
@@ -167,8 +165,7 @@ namespace Auth.JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             if (!tokenHandler.CanReadToken(token)) return false;
 
-            var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-            if (jwtToken == null) return false;
+            if (tokenHandler.ReadToken(token) is not JwtSecurityToken jwtToken) return false;
 
             var expiration = jwtToken.ValidTo;
 
@@ -186,6 +183,10 @@ namespace Auth.JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             var keyBytes = Encoding.UTF8.GetBytes(this._secretKey);
 
+            if (tokenHandler.ReadToken(token) is not JwtSecurityToken jwtToken) return false;
+
+            if (jwtToken.ValidTo < DateTime.UtcNow) return false;
+
             var principal = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -200,13 +201,13 @@ namespace Auth.JWT
         }
 
         /// <summary>
-        /// ValidateVerificationToken
+        /// Validate OTT 
         /// </summary>
         /// <param name="token"></param>
-        /// <returns>User Id</returns>
-        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <returns></returns>
+        /// <exception cref="BadRequestExceptions"></exception>
+        /// <exception cref="SecurityTokenSignatureKeyNotFoundException"></exception>
         /// <exception cref="SecurityTokenExpiredException"></exception>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task<JwtSecurityToken?> ValidateOTT(string token)
         {
             if (string.IsNullOrEmpty(token))
@@ -216,6 +217,12 @@ namespace Auth.JWT
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var keyBytes = Encoding.UTF8.GetBytes(this._secretKey);
+
+            if (tokenHandler.ReadToken(token) is not JwtSecurityToken validateToken)
+                throw new SecurityTokenSignatureKeyNotFoundException("Token is invalid");
+
+            if (validateToken.ValidTo < DateTime.UtcNow)
+                throw new SecurityTokenExpiredException("Token is expired");
 
             var verification = new TokenValidationParameters
             {

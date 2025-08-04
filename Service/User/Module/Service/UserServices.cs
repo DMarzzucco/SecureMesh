@@ -22,41 +22,18 @@ namespace User.Module.Service
             this._validation = validation;
         }
         /// <summary>
-        /// Find User By id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<UserModel> FindUserById(int id)
-        {
-            var user = await this._repository.FindByIdAsync(id) ??
-                throw new NotFoundExceptions("User not found");
-            return user;
-        }
-
-        /// <summary>
         /// Get User Profile By Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<UserDTO> GetUserProfileById(int id)
         {
-            var user = await this.FindUserById(id);
+            var user = await this._repository.FindByIdAsync(id) ??
+                throw new NotFoundExceptions("User not found");
             var response = this._mapper.Map<UserDTO>(user);
             return response;
         }
-        /// <summary>
-        /// Get user by email
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        /// <exception cref="NotFoundExceptions"></exception>
-        public async Task<UserModel> GetUserByEmail(string email)
-        {
-            var user = await this._repository.FindByEmailAsync(email) ??
-                throw new NotFoundExceptions("This email adress not exist ");
-            return user;
-        }
+
         /// <summary>
         /// List of All Register
         /// </summary>
@@ -142,7 +119,7 @@ namespace User.Module.Service
 
             return "Password updated successfully";
         }
-        
+
         /// <summary>
         /// Update Email Adress
         /// </summary>
@@ -276,5 +253,5 @@ namespace User.Module.Service
             return user;
         }
     }
-    
+
 }
