@@ -53,7 +53,7 @@ namespace Auth.Utils.Middleware
             }
             try
             {
-                if (!tokenService.ValidateToken(accessToken))
+                if (!tokenService.ValidateAuthenticationToken(accessToken))
                 {
                     context.Response.StatusCode = StatusCodes.Status403Forbidden;
                     await context.Response.WriteAsJsonAsync(new { message = "Invalid Token" });
@@ -70,13 +70,13 @@ namespace Auth.Utils.Middleware
                         await context.Response.WriteAsJsonAsync(new { message = "Refresh Token is missing " });
                         return;
                     }
-                    if (!tokenService.ValidateToken(refreshToken))
+                    if (!tokenService.ValidateAuthenticationToken(refreshToken))
                     {
                         context.Response.StatusCode = StatusCodes.Status403Forbidden;
                         await context.Response.WriteAsJsonAsync(new { message = "Invalid refresh Token" });
                         return;
                     }
-                    var newAccessToken = tokenService.RefreshToken(payload.SessionId, payload.User);
+                    var newAccessToken = tokenService.GenerateRefreshToken(payload.SessionId, payload.User);
                     cookieService.SetTokenCookies(context.Response, newAccessToken);
                 }
             }

@@ -8,15 +8,14 @@ namespace Auth.JWT.Interfaces
     public interface IJwtService
     {
         IEnumerable<Claim> GetClaimFromToken();
-        Task<string> GenerateEmailVerificationToken(UserModel user);
-        Task<string> GenerateRBAToken(UserModel user, string ip, string userAgent, string location);
-        Task<string> GenerateRecuperationPasswordToken(UserModel user);
-        TokenPair GenerateToken(int sessionId, UserModel user);
-        TokenPair RefreshToken(int sessionId, UserModel user);
-        bool ValidateToken(string token);
-        string GetClaimsValue(IEnumerable<Claim> claims, string type);
-        Task<JwtSecurityToken?> ValidateVerificationToken(string token);
+        Task<string> GenerateEmailVerificationOTT(UserModel user);
+        Task<string> GenerateRBAOTT(UserModel user, string ip, string userAgent, string location);
+        Task<string> GenerateRecuperationPasswordOTT(UserModel user);
+        TokenPair GenerateAuthenticationToken(int sessionId, UserModel user);
+        TokenPair GenerateRefreshToken(int sessionId, UserModel user);
+        bool ValidateAuthenticationToken(string token);
+        string GetValuesFromClaim(IEnumerable<Claim> claims, string type);
+        Task<JwtSecurityToken?> ValidateOTT(string token);
         bool IsTokenExpirationSoon(string token);
-        TokenPair CreateTokenPair(int  sessionId, UserModel user, DateTime accessTokenExpiration, DateTime refreshTokenExpiration);
     }
 }

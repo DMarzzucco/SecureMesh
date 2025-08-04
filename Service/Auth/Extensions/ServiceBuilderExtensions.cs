@@ -34,6 +34,8 @@ using Auth.Server.Hangfire.Interfaces;
 using Auth.Server.Hangfire;
 using System.Reflection;
 using SwaggerSchemaExample.Nuget;
+using Auth.JWT.Helper.Interfaces;
+using Auth.JWT.Helper;
 
 namespace Auth.Extensions
 {
@@ -99,6 +101,7 @@ namespace Auth.Extensions
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<HandleGrpcError>();
             service.AddScoped<ICookieService, CookieService>();
+            service.AddScoped<ITokenCreationServices, TokenCreationServices>();
             service.AddScoped<IJwtService, JwtService>();
             service.AddScoped<IValidateTwoFactorAuth, ValidateTwoFactorAuth>();
             service.AddScoped<IAuthRepository, AuthRepository>();

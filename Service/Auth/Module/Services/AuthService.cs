@@ -60,12 +60,9 @@ namespace Auth.Module.Services
             var user = await this._userService.RegisterUser(body);
             await this.repository.SaveAuth(user.Id);
 
-            if (user != null)
-            {
-                var verificationToken = await this._jwtService.GenerateEmailVerificationToken(user);
+            var verificationToken = await this._jwtService.GenerateEmailVerificationOTT(user);
 
-                await this._messagingQueues.SendEmailVerificactionEvent(user.Email, verificationToken, user.Id);
-            }
+            await this._messagingQueues.SendEmailVerificactionEvent(user.Email, verificationToken, user.Id);
 
             return $"Your was registerd successfully, now you need check your email to verificated";
         }
@@ -80,13 +77,13 @@ namespace Auth.Module.Services
                 throw new UnauthorizedAccessException("httpContext is null");
 
             var claim = this._jwtService.GetClaimFromToken();
-            var id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
-            var sessionId = int.Parse(this._jwtService.GetClaimsValue(claim, "sessionId"));
+            var id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
+            var sessionId = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sessionId"));
 
             var user = await this._userService.GetUserById(id);
             var auth = await this.repository.FindAuthByUserId(id) ?? throw new UnauthorizedAccessException();
 
-            var token = this._jwtService.RefreshToken(sessionId, user);
+            var token = this._jwtService.GenerateRefreshToken(sessionId, user);
             auth.RefreshToken = token.RefreshHasherToken;
 
             await this.repository.UpdateAsync(auth);
@@ -125,7 +122,7 @@ namespace Auth.Module.Services
                 if (!sessionsExists)
                 {
 
-                    var token = await this._jwtService.GenerateRBAToken(user, currentIp, currentUserAgent, location);
+                    var token = await this._jwtService.GenerateRBAOTT(user, currentIp, currentUserAgent, location);
                     await this._messagingQueues.RiskBasedAuthenticationMessage(token, user.Email, currentUserAgent, location);
 
                     return $"Check your email if you are really are you: IP {currentIp} UserAgent {currentUserAgent}";
@@ -149,17 +146,17 @@ namespace Auth.Module.Services
         /// <exception cref="UnauthorizedAccessException"></exception>
         public async Task<string> VerifySession(string token)
         {
-            var jwt = await this._jwtService.ValidateVerificationToken(token);
+            var jwt = await this._jwtService.ValidateOTT(token);
 
             var code = this.codeGeneration.InvokeCodeGeneration();
 
             var claims = jwt?.Claims ??
                throw new UnauthorizedAccessException("Invalid Token");
 
-            var userId = this._jwtService.GetClaimsValue(claims, "sub");
-            var ip = this._jwtService.GetClaimsValue(claims, "ip");
-            var userAgent = this._jwtService.GetClaimsValue(claims, "ua");
-            var location = this._jwtService.GetClaimsValue(claims, "location");
+            var userId = this._jwtService.GetValuesFromClaim(claims, "sub");
+            var ip = this._jwtService.GetValuesFromClaim(claims, "ip");
+            var userAgent = this._jwtService.GetValuesFromClaim(claims, "ua");
+            var location = this._jwtService.GetValuesFromClaim(claims, "location");
 
             int id = int.Parse(userId);
 
@@ -206,7 +203,7 @@ namespace Auth.Module.Services
                 ? session.Id
                 : await this.sessionService.SaveSession(user.Id, ip, userAgent, location);
 
-            var token = this._jwtService.GenerateToken(sessionId, user);
+            var token = this._jwtService.GenerateAuthenticationToken(sessionId, user);
 
             auth.RefreshToken = token.RefreshHasherToken;
             await this.repository.UpdateAsync(auth);
@@ -224,8 +221,8 @@ namespace Auth.Module.Services
         public async Task<AuthorizationTokenDTO> GetValueByCookie()
         {
             var claim = this._jwtService.GetClaimFromToken();
-            int id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
-            int sessionId = int.Parse(this._jwtService.GetClaimsValue(claim, "sessionId"));
+            int id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
+            int sessionId = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sessionId"));
 
             var user = await this._userService.GetUserById(id);
             var response = new AuthorizationTokenDTO { User = user, SessionId = sessionId };
@@ -241,7 +238,7 @@ namespace Auth.Module.Services
         public async Task<IEnumerable<SessionModel?>> ListOfAllSessionsAsync()
         {
             var claim = this._jwtService.GetClaimFromToken();
-            int id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
+            int id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
 
             var sessions = await this.sessionService.FindAllSessionsByUserId(id) ??
                 throw new NotFoundExceptions("User not found");
@@ -256,14 +253,14 @@ namespace Auth.Module.Services
         public async Task<string> RemoveOneSessionById(int id)
         {
             var claim = this._jwtService.GetClaimFromToken();
-            int userId = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
+            int userId = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
 
             var sessions = await this.sessionService.FindAllSessionsByUserId(userId);
 
             if (!sessions.Any(s => s?.Id == id))
                 throw new UnauthorizedAccessException("Your not allowed to deleted this session");
 
-            if (id == int.Parse(this._jwtService.GetClaimsValue(claim, "sessionId")))
+            if (id == int.Parse(this._jwtService.GetValuesFromClaim(claim, "sessionId")))
                 throw new UnauthorizedAccessException("You cannot delete the session you are using.");
 
             await this.sessionService.RemoveSessionById(id);
@@ -281,7 +278,7 @@ namespace Auth.Module.Services
             var user = await this._userService.GetUserByEmail(dto.Email);
             if (user != null)
             {
-                var token = await this._jwtService.GenerateRecuperationPasswordToken(user);
+                var token = await this._jwtService.GenerateRecuperationPasswordOTT(user);
                 await this._messagingQueues.PasswordRecuperationMessage(user.Email, token, user.Id);
             }
             return "You need check your email to next.";
@@ -297,7 +294,7 @@ namespace Auth.Module.Services
                 throw new UnauthorizedAccessException("HttpContext is null");
 
             var claim = this._jwtService.GetClaimFromToken();
-            int id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
+            int id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
 
             var auth = await this.repository.FindAuthByUserId(id) ?? throw new UnauthorizedAccessException();
             auth.RefreshToken = null;
@@ -321,7 +318,7 @@ namespace Auth.Module.Services
                 throw new BadRequestExceptions("Password is required");
 
             var claim = this._jwtService.GetClaimFromToken();
-            int id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
+            int id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
 
             var httpContext = this._context.HttpContext ??
                 throw new UnauthorizedAccessException("HttpContext is null");
@@ -369,7 +366,7 @@ namespace Auth.Module.Services
         /// <returns></returns>
         public async Task<string> ResetPassword(string token, PasswordDTO body)
         {
-            var jwtToken = await this._jwtService.ValidateVerificationToken(token);
+            var jwtToken = await this._jwtService.ValidateOTT(token);
 
             var userId = jwtToken?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ??
                 throw new UnauthorizedAccessException("Invalid Token");
@@ -392,7 +389,7 @@ namespace Auth.Module.Services
         /// <returns></returns>
         public async Task<string> VerificationEmail(string token)
         {
-            var jwt = await this._jwtService.ValidateVerificationToken(token);
+            var jwt = await this._jwtService.ValidateOTT(token);
 
             var userId = jwt?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ??
                 throw new UnauthorizedAccessException("Invalid Token");
@@ -419,7 +416,7 @@ namespace Auth.Module.Services
         /// <returns></returns>
         public async Task<string> VerificationNewEmail(string token)
         {
-            var jwt = await this._jwtService.ValidateVerificationToken(token);
+            var jwt = await this._jwtService.ValidateOTT(token);
 
             var userId = jwt?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ??
                 throw new UnauthorizedAccessException("Invalid Token");
@@ -445,7 +442,7 @@ namespace Auth.Module.Services
         public async Task<string> TwoFactorAuthenticationCodeGeneration()
         {
             var claim = this._jwtService.GetClaimFromToken();
-            int id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
+            int id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
 
             var user = await this._userService.GetUserById(id);
             var auth = await this.repository.FindAuthByUserId(id) ?? throw new UnauthorizedAccessException();
@@ -471,8 +468,8 @@ namespace Auth.Module.Services
         {
             var claim = this._jwtService.GetClaimFromToken();
 
-            int id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
-            int sessionId = int.Parse(this._jwtService.GetClaimsValue(claim, "sessionId"));
+            int id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
+            int sessionId = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sessionId"));
 
             await this.validateTwoFactor.ImplementValidate(id, body.Code);
 
@@ -495,15 +492,15 @@ namespace Auth.Module.Services
 
             var claim = this._jwtService.GetClaimFromToken();
 
-            int id = int.Parse(this._jwtService.GetClaimsValue(claim, "sub"));
-            int sessionId = int.Parse(this._jwtService.GetClaimsValue(claim, "sessionId"));
+            int id = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sub"));
+            int sessionId = int.Parse(this._jwtService.GetValuesFromClaim(claim, "sessionId"));
 
             var auth = await this.validateTwoFactor.ImplementValidate(id, body.Code);
 
-            var user = await this._userService.UpdateEmailAddress(id, body) ?? 
+            var user = await this._userService.UpdateEmailAddress(id, body) ??
                 throw new BadRequestExceptions("The email could not be updated.");
 
-            var ott = await this._jwtService.GenerateEmailVerificationToken(user);
+            var ott = await this._jwtService.GenerateEmailVerificationOTT(user);
             await this._messagingQueues.SendNewEmailVerificationEvent(user.Email, ott, user.Id);
 
             await this.sessionService.RemoveAllSessionExceptCurrent(id, sessionId);

@@ -116,9 +116,9 @@ namespace User.Module.Service
         /// <exception cref="NotFoundExceptions"></exception>
         /// <exception cref="ForbiddenExceptions"></exception>
         /// <exception cref="ConflictExceptions"></exception>
-        public async Task<string> UpdatePassword(int id, UpdatePasswordDTO dt)
+        public async Task<string> UpdatePassword(int id, string oldPassword, string newPassword)
         {
-            if (string.IsNullOrEmpty(dt.OldPassword))
+            if (string.IsNullOrEmpty(oldPassword))
                 throw new BadRequestExceptions("Old password is required");
 
             var date = await this._repository.FindByIdAsync(id) ??
@@ -126,18 +126,18 @@ namespace User.Module.Service
 
             var passwordHasher = new PasswordHasher<UserModel>();
 
-            var verificationPass = passwordHasher.VerifyHashedPassword(date, date.Password, dt.OldPassword);
+            var verificationPass = passwordHasher.VerifyHashedPassword(date, date.Password, oldPassword);
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password Wrong");
 
-            this._validation.ValidateStructurePassword(dt.NewPassword);
+            this._validation.ValidateStructurePassword(newPassword);
 
-            var verificationResult = passwordHasher.VerifyHashedPassword(date, date.Password, dt.NewPassword);
+            var verificationResult = passwordHasher.VerifyHashedPassword(date, date.Password, newPassword);
 
             if (verificationResult == PasswordVerificationResult.Success)
                 throw new ConflictExceptions("The password cannot be the same as the current one");
 
-            date.Password = passwordHasher.HashPassword(date, dt.NewPassword);
+            date.Password = passwordHasher.HashPassword(date, newPassword);
             await this._repository.UpdateAsync(date);
 
             return "Password updated successfully";
@@ -152,27 +152,27 @@ namespace User.Module.Service
         /// <exception cref="NotFoundExceptions"></exception>
         /// <exception cref="ForbiddenExceptions"></exception>
         /// <exception cref="ConflictExceptions"></exception>
-        public async Task<UserModel> UpdateEmail(int id, NewEmailDTO dt)
+        public async Task<UserModel> UpdateEmail(int id, string password, string newEmail)
         {
-            if (string.IsNullOrEmpty(dt.NewEmail))
+            if (string.IsNullOrEmpty(newEmail))
                 throw new BadRequestExceptions("The Email is required");
 
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
             var passwordHasher = new PasswordHasher<UserModel>();
-            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, dt.Password);
+            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, password);
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password is Wrong");
 
-            this._validation.ValidationEmail(dt.NewEmail);
+            this._validation.ValidationEmail(newEmail);
 
-            if (user.Email == dt.NewEmail)
+            if (user.Email == newEmail)
                 throw new ConflictExceptions("The new email address must be different from the current one.");
 
-            await this._validation.ValidateEmailDuplicate(dt.NewEmail);
+            await this._validation.ValidateEmailDuplicate(newEmail);
 
-            user.Email = dt.NewEmail;
+            user.Email = newEmail;
 
             await this._repository.UpdateAsync(user);
             return user;
@@ -184,7 +184,7 @@ namespace User.Module.Service
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<UserModel> UpdateRegister(UpdateUserDTO body, int id)
+        public async Task<UserModel> UpdateRegister(int id, UpdateUserDTO body)
         {
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
@@ -196,6 +196,7 @@ namespace User.Module.Service
             await this._repository.UpdateAsync(user);
             return user;
         }
+
         /// <summary>
         /// Update own register
         /// </summary>
@@ -230,15 +231,15 @@ namespace User.Module.Service
         /// <param name="newRoles"></param>
         /// <returns></returns>
         /// <exception cref="NotFoundExceptions"></exception>
-        public async Task<string> UpdateRoles(int id, RolesDTO newRoles)
+        public async Task<string> UpdateRoles(int id, ROLES newRoles)
         {
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
-            if (user.Roles == newRoles.Roles)
+            if (user.Roles == newRoles)
                 throw new BadRequestExceptions("No changes were made, Roles is already set");
 
-            user.Roles = newRoles.Roles;
+            user.Roles = newRoles;
 
             await this._repository.UpdateAsync(user);
 
@@ -254,21 +255,21 @@ namespace User.Module.Service
         /// <exception cref="NotFoundExceptions"></exception>
         /// <exception cref="ConflictExceptions"></exception>
         /// <exception cref="BadRequestExceptions"></exception>
-        public async Task<UserModel> ReturnPasswordAsync(int id, PasswordDTO body)
+        public async Task<UserModel> ReturnPasswordAsync(int id, string newPassword)
         {
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
             var passwordHasher = new PasswordHasher<UserModel>();
 
-            this._validation.ValidateStructurePassword(body.Password);
+            this._validation.ValidateStructurePassword(newPassword);
 
-            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, body.Password);
+            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, newPassword);
 
             if (verificationPass == PasswordVerificationResult.Success)
                 throw new ConflictExceptions("The password cannot be the same as the old one");
 
-            user.Password = passwordHasher.HashPassword(user, body.Password);
+            user.Password = passwordHasher.HashPassword(user, newPassword);
 
             await this._repository.UpdateAsync(user);
 

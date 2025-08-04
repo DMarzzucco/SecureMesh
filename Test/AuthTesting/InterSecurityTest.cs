@@ -217,7 +217,7 @@ public class InterSecurityTest
         string message = $"{user.FullName} Your new password was chanchis successfully";
 
         this._redisRepository.Setup(r => r.GetByTokenAsync(token)).ReturnsAsync(token);
-        this._jwtService.Setup(j => j.ValidateVerificationToken(token)).ReturnsAsync
+        this._jwtService.Setup(j => j.ValidateOTT(token)).ReturnsAsync
             (new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
             claims: [new Claim("sub", id.ToString())])
             );
@@ -244,7 +244,7 @@ public class InterSecurityTest
         string message = $"Hello {user.FullName} your account was verificate successfully.";
 
         this._redisRepository.Setup(r => r.GetByTokenAsync(token)).ReturnsAsync(token);
-        this._jwtService.Setup(j => j.ValidateVerificationToken(token)).ReturnsAsync
+        this._jwtService.Setup(j => j.ValidateOTT(token)).ReturnsAsync
             (new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
             claims: [new Claim("sub", id.ToString())])
             );
@@ -276,7 +276,7 @@ public class InterSecurityTest
         string message = $"{user.Username} your new adress was verificate successfully, now you can login in.";
 
         this._redisRepository.Setup(r => r.GetByTokenAsync(token)).ReturnsAsync(token);
-        this._jwtService.Setup(j => j.ValidateVerificationToken(token)).ReturnsAsync
+        this._jwtService.Setup(j => j.ValidateOTT(token)).ReturnsAsync
             (new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
             claims: [new Claim("sub", id.ToString())])
             );

@@ -49,8 +49,7 @@ namespace User.Module.Stubs
         {
             try
             {
-                var dto = new UpdatePasswordDTO { OldPassword = request.Password, NewPassword = request.NewPassword };
-                var reg = await this._service.UpdatePassword(request.Id, dto);
+                var reg = await this._service.UpdatePassword(request.Id, request.Password, request.NewPassword);
                 var response = new MessageResponse { Message = reg };
 
                 return response;
@@ -94,8 +93,7 @@ namespace User.Module.Stubs
         {
             try
             {
-                var body = new NewEmailDTO { Password = request.Password, NewEmail = request.NewEmail };
-                var reg = await this._service.UpdateEmail(request.Id, body);
+                var reg = await this._service.UpdateEmail(request.Id, request.Password, request.NewEmail);
                 var response = this._mapper.InvokeMap(reg);
 
                 return new ValidationResponse { User = response };
@@ -151,9 +149,7 @@ namespace User.Module.Stubs
         {
             try
             {
-                var body = new PasswordDTO { Password = request.Password };
-
-                var reg = await this._service.ReturnPasswordAsync(request.Id, body);
+                var reg = await this._service.ReturnPasswordAsync(request.Id, request.Password);
                 var response = this._mapper.InvokeMap(reg);
 
                 return new ValidationResponse { User = response };

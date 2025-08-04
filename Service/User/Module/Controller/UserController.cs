@@ -45,7 +45,7 @@ namespace User.Module.Controller
         [HttpPut("{id}/e90u")]
         public async Task<IActionResult> EditUser(int id, [FromBody] UpdateUserDTO body)
         {
-            await this._service.UpdateRegister(body, id);
+            await this._service.UpdateRegister(id, body);
             return NoContent();
         }
 
@@ -69,7 +69,7 @@ namespace User.Module.Controller
         /// <param name="newRoles"></param>
         /// <returns></returns>
         [HttpPatch("{id}/rm0x1")]
-        public async Task<ActionResult<string>> UpdateRoles(int id, [FromBody] RolesDTO newRoles)
+        public async Task<ActionResult<string>> UpdateRoles(int id, [FromBody]  ROLES newRoles)
         {
             var res = await this._service.UpdateRoles(id, newRoles);
             return Ok(res);

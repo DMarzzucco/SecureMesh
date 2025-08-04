@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Auth.Server.Users.Model;
 using Microsoft.OpenApi.Expressions;
+using Auth.JWT.Helper.Interfaces;
 
 namespace Auth.JWT
 {
@@ -17,7 +18,9 @@ namespace Auth.JWT
         private readonly string _secretKey;
         private readonly IHttpContextAccessor _context;
         private readonly IRedisRepository _redisRepository;
-        public JwtService(IConfiguration configuration, IHttpContextAccessor context, IRedisRepository redisRepository)
+        private readonly ITokenCreationServices tokenCreation;
+
+        public JwtService(IConfiguration configuration, IHttpContextAccessor context, IRedisRepository redisRepository, ITokenCreationServices tokenCreation)
         {
             var secretKeySection = configuration.GetSection("JwtSettings").GetSection("seecretKey").ToString();
 
@@ -27,6 +30,7 @@ namespace Auth.JWT
             _secretKey = secretKeySection;
             _context = context;
             this._redisRepository = redisRepository;
+            this.tokenCreation = tokenCreation;
         }
 
         /// <summary>
@@ -34,18 +38,17 @@ namespace Auth.JWT
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<string> GenerateEmailVerificationToken(UserModel user)
+        public async Task<string> GenerateEmailVerificationOTT(UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var tokenDescription = this.TokenDescriptionTemplate(user, "email_verification", DateTime.UtcNow.AddMinutes(10));
+            var tokenDescription = this.tokenCreation.TokenDescriptionTemplate(user, "email_verification", DateTime.UtcNow.AddMinutes(10));
 
             var token = tokenHandler.CreateToken(tokenDescription);
-            var tk = tokenHandler.WriteToken(token);
+            var ott = tokenHandler.WriteToken(token);
 
-            await this._redisRepository.SetAsync(tk);
-            /// save token in redis
-            return tk;
+            await this._redisRepository.SetAsync(ott);
+            return ott;
 
         }
 
@@ -57,7 +60,7 @@ namespace Auth.JWT
         /// <param name="userAgent"></param>
         /// <param name="location"></param>
         /// <returns></returns>
-        public async Task<string> GenerateRBAToken(UserModel user, string ip, string userAgent, string location)
+        public async Task<string> GenerateRBAOTT(UserModel user, string ip, string userAgent, string location)
         {
             var key = Encoding.UTF8.GetBytes(this._secretKey);
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -76,11 +79,11 @@ namespace Auth.JWT
             };
 
             var token = tokenHandler.CreateToken(tokenDescription);
-            var tk = tokenHandler.WriteToken(token);
+            var ott = tokenHandler.WriteToken(token);
 
-            await this._redisRepository.SetAsync(tk);
+            await this._redisRepository.SetAsync(ott);
 
-            return tk;
+            return ott;
         }
 
         /// <summary>
@@ -88,24 +91,23 @@ namespace Auth.JWT
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<string> GenerateRecuperationPasswordToken(UserModel user)
+        public async Task<string> GenerateRecuperationPasswordOTT(UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescription = this.TokenDescriptionTemplate(user, "password_recuperation", DateTime.UtcNow.AddMinutes(10));
+            var tokenDescription = this.tokenCreation.TokenDescriptionTemplate(user, "password_recuperation", DateTime.UtcNow.AddMinutes(10));
 
             var token = tokenHandler.CreateToken(tokenDescription);
-            var tk = tokenHandler.WriteToken(token);
+            var ott = tokenHandler.WriteToken(token);
 
-            await this._redisRepository.SetAsync(tk);
-            /// save token in redis
-            return tk;
+            await this._redisRepository.SetAsync(ott);
+            return ott;
         }
 
         /// <summary>
-        /// Get Id From Token
+        /// Get Claim From Token
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
         public IEnumerable<Claim> GetClaimFromToken()
         {
             var httpContext = this._context.HttpContext ??
@@ -129,24 +131,25 @@ namespace Auth.JWT
         /// <param name="user"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public TokenPair GenerateToken(int sessionId, UserModel user)
+        public TokenPair GenerateAuthenticationToken(int sessionId, UserModel user)
         {
-            return CreateTokenPair(
+            return this.tokenCreation.CreateTokenPair(
                 sessionId,
                 user,
                 DateTime.UtcNow.AddHours(5),
                 DateTime.UtcNow.AddDays(5)
                 );
         }
+
         /// <summary>
         /// Refresh Token
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public TokenPair RefreshToken(int sessionId, UserModel user)
+        public TokenPair GenerateRefreshToken(int sessionId, UserModel user)
         {
-            return CreateTokenPair(
+            return this.tokenCreation.CreateTokenPair(
                 sessionId,
                 user,
                 DateTime.UtcNow.AddDays(5),
@@ -171,13 +174,14 @@ namespace Auth.JWT
 
             return expiration <= DateTime.UtcNow.AddMinutes(60);
         }
+
         /// <summary>
         /// Validate Token
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool ValidateToken(string token)
+        public bool ValidateAuthenticationToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var keyBytes = Encoding.UTF8.GetBytes(this._secretKey);
@@ -191,18 +195,8 @@ namespace Auth.JWT
                 ValidateLifetime = false,
                 ClockSkew = TimeSpan.Zero
             };
-            try
-            {
-                tokenHandler.ValidateToken(token, principal, out _);
-                return true;
-            }
-            catch (SecurityTokenExpiredException)
-            {
-                return false;
-            }
-
-            throw new NotImplementedException();
-
+            tokenHandler.ValidateToken(token, principal, out _);
+            return true;
         }
 
         /// <summary>
@@ -213,98 +207,29 @@ namespace Auth.JWT
         /// <exception cref="UnauthorizedAccessException"></exception>
         /// <exception cref="SecurityTokenExpiredException"></exception>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<JwtSecurityToken?> ValidateVerificationToken(string token)
+        public async Task<JwtSecurityToken?> ValidateOTT(string token)
         {
+            if (string.IsNullOrEmpty(token))
+                throw new BadRequestExceptions("Token is required");
 
-            try
-            {
-                if (string.IsNullOrEmpty(token))
-                    throw new BadRequestExceptions("Token is required");
-                //validate if token was used or not 
-                var tk = await this._redisRepository.GetByTokenAsync(token);
-                //if token was used, return 401
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var keyBytes = Encoding.UTF8.GetBytes(this._secretKey);
+            var tk = await this._redisRepository.GetByTokenAsync(token);
 
-                var verification = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = false,
-                    ClockSkew = TimeSpan.Zero
-                };
-                tokenHandler.ValidateToken(tk, verification, out _);
-
-                var jwtToken = tokenHandler.ReadToken(tk) as JwtSecurityToken;
-                return jwtToken;
-            }
-            catch (SecurityTokenExpiredException)
-            {
-                throw new SecurityTokenExpiredException("Token is expired");
-            }
-
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Create Token Pair template
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="accessTokenExpiration"></param>
-        /// <param name="refreshTokenExpiration"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public TokenPair CreateTokenPair(int sessionId, UserModel user, DateTime accessTokenExpiration, DateTime refreshTokenExpiration)
-        {
+            var tokenHandler = new JwtSecurityTokenHandler();
             var keyBytes = Encoding.UTF8.GetBytes(this._secretKey);
-            var credentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature);
 
-            var claims = new List<Claim>
+            var verification = new TokenValidationParameters
             {
-                new ("sub", user.Id.ToString()),
-                new (ClaimTypes.Role, user.Roles.ToString()),
-                new ("sessionId", sessionId.ToString())
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = false,
+                ClockSkew = TimeSpan.Zero
             };
+            tokenHandler.ValidateToken(tk, verification, out _);
 
-            var accessToken = CreateToken(claims, credentials, accessTokenExpiration);
-            var refreshToken = CreateToken(claims, credentials, refreshTokenExpiration);
-
-
-            var refreshHasherToken = BCrypt.Net.BCrypt.HashPassword(refreshToken);
-
-            return new TokenPair
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                RefreshHasherToken = refreshHasherToken
-            };
-
-        }
-        /// <summary>
-        /// Token Description Template
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="purpose"></param>
-        /// <param name="expiration"></param>
-        /// <returns></returns>
-        private SecurityTokenDescriptor TokenDescriptionTemplate(UserModel user, string purpose, DateTime expiration)
-        {
-            var key = Encoding.UTF8.GetBytes(this._secretKey);
-            var tokenDescription = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(
-                [
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim ("sub", user.Id.ToString()),
-                    new Claim ("purpose", purpose)
-                ]),
-                Expires = expiration,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-
-            };
-            return tokenDescription;
+            var jwtToken = tokenHandler.ReadToken(tk) as JwtSecurityToken;
+            return jwtToken;
         }
 
         /// <summary>
@@ -314,7 +239,7 @@ namespace Auth.JWT
         /// <param name="type"></param>
         /// <returns></returns>
         /// <exception cref="UnauthorizedAccessException"></exception>
-        public string GetClaimsValue(IEnumerable<Claim> claims, string type)
+        public string GetValuesFromClaim(IEnumerable<Claim> claims, string type)
         {
             var value = claims.FirstOrDefault(c => c.Type == type)?.Value;
 
@@ -322,22 +247,6 @@ namespace Auth.JWT
                 throw new UnauthorizedAccessException($"Invalid tokne, missing claim: {type}");
 
             return value;
-        }
-
-        /// <summary>
-        /// Template to create token
-        /// </summary>
-        /// <returns></returns>
-        private static string CreateToken(IEnumerable<Claim> claims, SigningCredentials signing, DateTime expiration)
-        {
-            var tokenDescription = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = expiration,
-                SigningCredentials = signing
-            };
-            var tokenHandler = new JwtSecurityTokenHandler();
-            return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescription));
         }
 
     }

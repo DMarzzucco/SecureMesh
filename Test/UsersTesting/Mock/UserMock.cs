@@ -67,31 +67,11 @@ namespace UsersTesting.Mock
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
         };
-        public static RolesDTO RolesDTOMock => new()
-        {
-            Roles = ROLES.Creator
-        };
-
-        public static PasswordDTO PasswordDTOMock => new() { Password = "Pr@motheus98" };
-        public static PasswordDTO PasswordReturnMock => new() { Password = "Sr@motheus23" };
-
-
-        public static UpdatePasswordDTO UpdatePasswordDTOMock => new()
-        {
-            OldPassword = "Pr@motheus98",
-            NewPassword = "Sr@motheus23"
-        };
-
         public static UpdateOwnUserDTO UpdateOwnUserDTOMock => new()
         {
             Password = "Pr@motheus98",
             FullName = "Dario Marzzucco",
             Username = "derkmarzz77",
-        };
-        public static NewEmailDTO NewEmailMOck => new()
-        {
-            Password = "Pr@motheus98",
-            NewEmail = "dmarzz_@hotmail.com"
         };
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.OpenApi.Expressions;
 using Moq;
+using User;
 using User.Module.DTOs;
 using User.Module.Model;
 using User.Module.Repository.Interface;
@@ -156,17 +157,18 @@ public class IntServicesUser
     public async Task ShouldUpdatePassword()
     {
         int id = 4;
-        var dt = UsersMock.UpdatePasswordDTOMock;
+        string oldPassword = "Pr@motheus98";
+        string newPassword = "Sr@motheus23";
 
         string message = "Password updated successfully";
 
         var user = UsersMock.UserHashPassMock;
 
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._validation.Setup(v => v.ValidateStructurePassword(dt.NewPassword));
+        this._validation.Setup(v => v.ValidateStructurePassword(newPassword));
         this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
-        var res = await this._service.UpdatePassword(id, dt);
+        var res = await this._service.UpdatePassword(id, oldPassword, newPassword);
 
         Assert.NotNull(res);
         Assert.Equal(message, res);
@@ -178,15 +180,18 @@ public class IntServicesUser
     public async Task UpdateEmail()
     {
         int id = 4;
-        var body = UsersMock.NewEmailMOck;
+
+        string password = "Pr@motheus98";
+        string newEmail = "dmarzz_@hotmail.com";
+
         var user = UsersMock.UserHashPassMock;
 
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
         this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
-        this._validation.Setup(v => v.ValidationEmail(body.NewEmail));
-        this._validation.Setup(v => v.ValidateEmailDuplicate(body.NewEmail));
+        this._validation.Setup(v => v.ValidationEmail(newEmail));
+        this._validation.Setup(v => v.ValidateEmailDuplicate(newEmail));
 
-        var res = await this._service.UpdateEmail(id, body);
+        var res = await this._service.UpdateEmail(id, password, newEmail);
 
         Assert.Equal(user, res);
 
@@ -199,7 +204,8 @@ public class IntServicesUser
     public async Task ShouldUpdateRoles()
     {
         int id = 4;
-        var roles = UsersMock.RolesDTOMock;
+        ROLES roles = ROLES.Creator;
+
         var user = UsersMock.UserMock;
         string message = "Roles were updated successfully";
 
@@ -226,7 +232,7 @@ public class IntServicesUser
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
         this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
-        var res = await this._service.UpdateRegister(body, id);
+        var res = await this._service.UpdateRegister(id, body);
         // Then
 
         Assert.NotNull(res);
@@ -263,13 +269,12 @@ public class IntServicesUser
     {
         var user = UsersMock.UserHashPassMock;
         int id = 4;
-        var body = UsersMock.PasswordReturnMock;
-
+        string password = "Sr@motheus23";
         this._repository.Setup(r => r.FindByIdAsync(id)).ReturnsAsync(user);
-        this._validation.Setup(v => v.ValidateStructurePassword(body.Password));
+        this._validation.Setup(v => v.ValidateStructurePassword(password));
         this._repository.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
-        var res = await this._service.ReturnPasswordAsync(id, body);
+        var res = await this._service.ReturnPasswordAsync(id, password);
 
         Assert.Equal(user, res);
     }

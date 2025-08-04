@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using User;
 using User.Module.Controller;
 using User.Module.DTOs;
 using User.Module.Service.Interface;
@@ -65,7 +66,7 @@ public class UnitControllerUser
         var id = 5;
         var user = UsersMock.UserMockBasic;
 
-        this._service.Setup(s => s.UpdateRegister(body, id)).ReturnsAsync(user);
+        this._service.Setup(s => s.UpdateRegister(id, body)).ReturnsAsync(user);
         var res = await this._controller.EditUser(id, body) as NoContentResult;
 
         Assert.NotNull(res);
@@ -118,13 +119,13 @@ public class UnitControllerUser
     public async Task ShouldUpdateRoles()
     {
         int id = 5;
-        var body = UsersMock.RolesDTOMock;
+        ROLES roles = ROLES.Creator;
 
         string message = "Roles were updated successfully";
 
-        this._service.Setup(s=> s.UpdateRoles(id, body)).ReturnsAsync(message);
+        this._service.Setup(s=> s.UpdateRoles(id, roles)).ReturnsAsync(message);
 
-        var res = await this._controller.UpdateRoles(id, body);
+        var res = await this._controller.UpdateRoles(id, roles);
         var result = Assert.IsType<OkObjectResult>(res.Result);
 
         Assert.NotNull(result);

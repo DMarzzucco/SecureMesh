@@ -1,8 +1,9 @@
-﻿using Grpc.Core;
+﻿using Auth.Utils.Exceptions;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
-using Auth.Utils.Exceptions;
+using System;
 
 namespace Auth.Utils.Filter
 {
@@ -32,25 +33,30 @@ namespace Auth.Utils.Filter
                 TooManyRequestsException => 429,
                 _ => 500
             };
+            var message = context.Exception switch
+            {
+                BadRequestExceptions ex => ex.Message,
+                UnauthorizedAccessException ex => ex.Message,
+                ForbiddenExceptions ex => ex.Message,
+                SecurityTokenExpiredException => "El token ha expirado",
+                SecurityTokenSignatureKeyNotFoundException => "Token inválido",
+                RpcException grpcEx => grpcEx.StatusCode switch
+                {
+                    StatusCode.NotFound => "No encontrado",
+                    StatusCode.Unauthenticated => "No autenticado",
+                    StatusCode.InvalidArgument => "Argumento inválido",
+                    _ => context.Exception.Message
+                },
+                KeyNotFoundException ex => ex.Message,
+                ConflictExceptions ex => ex.Message,
+                TooManyRequestsException ex => ex.Message,
+                _ => context.Exception.Message
+            };
 
             var response = new ErrorResponse
             {
                 StatusCode = statusCode,
-                Message = statusCode switch
-                {
-                    400 => context.Exception.Message,
-                    401 => context.Exception.Message,
-                    403 => context.Exception switch
-                    {
-                        SecurityTokenExpiredException => "Token has expired",
-                        SecurityTokenSignatureKeyNotFoundException => "Invalid Token",
-                        _ => context.Exception.Message
-                    },
-                    404 => context.Exception.Message,
-                    409=> context.Exception.Message,
-                    429=> context.Exception.Message,
-                    _ => context.Exception.Message
-                },
+                Message = message,
                 Details = statusCode == 500 ?
                     context.Exception.InnerException?.Message : null
             };
