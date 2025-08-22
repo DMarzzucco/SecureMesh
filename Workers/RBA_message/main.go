@@ -65,7 +65,7 @@ func main() {
 			if err := json.Unmarshal(d.Body, &msg); err != nil {
 				log.Printf("❌ Error to deserialize message: %s", err)
 			} else {
-				fmt.Printf("⚠⚠⚠ Hi %s, your account init session in %s and location %s : If your reali you put over theare : https://localhost:8888/api/Auth/lskda_2312sd2000123sdaSD?k892=%s\n", msg.Email, msg.UserAgent, msg.Location, msg.Token)
+				fmt.Printf("⚠⚠⚠ Hi %s, your account init session in %s and location %s : If your reali you put over theare : https://localhost:8888/api/Idp/lskda_2312sd2000123sdaSD?k892=%s\n", msg.Email, msg.UserAgent, msg.Location, msg.Token)
 			}
 
 			d.Ack(false)

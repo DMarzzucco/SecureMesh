@@ -58,19 +58,15 @@ public class UserValidation(IUserRepository repository) : IUserValidation
     /// Validation Duplicated
     /// </summary>
     /// <param name="body"></param>
-    public async Task ValidationDuplicated(CreateUserDTO body)
+    public async Task ValidationUsernameDuplicated(string username)
     {
-        var normalizedUsername = body.Username.Trim().ToLowerInvariant();
-        var normalizedEmail = body.Email.Trim().ToLowerInvariant();
+        if (string.IsNullOrEmpty(username))
+            throw new BadRequestExceptions("Username is required");
 
-        var validation = new List<(bool isInvalid, Exception Error)>
-        {
-           (await _repository.ExistisByUsername(normalizedUsername), new ConflictExceptions("This username already exists")),
-           (await _repository.ExistisByEmail(normalizedEmail), new ConflictExceptions("This email already exists")),
-        };
-        var firstError = validation.FirstOrDefault(v => v.isInvalid);
-        if (firstError != default)
-            throw firstError.Error;
+        var normalizedUsername = username.Trim().ToLowerInvariant();
+
+        if (await this._repository.ExistisByUsername(normalizedUsername))
+            throw new ConflictExceptions("This username already exists");
     }
 
     /// <summary>

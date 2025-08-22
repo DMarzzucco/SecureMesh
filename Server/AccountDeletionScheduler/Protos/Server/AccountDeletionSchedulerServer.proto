@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "AccountDeletionSchedulerServer.Protos";
+
+service AccountDeletionSchedulerService {
+  rpc ScheduleDeletion (ScheduleRequest) returns (ScheduleResponse);
+  rpc CancelScheduledJob (CancelRequest) returns (CancelResponse);
+}
+
+message ScheduleRequest {
+  int32 authId = 1;
+}
+
+message ScheduleResponse {
+  string jobId = 1;
+}
+
+message CancelRequest {
+  string jobId = 1;
+}
+
+message CancelResponse {
+  bool success = 1;
+}

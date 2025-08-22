@@ -29,5 +29,8 @@
 **/*.log.*
 *.log
 *.db
-.vs/
 Publish/
+.vs/
+.idea/
+.vscode/
+.bin/

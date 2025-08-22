@@ -13,7 +13,6 @@ public static class ApplicationBuilderExtensions
             e.MapGrpcService<UserServiceGrpcImpl>();
         });
         app.UseStaticFiles();
-        app.UseCors("CorsPolicy");
 
         return app;
     }

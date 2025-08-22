@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option csharp_namespace = "IdentifyService.Proto.Server";
+
+import "google/protobuf/empty.proto";
+
+service RemoveIdpRelationService {
+    rpc InvokeDeletionRelationIdp (UserIdRequest) returns (google.protobuf.Empty);
+}
+
+message UserIdRequest {
+    int32 user_id = 1;
+}

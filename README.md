@@ -20,10 +20,11 @@ The system includes multiple microservices, each focused on a specific domain su
 #### 1. Microservices
 
 - `API Gateway`: A unified entry point for clients (web, mobile, desktop). It exposes REST endpoints for consumption, encapsulates routing logic, and implements CORS policies, Rate Limiting, Role Hierarchies, and OAuth2 protocols.
-- `Identity Service`: Manages user identity and data. Implements business logic related to profiles, authentication, and permissions.
-- `User API`: Manages the full lifecycle of users.
-- `Security API`: Manages the full lifecycle of user sessions.
-- `Hangfire Server`: Executes background jobs.
+- `User Service`: Manages domain logic and rules for user entities (validations, unique constraints, lifecycle rules).
+- `Sessions Management Service`: Handles the full lifecycle of sessions (create, list, delete, expiration) linked to users.
+- `User Management Service (UMS)`: Orchestrates communication between services (BFF pattern). Other services do not know of each other’s existence.
+- `Identity Provider (IDP)`: Manages security, authentication, and authorization. It only knows about the UMS as its source of truth.
+- `Account Delation Scheduler`: Executes scheduled user account deletion requests.
 - `Redis`: A key-value store used to hold one-time tokens, which are discarded after TTL expiration.
 - `RabbitMQ`: An asynchronous messaging system used for email verification, welcome messages, and account recovery.
 - `PostgreSQL`: Relational database for persistent storage.
@@ -102,11 +103,11 @@ make purge
 ---
 
 ## 🔌 Ports
-1. User API ["https://*:4080"]("https://localhost:4080/swagger/index.html") 
-2. IPS ["https://*:5090"]("https://localhost:5090/swagger/index.html")
-3. Hangfire ["https://*:3434"]("https://localhost:3434/hangfire")
+1. UMS Swagger UI ["https://*:7080"]("https://localhost:7080/swagger/index.html") 
+2. IPS Swagger UI ["https://*:5090"]("https://localhost:5090/swagger/index.html")
+3. Hangfire UI ["https://*:3434"]("https://localhost:3434/hangfire")
 4. API Gateway ["https://*:8888"]("https://localhost:8888/")
-5. RabbitMQ ["https://*:15672"]("http://localhost:15672/#/")
+5. RabbitMQ UI ["https://*:15672"]("http://localhost:15672/#/")
 
 > [!NOTE]
 > Since they are using self-signed SSL certificates, I have not yet been able to invalidate their use, so Swagger cannot be accessed through the API gateway, only through Postman.

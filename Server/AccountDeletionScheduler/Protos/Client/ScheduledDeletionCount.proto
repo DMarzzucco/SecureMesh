@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option csharp_namespace = "UserManagementService.Proto.Server";
+
+import "google/protobuf/empty.proto";
+
+service ScheduledDeletionCountService {
+    rpc InvokeCounted (UserIdToDeleteRequest) returns (google.protobuf.Empty);
+}
+
+message UserIdToDeleteRequest {
+    int32 user_id = 1;
+}

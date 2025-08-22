@@ -1,6 +1,3 @@
-using Swashbuckle.AspNetCore.Annotations;
-using SwaggerSchemaExample.Nuget;
-
 namespace User.Module.DTOs;
 
 /// <summary>
@@ -8,17 +5,7 @@ namespace User.Module.DTOs;
 /// </summary>
 public class UpdateOwnUserDTO
 {
-    // password to validate
-    [SwaggerSchema("User password")]
-    [SwaggerSchemaExample("Pr@motheus98")]
     public required string Password { get; set; }
-
-    //body
-    [SwaggerSchema("User name")]
-    [SwaggerSchemaExample("Dario Marzzucco")]
     public string? FullName { get; set; }
-
-    [SwaggerSchema("User username")]
-    [SwaggerSchemaExample("derkmarzz77")]
     public string? Username { get; set; }
 }

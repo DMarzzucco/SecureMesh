@@ -6,6 +6,6 @@ public interface IUserValidation
 {
     void ValidationEmail(string email);
     Task ValidateEmailDuplicate(string email);
-    Task ValidationDuplicated(CreateUserDTO body);
+    Task ValidationUsernameDuplicated(string username);
     void ValidateStructurePassword (string password);
 }

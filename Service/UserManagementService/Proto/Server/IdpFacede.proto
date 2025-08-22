@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+option csharp_namespace = "UserManagementService.Proto.Server";
+
+import "google/protobuf/empty.proto";
+
+service IdpFacedeService {
+     rpc GetUserByIdForAuth (UserRequest) returns (UserResponse);
+     rpc GetUserByEmail(EmailRequest)returns (MultipleUserResponse);
+     rpc SaveUserRegister (CreateUserRequest) returns (MultipleUserResponse);
+     rpc FindByUsername(UsernameRequest) returns (MultipleUserResponse);
+     rpc UpdatePasswordUser (UpdatePasswordRequest) returns (MessageResponse);
+     rpc VerifyNewEmailAdress (VerifyNewEmailRequest) returns (MultipleUserResponse);
+
+     rpc GetAllUsersSessionsByUserId (UserRequest) returns (GetSessionsListResponse);
+     rpc FindSessionIfExist (SessionRequest) returns (FindSessionResponse);
+     rpc SaveSession (SessionRequest) returns (SessionIdResponse);
+     rpc DeleteSessionById (SessionIdRequest) returns (google.protobuf.Empty);
+
+     rpc AccountDelationRequest (UserRequest) returns (google.protobuf.Empty);
+     rpc CancelAccountDelationOperation (UserRequest) returns (google.protobuf.Empty);
+}
+
+
+message MultipleUserResponse {
+    oneof result {
+        UserResponse user = 1;
+        ErrorResponse error = 2;
+    }
+}
+message MessageResponse {
+    oneof result {
+        string message = 1;
+        ErrorResponse error = 2;
+    }
+}
+
+message UserRequest {
+    int32 id = 1;
+}
+message EmailRequest{
+    string email = 1;
+}
+message CreateUserRequest {
+    string full_name = 2;
+    string username = 3;
+    string email = 4;
+    string password = 5;
+    ROLES roles = 6;
+}
+
+message ErrorResponse {
+    int32 status_code = 1;
+    string message = 2;
+}
+message UsernameRequest {
+    string username = 1;
+}
+message UpdatePasswordRequest{
+    int32 user_id = 1;
+    int32 session_id = 2;
+    string password = 3;
+    string new_password = 4;
+}
+message VerifyNewEmailRequest{
+    int32 user_id = 1;
+    string password = 2;
+    string new_email = 3;
+}
+
+message UserResponse {
+    int32 id = 1;
+    string full_name = 2;
+    string username = 3;
+    string email = 4;
+    string password = 5;
+    ROLES roles = 6;
+}
+message SessionIdRequest{
+    int32 session_id = 1;
+}
+message SessionRequest {
+    int32 user_id = 1;
+    string ip = 2;
+    string user_agent = 3;
+    string location = 4;
+}
+
+message SessionIdResponse {
+    int32 session_id = 1;
+}
+
+message FindSessionResponse {
+    oneof result {
+        SessionResponse session = 1;
+        NotFoundResponse reason = 2;
+    }
+}
+
+message GetSessionsListResponse {
+    repeated SessionResponse sessions = 1;
+    NotFoundResponse reason = 2;
+}
+message NotFoundResponse {
+    string reason = 1;
+}
+message SessionResponse {
+    int32 id = 1;
+    int32 user_id = 2;
+    string ip = 3;
+    string user_agent = 4;
+    string location = 5;
+}
+
+enum ROLES{
+     ADMIN = 0;
+     CREATOR = 1;
+     BASIC = 2;
+}

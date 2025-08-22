@@ -1,0 +1,136 @@
+using IdentifyService.Queues.Infrastructure;
+using IdentifyService.Queues.Interfaces;
+using IdentifyService.Queues.Messaging.Interfaces;
+
+namespace IdentifyService.Queues.Messaging;
+
+public partial class MessagingQueues(IRabbitMQServices services) : IMessagingQueues
+{
+    private readonly IRabbitMQServices _services = services;
+
+    /// <summary>
+    /// Send Email Verification
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="token"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task SendEmailVerificactionEvent(string email, string token, int id)
+    {
+        var message = new EmailVerifcationMessage
+        {
+            Email = email,
+            Token = token,
+            Id = id,
+        };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await _services.SendMessageAsync(message, QueuesNames.EmailVerficationQueue);
+    }
+    /// <summary>
+    /// Verificate New Email
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="token"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task SendNewEmailVerificationEvent(string email, string token, int id)
+    {
+        var message = new EmailVerifcationMessage
+        {
+            Email = email,
+            Token = token,
+            Id = id,
+        };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await _services.SendMessageAsync(message, QueuesNames.NewEmailVerificationQueue);
+    }
+    /// <summary>
+    /// Send Welcome Message
+    /// </summary>
+    /// <param name="fullName"></param>
+    /// <param name="email"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task SendWelcomeMessage(string fullName, string email, int id)
+    {
+        var message = new WelcomeMessage
+        {
+            FullName = fullName,
+            Email = email,
+            Id = id
+        };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await _services.SendMessageAsync(message, QueuesNames.WelcomeQueue);
+    }
+    /// <summary>
+    /// Sen Password recuperation message to email
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="token"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task PasswordRecuperationMessage(string email, string token, int id)
+    {
+        var message = new EmailVerifcationMessage { Email = email, Token = token, Id = id };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await this._services.SendMessageAsync(message, QueuesNames.PasswordRecuperationQeue);
+    }
+
+    /// <summary>
+    /// Sen a code to validate login
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task TowAfCodeMessage(string email, string code)
+    {
+        var message = new TowAFMessage { Email = email, TwoAFCode = code };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await this._services.SendMessageAsync(message, QueuesNames.TwoAFCodeQeue);
+    }
+
+    /// <summary>
+    /// Verify Sessions RBA
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="email"></param>
+    /// <param name="ip"></param>
+    /// <param name="userAgent"></param>
+    /// <param name="location"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task RiskBasedAuthenticationMessage(
+        string token,
+        string email,
+        string userAgent,
+        string location
+     )
+    {
+        var message = new VerifySessionsMessage
+        {
+            Token = token,
+            Email = email,
+            UserAgent = userAgent,
+            Location = location
+        };
+        if (message == null)
+            throw new ArgumentNullException(nameof(message));
+
+        await this._services.SendMessageAsync(message, QueuesNames.VerifySessionQueue);
+    }
+}

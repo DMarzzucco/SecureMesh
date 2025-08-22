@@ -12,7 +12,6 @@ using User.Module.Validations;
 using User.Module.Validations.Interface;
 using User.Module.Stubs.Maps;
 using User.Module.Stubs.Handlers;
-using SwaggerSchemaExample.Nuget;
 
 namespace User.Extensions;
 
@@ -43,33 +42,7 @@ public static partial class ServiceBuilderExtensions
         services.AddScoped<IUserValidation, UserValidation>();
         services.AddScoped<IUserService, UserServices>();
         services.AddScoped<IUserRepository, UserRepository>();
-        //swagger
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(e =>
-        {
-            e.EnableAnnotations();
-            e.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "User API",
-                Version = "0.1",
-                Description = "User API"
-            });
-            e.SchemaFilter<SwaggerSchemaExampleFilter>();
-        });
-        //CorsPolicy
-        services.AddCors(p =>
-        {
-            p.AddPolicy("CorsPolicy", e =>
-            {
-                e.WithOrigins(
-                   "https://localhost:5090",
-                    //"https://auth:5090",
-                   "https://localhost:8888"
-                    );
-                e.AllowCredentials();
-                e.AllowAnyHeader();
-            });
-        });
+       
         //mapper
         var mappConfig = new MapperConfiguration(conf =>
         {

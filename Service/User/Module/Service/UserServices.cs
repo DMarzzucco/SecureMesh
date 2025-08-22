@@ -21,30 +21,6 @@ namespace User.Module.Service
             this._mapper = mapper;
             this._validation = validation;
         }
-        /// <summary>
-        /// Get User Profile By Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<UserDTO> GetUserProfileById(int id)
-        {
-            var user = await this._repository.FindByIdAsync(id) ??
-                throw new NotFoundExceptions("User not found");
-            var response = this._mapper.Map<UserDTO>(user);
-            return response;
-        }
-
-        /// <summary>
-        /// List of All Register
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<IEnumerable<UserDTO>> ListOfAllRegister()
-        {
-            var user = await this._repository.ToListAsync();
-            var response = this._mapper.Map<IEnumerable<UserDTO>>(user);
-            return response;
-        }
 
         /// <summary>
         /// Register User
@@ -54,7 +30,9 @@ namespace User.Module.Service
         /// <exception cref="ConflictExceptions"></exception>
         public async Task<UserModel> RegisterUser(CreateUserDTO body)
         {
-            await this._validation.ValidationDuplicated(body);
+            await this._validation.ValidationUsernameDuplicated(body.Username);
+            await this._validation.ValidateEmailDuplicate(body.Email);
+            
             this._validation.ValidationEmail(body.Email);
             this._validation.ValidateStructurePassword(body.Password);
 
@@ -66,13 +44,14 @@ namespace User.Module.Service
             await this._repository.AddChangeAsync(user);
             return user;
         }
+
         /// <summary>
         /// Remove User 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task RemoveUserRegister(int id)
+        public async Task<string> RemoveUserRegister(int id)
         {
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
@@ -81,6 +60,8 @@ namespace User.Module.Service
                 throw new ForbiddenExceptions("Could not delete a user Admin");
 
             await this._repository.DeleteAsync(user);
+
+            return $"User {user.FullName} was deleted successfully";
         }
 
         /// <summary>
@@ -121,7 +102,7 @@ namespace User.Module.Service
         }
 
         /// <summary>
-        /// Update Email Adress
+        /// Verify New Email Parameters
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dt"></param>
@@ -129,7 +110,7 @@ namespace User.Module.Service
         /// <exception cref="NotFoundExceptions"></exception>
         /// <exception cref="ForbiddenExceptions"></exception>
         /// <exception cref="ConflictExceptions"></exception>
-        public async Task<UserModel> UpdateEmail(int id, string password, string newEmail)
+        public async Task<UserModel> VerifyNewEmailParameters(int id, string password, string newEmail)
         {
             if (string.IsNullOrEmpty(newEmail))
                 throw new BadRequestExceptions("The Email is required");
@@ -142,34 +123,31 @@ namespace User.Module.Service
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password is Wrong");
 
+            Console.WriteLine($"THE NEW EMAIL IS {newEmail}");
+
             this._validation.ValidationEmail(newEmail);
 
             if (user.Email == newEmail)
                 throw new ConflictExceptions("The new email address must be different from the current one.");
 
             await this._validation.ValidateEmailDuplicate(newEmail);
-
-            user.Email = newEmail;
-
-            await this._repository.UpdateAsync(user);
             return user;
         }
+        
         /// <summary>
-        /// Update User
+        /// Update Email 
         /// </summary>
-        /// <param name="body"></param>
         /// <param name="id"></param>
+        /// <param name="newEmail"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<UserModel> UpdateRegister(int id, UpdateUserDTO body)
+        /// <exception cref="NotFoundExceptions"></exception>
+        public async Task<UserModel> UpdateEmail(int id, string newEmail)
         {
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
-            if (user.Roles == ROLES.Admin)
-                throw new ForbiddenExceptions("Could not edit a user Admin");
+            user.Email = newEmail;
 
-            this._mapper.Map(body, user);
             await this._repository.UpdateAsync(user);
             return user;
         }
@@ -191,10 +169,7 @@ namespace User.Module.Service
             var user = await this._repository.FindByIdAsync(id) ??
                 throw new NotFoundExceptions("User not found");
 
-            var passwordHasher = new PasswordHasher<UserModel>();
-            var verificationPass = passwordHasher.VerifyHashedPassword(user, user.Password, body.Password);
-            if (verificationPass == PasswordVerificationResult.Failed)
-                throw new ForbiddenExceptions("Password is wrong");
+            await this._validation.ValidationUsernameDuplicated(body.Username);
 
             this._mapper.Map(body, user);
             await this._repository.UpdateAsync(user);
@@ -221,6 +196,18 @@ namespace User.Module.Service
             await this._repository.UpdateAsync(user);
 
             return "Roles were updated successfully";
+        }
+        /// <summary>
+        /// Find  Value By Key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundExceptions"></exception>
+        public async Task<UserModel> FindValueByKey(string key, object value)
+        {
+            var user = await this._repository.FindByKey(key, value) ?? throw new NotFoundExceptions("The username is wrong or not exist.");
+            return user;
         }
 
         /// <summary>

@@ -5,15 +5,14 @@ namespace User.Module.Service.Interface
 {
     public interface IUserService
     {
-        Task<UserDTO> GetUserProfileById(int id);
         Task<UserModel> RegisterUser(CreateUserDTO body);
-        Task<IEnumerable<UserDTO>> ListOfAllRegister();
-        Task<UserModel> UpdateEmail(int id, string password, string newEmail);
-        Task<UserModel> UpdateRegister( int id, UpdateUserDTO body);
+        Task<UserModel> VerifyNewEmailParameters(int id, string password, string newEmail);
         Task<string> UpdateOwnRegister(int id, UpdateOwnUserDTO body);
         Task<string> UpdatePassword(int id, string oldPassword, string newPassword);
+        Task<UserModel> UpdateEmail(int id, string newEmail);
         Task<string> UpdateRoles(int id, ROLES roles);
-        Task RemoveUserRegister(int id);
+        Task<string> RemoveUserRegister(int id);
+        Task<UserModel> FindValueByKey(string key, object value);
         Task<UserModel> ReturnPasswordAsync(int id, string newPassword);
     }
 }

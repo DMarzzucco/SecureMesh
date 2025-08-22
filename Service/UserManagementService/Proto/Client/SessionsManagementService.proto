@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option csharp_namespace = "SessionsManagement.Protos";
+
+import "google/protobuf/empty.proto";
+
+service SessionsManagementServiceGrpc {
+    rpc FindListSessionsByUser (UserIdRequest) returns (FindListResponse);
+    rpc FindSessionByProps (SessionsPropsRequest) returns (FindResponse);
+    rpc SaveSession (SessionsPropsRequest) returns (IdResponse);
+    rpc DeleteSessionById (IdRequest) returns (google.protobuf.Empty);
+    rpc DeleteAllSessionsExceptCurrent(DeleteAllSessionExceptCurrentRequest) returns (google.protobuf.Empty);
+    rpc DeleteAllSessionsByUserId (UserIdRequest) returns (google.protobuf.Empty);
+}
+
+message UserIdRequest {
+    int32 user_id = 1;
+}
+
+message DeleteAllSessionExceptCurrentRequest {
+    int32 user_id = 1;
+    int32 current_session_id = 2;
+}
+
+message IdRequest {
+    int32 id = 1;
+}
+
+message IdResponse {
+    int32 id = 1;
+}
+
+message SessionsPropsRequest {
+    int32 user_id = 1;
+    string ip = 2;
+    string user_agent = 3;
+    string location = 4;
+}
+
+message FindResponse {
+    oneof result {
+        SessionResponse session = 1;
+        NotFoundResponse reason = 2;
+    }
+}
+
+message FindListResponse {
+    repeated SessionResponse sessions = 1;
+    NotFoundResponse reason = 2;
+}
+message NotFoundResponse {
+    string reason = 1;
+}
+message SessionResponse {
+    int32 id = 1;
+    int32 user_id = 2;
+    string ip = 3;
+    string user_agent = 4;
+    string location = 5;
+    bool is_active = 6;
+}
