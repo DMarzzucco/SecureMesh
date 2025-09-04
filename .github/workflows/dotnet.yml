@@ -30,13 +30,16 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Run tests
-        run: dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory TestResults
+        run: | 
+         cd Test/IdpTesting
+         dotnet test --no-build --configuration Release --logger 
+         "trx;LogFileName=test_results.trx" --results-directory TestResults
 
       - name: Publish Test Results
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: xUnit Tests
-        #   path: TestResults/**/*.trx
-          path: Test/idpTesting/TestResults/test_results.trx
+          path: TestResults/**/*.trx
+        #   path: Test/idpTesting/TestResults/test_results.trx
           reporter: dotnet-trx
