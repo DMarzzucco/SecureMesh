@@ -1,18 +1,24 @@
-using System.Globalization;
-using System.Security.Claims;
 using IdentifyService._2FA.Interfaces;
 using IdentifyService.Configuration.Redis.Repository.Interfaces;
 using IdentifyService.Cookies.Interfaces;
+using IdentifyService.JWT.DTOs;
 using IdentifyService.JWT.Interfaces;
 using IdentifyService.Module.Model;
 using IdentifyService.Module.Repository.Interface;
 using IdentifyService.Module.Services;
 using IdentifyService.Queues.Messaging.Interfaces;
+using IdentifyService.Server.UMS.Model;
 using IdentifyService.Server.UMS.Services.Interfaces;
 using IdentifyService.Utils.Helper;
+using IdentifyService.Utils.Helper.IpService.Interfaces;
 using idpTesting.Mock;
 using Microsoft.AspNetCore.Http;
 using Moq;
+using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace idpTesting.Service;
 
@@ -27,6 +33,7 @@ public class InterIdpServiceTest
     private readonly Mock<CodeGeneration> _codeGeneration;
     private readonly Mock<IValidateTwoFactorAuth> _validateTwoFactor;
     private readonly Mock<IManagementUserFacedeServices> _managementUser;
+    private readonly Mock<IIpService> _ipService;
     private readonly IdentityProviderService _service;
 
     public InterIdpServiceTest()
@@ -40,6 +47,7 @@ public class InterIdpServiceTest
         this._codeGeneration = new Mock<CodeGeneration>();
         this._validateTwoFactor = new Mock<IValidateTwoFactorAuth>();
         this._managementUser = new Mock<IManagementUserFacedeServices>();
+        this._ipService = new Mock<IIpService>();
 
 
         this._httpContext.Setup(h => h.HttpContext).Returns(new DefaultHttpContext());
@@ -53,7 +61,8 @@ public class InterIdpServiceTest
             this._redisRepository.Object,
             this._codeGeneration.Object,
             this._validateTwoFactor.Object,
-            this._managementUser.Object
+            this._managementUser.Object,
+            this._ipService.Object
         );
     }
     /// <summary>
@@ -72,8 +81,8 @@ public class InterIdpServiceTest
         this._managementUser.Setup(m => m.SaveUserRegistered(body)).ReturnsAsync(user);
         this._repository.Setup(r => r.SaveAuth(user.Id)).Returns(Task.CompletedTask);
 
-        this._jwtService.Setup(j => j.GenerateEmailVerificationOTT(user)).ReturnsAsync(token.VerifyEmail);
-        this._messagingQueues.Setup(m => m.SendEmailVerificactionEvent(user.Email, token.VerifyEmail, user.Id)).Returns(Task.CompletedTask);
+        this._jwtService.Setup(j => j.GenerateEmailVerificationOTT(user)).ReturnsAsync(token.VerifyEmailOTT);
+        this._messagingQueues.Setup(m => m.SendEmailVerificactionEvent(user.Email, token.VerifyEmailOTT, user.Id)).Returns(Task.CompletedTask);
 
         var res = await this._service.RegisteredUser(body);
 
@@ -135,10 +144,110 @@ public class InterIdpServiceTest
 
         var result = await this._service.Login(user);
 
-        this._cookieService.Verify(x => x.SetTokenCookies(It.IsAny<HttpResponse>(), token), Times.Once);
-
         Assert.Equal(message, result);
     }
+
+    /// <summary>
+    /// Should Validate Session
+    /// </summary>
+    [Fact]
+    public async Task ShouldValidateSession()
+    {
+        var user = IdentityServiceMock.UserMock;
+        var token = IdentityServiceMock.TokenVerify.VerifySessionOTT;
+        int id = 4;
+
+        var session = IdentityServiceMock.SessionModelMock;
+
+        var idp = new AuthModel { Id = 1, UserId = user.Id };
+        int sessionId = 1;
+
+        var claim = new List<Claim>
+        {
+            new("sub", id.ToString()),
+            new("ip", session.Ip),
+            new("ua", session.UserAgent),
+            new("location", session.Location)
+        };
+
+        string message = "Your new session was saved successfully, now you cann init session";
+
+        this._redisRepository.Setup(r => r.GetByTokenAsync(token)).ReturnsAsync(token);
+
+        this._jwtService.Setup(j => j.ValidateOTT(token)).ReturnsAsync
+            (new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
+            claims: claim)
+            );
+
+        this._jwtService.Setup(j => j.GetValuesFromClaims(It.IsAny<IEnumerable<Claim>>(), "sub")).Returns(id.ToString());
+        this._jwtService.Setup(j => j.GetValuesFromClaims(It.IsAny<IEnumerable<Claim>>(), "ip")).Returns(session.Ip);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(It.IsAny<IEnumerable<Claim>>(), "ua")).Returns(session.UserAgent);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(It.IsAny<IEnumerable<Claim>>(), "location")).Returns(session.Location);
+
+        this._managementUser.Setup(um => um.SaveSessionRegister(id, session.Ip, session.UserAgent, session.Location)).ReturnsAsync(sessionId);
+        this._managementUser.Setup(um => um.FindUserById(id)).ReturnsAsync(user);
+
+        this._repository.Setup(r => r.FindAuthByUserId(id)).ReturnsAsync(idp);
+        this._repository.Setup(r => r.UpdateAsync(idp)).ReturnsAsync(true);
+
+        this._messagingQueues.Setup(mq => mq.TowAfCodeMessage(user.Email, "123456")).Returns(Task.CompletedTask);
+
+        this._redisRepository.Setup(rd => rd.UpdateStateAsync(token)).ReturnsAsync(true);
+
+        var res = await this._service.VerifySession(token);
+
+        Assert.NotNull(res);
+        Assert.Equal(message, res);
+    }
+
+    /// <summary>
+    /// Should Init Session
+    /// </summary>
+    /// <returns></returns>
+    // [Fact]
+    // public async Task ShouldInitSession()
+    // {
+    //     var session = IdentityServiceMock.SessionModelMock;
+    //     var user = IdentityServiceMock.UserMock;
+    //     var dto = IdentityServiceMock.VerifyCodeDTOMock;
+    //     var idp = new AuthModel { Id = 1, UserId = user.Id };
+    //     int sessionId = 1;
+    //     var token = IdentityServiceMock.TokenMock;
+
+    //     string ip = "127.0.0.1";
+    //     string location = "FakeLocation";
+
+    //     string message = $"Welcome {user.FullName}";
+
+    //     var fakeHttpContext = new DefaultHttpContext();
+    //     fakeHttpContext.Connection.RemoteIpAddress = IPAddress.Parse("127.0.0.1");
+    //     fakeHttpContext.Request.Headers.UserAgent = "FakeAgent/1.0";
+
+    //     this._httpContext.Setup(h => h.HttpContext).Returns(fakeHttpContext);
+
+    //     this._ipService.Setup(g => g.GetCityAsync(ip)).ReturnsAsync(location);
+
+    //     this._managementUser.Setup(ms => ms.FindUserByEmail(dto.Email)).ReturnsAsync(user);
+
+    //     this._validateTwoFactor.Setup(vs => vs.ImplementValidate(user.Id, dto.TwoAfCode)).ReturnsAsync(idp);
+
+    //     this._managementUser.Setup(ms => ms.FindSessionIfExists(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(session);
+    //     this._managementUser.Setup(ms => ms.SaveSessionRegister(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(sessionId);
+
+    //     this._jwtService.Setup(jwt => jwt.GenerateAuthenticationToken(sessionId, user)).Returns(token);
+
+    //     this._repository.Setup(r => r.UpdateAsync(idp)).ReturnsAsync(true);
+
+    //     var res = await this._service.InitSession(dto);
+
+    //     this._cookieService.Verify(
+    //         x => x.SetTokenCookies(It.IsAny<HttpResponse>(), It.IsAny<TokenPair>()),
+    //         Times.Once
+    //     );
+
+    //     Assert.NotNull(res);
+    //     Assert.Equal(message, res);
+    // }
 
     /// <summary>
     /// Get Value by Cookie
@@ -161,6 +270,58 @@ public class InterIdpServiceTest
 
         Assert.NotNull(result);
         Assert.Equal(user.Username, result.User.Username);
+    }
+
+    /// <summary>
+    /// Should Show List of all User Sessions
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldShowListOfAllUserSessions()
+    {
+        int id = 4;
+        var claim = new List<Claim> { new("sub", id.ToString()) };
+        var listSessions = new List<SessionModel> { IdentityServiceMock.SessionModelMock };
+
+        this._jwtService.Setup(j => j.GetClaimFromToken()).Returns(claim);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sub")).Returns(id.ToString);
+
+        this._managementUser.Setup(ms => ms.FindAllSessionsByUserId(id)).ReturnsAsync(listSessions);
+
+        var res = await this._service.ListOfAllSessionsAsync();
+
+        Assert.NotNull(res);
+        Assert.Equal(listSessions, res);
+    }
+
+    /// <summary>
+    /// Should Remove One Session By Id
+    /// </summary>
+    [Fact]
+    public async Task ShouldRemoveOneSessionByKeyId()
+    {
+        int userId = 4;
+        int sessionId = 1;
+        int sessionToDelete = 2;
+        var claim = new List<Claim> { new("sub", userId.ToString()), new("sessionId", sessionId.ToString()) };
+
+        var listSessions = new List<SessionModel> { IdentityServiceMock.SessionModelMock };
+
+        string message = "This session was deleted successfully";
+
+        this._jwtService.Setup(j => j.GetClaimFromToken()).Returns(claim);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sub")).Returns(userId.ToString);
+
+        this._managementUser.Setup(ms => ms.FindAllSessionsByUserId(userId)).ReturnsAsync(listSessions);
+
+        this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sessionId")).Returns(sessionId.ToString);
+
+        this._managementUser.Setup(ms => ms.RemoveSessionById(sessionToDelete)).Returns(Task.CompletedTask);
+
+        var res = await this._service.RemoveOneSessionById(sessionToDelete);
+
+        Assert.NotNull(res);
+        Assert.Equal(message, res);
     }
 
     /// <summary>
@@ -218,6 +379,7 @@ public class InterIdpServiceTest
 
         Assert.Equal(message, res);
     }
+
     /// <summary>
     /// Refresh Token Validation
     /// </summary>
@@ -244,7 +406,7 @@ public class InterIdpServiceTest
     [Fact]
     public async Task ShouldValidateEmail()
     {
-        var token = IdentityServiceMock.TokenVerify.PasswordRecuperation;
+        var token = IdentityServiceMock.TokenVerify.VerifyEmailOTT;
         var user = IdentityServiceMock.UserMock;
         int id = 4;
 
@@ -258,10 +420,10 @@ public class InterIdpServiceTest
 
         this._jwtService.Setup(j => j.ValidateOTT(token)).ReturnsAsync
             (new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
-            claims: [new Claim("sub", id.ToString())])
+            claims: claim)
             );
 
-        this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sub")).Returns(id.ToString);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(It.IsAny<IEnumerable<Claim>>(), "sub")).Returns(id.ToString());
 
         this._managementUser.Setup(u => u.FindUserById(id)).ReturnsAsync(user);
 
@@ -275,6 +437,68 @@ public class InterIdpServiceTest
         this._redisRepository.Setup(r => r.UpdateStateAsync(token)).ReturnsAsync(true);
 
         var res = await this._service.VerificationEmail(token);
+
+        Assert.NotNull(res);
+        Assert.Equal(message, res);
+    }
+
+    /// <summary>
+    /// Should Generate 2AF Code
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldGenerate2AFCode()
+    {
+        int userId = 4;
+        var user = IdentityServiceMock.UserMock;
+        var idp = new AuthModel { Id = 1, UserId = user.Id };
+
+        var claim = new List<Claim> { new("sub", userId.ToString()) };
+
+        string message = $"Check your email to singing code";
+
+        this._jwtService.Setup(j => j.GetClaimFromToken()).Returns(claim);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sub")).Returns(userId.ToString);
+
+        this._managementUser.Setup(ms => ms.FindUserById(userId)).ReturnsAsync(user);
+
+        this._repository.Setup(r => r.FindAuthByUserId(userId)).ReturnsAsync(idp);
+        this._repository.Setup(r => r.UpdateAsync(idp)).ReturnsAsync(true);
+
+        this._messagingQueues.Setup(ms => ms.TowAfCodeMessage(user.Email, "123456")).Returns(Task.CompletedTask);
+
+        var res = await this._service.TwoFactorAuthenticationCodeGeneration();
+
+        Assert.NotNull(res);
+        Assert.Equal(message, res);
+    }
+
+    /// <summary>
+    /// Should Change User Password
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task ShouldChangePassword()
+    {
+        int userId = 4;
+        int sessionId = 2;
+        var user = IdentityServiceMock.UserMock;
+        var dto = IdentityServiceMock.UpdatePasswordDTOMock;
+        var idp = new AuthModel { Id = 1, UserId = user.Id };
+
+        var claim = new List<Claim> { new("sub", userId.ToString()), new("sessionId", sessionId.ToString()) };
+
+        string message = "Password updated successfully";
+
+        this._jwtService.Setup(j => j.GetClaimFromToken()).Returns(claim);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sub")).Returns(userId.ToString);
+        this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sessionId")).Returns(sessionId.ToString);
+
+        this._validateTwoFactor.Setup(v => v.ImplementValidate(userId, dto.Code)).ReturnsAsync(idp);
+
+        this._managementUser.Setup(ms => ms.UpdatePasswordUser(userId, sessionId, dto)).ReturnsAsync(message);
+
+        var res = await this._service.ChangePassword(dto);
 
         Assert.NotNull(res);
         Assert.Equal(message, res);
@@ -297,11 +521,13 @@ public class InterIdpServiceTest
 
         var idp = new AuthModel { Id = 1, UserId = user.Id };
 
-        string message = $"Email was updated his new email is {user.Email} ";
+        string message = $"To complete this process, please check your email at {user?.Email} to verify it.";
 
         this._jwtService.Setup(j => j.GetClaimFromToken()).Returns(claim);
         this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sub")).Returns(user.Id.ToString);
         this._jwtService.Setup(j => j.GetValuesFromClaims(claim, "sessionId")).Returns(sessionId.ToString);
+
+        this._validateTwoFactor.Setup(v => v.ImplementValidate(id, body.Code)).ReturnsAsync(idp);
 
         this._repository.Setup(r => r.FindAuthByUserId(id)).ReturnsAsync(idp);
 
@@ -317,6 +543,7 @@ public class InterIdpServiceTest
 
         string res = await this._service.ChangeAddressEmail(body);
 
+        Assert.NotNull(res);
         Assert.Equal(message, res);
     }
 
@@ -330,7 +557,7 @@ public class InterIdpServiceTest
         var body = IdentityServiceMock.LoginDTOMock;
         var user = IdentityServiceMock.UserMockEmailTrue;
 
-        var idp = new AuthModel { Id = 1, UserId = user.Id , EmailVerify = true};
+        var idp = new AuthModel { Id = 1, UserId = user.Id, EmailVerify = true };
 
         this._managementUser.Setup(u => u.FindByValue(body.Username)).ReturnsAsync(user);
 

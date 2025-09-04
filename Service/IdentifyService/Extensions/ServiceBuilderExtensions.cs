@@ -31,6 +31,8 @@ using IdentifyService._2FA.Interfaces;
 using IdentifyService._2FA;
 using IdentifyService.JWT.Helper.Interfaces;
 using IdentifyService.JWT.Helper;
+using IdentifyService.Utils.Helper.IpService.Interfaces;
+using IdentifyService.Utils.Helper.IpService;
 
 namespace IdentifyService.Extensions
 {
@@ -95,6 +97,7 @@ namespace IdentifyService.Extensions
             service.AddScoped<ICookieService, CookieService>();
             service.AddScoped<ITokenCreationServices, TokenCreationServices>();
             service.AddScoped<IJwtService, JwtService>();
+            service.AddScoped<IIpService, IpService>();
             service.AddScoped<IValidateTwoFactorAuth, ValidateTwoFactorAuth>();
             service.AddScoped<IIdentityProviderRepository, IdentityProviderRepository>();
             service.AddScoped<IIdentityProviderService, IdentityProviderService>();

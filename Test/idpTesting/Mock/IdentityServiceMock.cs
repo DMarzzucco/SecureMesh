@@ -22,11 +22,15 @@ public class IdentityServiceMock
 
     public static VerifyTokens TokenVerify => new VerifyTokens
     {
-        VerifyEmail = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcnp6NzdfQGdtYWlsLmNvbSIsInN1YiI6IjIiLCJwdXJwb3NlIjoiZW1haWxfdmVyaWZpY2F0aW9uIiwibmJmIjoxNzUwMzM5NjI4LCJleHAiOjE3NTAzNDAyMjgsImlhdCI6MTc1MDMzOTYyOH0.wvWxzSTn1RDdQ1NtBLbtXjkA0Zj9woJTAWEYRgHttcI",
+        VerifyEmailOTT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcnp6NzdfQGdtYWlsLmNvbSIsInN1YiI6IjIiLCJwdXJwb3NlIjoiZW1haWxfdmVyaWZpY2F0aW9uIiwibmJmIjoxNzUwMzM5NjI4LCJleHAiOjE3NTAzNDAyMjgsImlhdCI6MTc1MDMzOTYyOH0.wvWxzSTn1RDdQ1NtBLbtXjkA0Zj9woJTAWEYRgHttcI",
 
-        VerifyNewEmail = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRtYXJ6el9AaG90bWFpbC5jb20iLCJzdWIiOiIyIiwicHVycG9zZSI6ImVtYWlsX3ZlcmlmaWNhdGlvbiIsIm5iZiI6MTc1MDMzOTgzMCwiZXhwIjoxNzUwMzQwNDMwLCJpYXQiOjE3NTAzMzk4MzB9.C3akMXGBPyT7pDrXYTZpWSGU_qJirlQ_PKnLt-Kl2Fk",
+        VerifySessionOTT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcnp6NzdfQGdtYWlsLmNvbSIsInN1YiI6IjIiLCJpcCI6IjguOC44LjguOCIsInVhIjoiRGViYWluIDEyIiwibG9jYXRpb24iOiJWZW5hZG8gVHVlcnRvLCBTYW50YSBGZSwgQXJnZW50aW5hIiwibmJmIjoxNzUwMzM5OTgwLCJleHAiOjE3NTAzNDA1ODAsImlhdCI6MTc1MDMzOTk4MH0.VtfwZPSaOICIxFYjmxG0URHYrZFlZwQDOouBSWJrmFc"
+    };
 
-        PasswordRecuperation = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcnp6NzdfQGdtYWlsLmNvbSIsInN1YiI6IjIiLCJwdXJwb3NlIjoicGFzc3dvcmRfcmVjdXBlcmF0aW9uIiwibmJmIjoxNzUwMzM5OTgwLCJleHAiOjE3NTAzNDA1ODAsImlhdCI6MTc1MDMzOTk4MH0.2LrmBLPeedYKfKH2oo_v2nKeNtXUmF8sFZe8T8DWKm0"
+    public static VerifyCodeDTO VerifyCodeDTOMock => new()
+    {
+        TwoAfCode = "123456",
+        Email = "marzz77_@gmail.com"
     };
     public static CreateUserDTO CreateUserDTOMOck => new CreateUserDTO
     {
@@ -37,7 +41,17 @@ public class IdentityServiceMock
         Roles = ROLES.ADMIN
     };
 
-    public static UserModel UserHashPassMock => new UserModel
+    public static SessionModel SessionModelMock => new()
+    {
+        Id = 2,
+        UserId = 4,
+        Ip = "8.8.8.8.8",
+        UserAgent = "Debain 12",
+        Location = "Venado Tuerto, Santa Fe, Argentina",
+        IsActive = true
+    };
+
+    public static UserModel UserHashPassMock => new()
     {
         Id = 4,
         FullName = "Dario Marzzucco",
@@ -95,9 +109,18 @@ public class IdentityServiceMock
 
     public class VerifyTokens
     {
-        public required string VerifyEmail { get; set; }
-        public required string VerifyNewEmail { get; set; }
-        public required string PasswordRecuperation { get; set; }
+        public required string VerifyEmailOTT { get; set; }
+
+        public required string VerifySessionOTT { get; set; }
+    }
+
+    public class SessionsDTO
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public required string Ip { get; set; }
+        public required string UserAgent { get; set; }
+        public required string Location { get; set; }
     }
 
 }

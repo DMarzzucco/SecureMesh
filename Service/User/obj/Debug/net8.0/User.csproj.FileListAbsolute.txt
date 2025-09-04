@@ -642,3 +642,4 @@ C:\Users\darma\Documents\Auth-Rol.ASP.NET\Service\User\obj\Debug\net8.0\refint\U
 C:\Users\darma\Documents\Auth-Rol.ASP.NET\Service\User\obj\Debug\net8.0\User.pdb
 C:\Users\darma\Documents\Auth-Rol.ASP.NET\Service\User\obj\Debug\net8.0\User.genruntimeconfig.cache
 C:\Users\darma\Documents\Auth-Rol.ASP.NET\Service\User\obj\Debug\net8.0\ref\User.dll
+C:\Users\darma\Documents\SecureMesh\Service\User\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

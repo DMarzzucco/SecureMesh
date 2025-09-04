@@ -12,6 +12,7 @@ using IdentifyService.Server.UMS.Model;
 using IdentifyService.Module.Repository.Interface;
 using IdentifyService._2FA.Interfaces;
 using IdentifyService.Server.UMS.Services.Interfaces;
+using IdentifyService.Utils.Helper.IpService.Interfaces;
 
 namespace IdentifyService.Module.Services
 {
@@ -26,8 +27,9 @@ namespace IdentifyService.Module.Services
         private readonly CodeGeneration _codeGeneration;
         private readonly IValidateTwoFactorAuth _validateTwoFactor;
         private readonly IManagementUserFacedeServices _managementUser;
+        private readonly IIpService _ipService;
 
-        public IdentityProviderService(IHttpContextAccessor context, IIdentityProviderRepository repository, IJwtService jwtService, ICookieService cookieService, IMessagingQueues messagingQueues, IRedisRepository redisRepository, CodeGeneration codeGeneration, IValidateTwoFactorAuth validateTwoFactor, IManagementUserFacedeServices managementUser)
+        public IdentityProviderService(IHttpContextAccessor context, IIdentityProviderRepository repository, IJwtService jwtService, ICookieService cookieService, IMessagingQueues messagingQueues, IRedisRepository redisRepository, CodeGeneration codeGeneration, IValidateTwoFactorAuth validateTwoFactor, IManagementUserFacedeServices managementUser, IIpService ipService)
         {
             _context = context;
             _repository = repository;
@@ -38,6 +40,7 @@ namespace IdentifyService.Module.Services
             _codeGeneration = codeGeneration;
             _validateTwoFactor = validateTwoFactor;
             _managementUser = managementUser;
+            _ipService = ipService;
         }
         /// <summary>
         /// Registered of user
@@ -183,13 +186,11 @@ namespace IdentifyService.Module.Services
             var httpContext = this._context.HttpContext ??
                 throw new UnauthorizedAccessException("Http Context is null");
 
-            using var client = new HttpClient();
-
             var ip = httpContext?.Connection?.RemoteIpAddress?.ToString();
             // var ip = "8.8.8.8";
             var userAgent = httpContext?.Request.Headers.UserAgent.ToString();
-            var response = await client.GetFromJsonAsync<IpInfoResponse>($"https://ipinfo.io/{ip}/json");
-            var location = response?.City ?? "Unkown";
+
+            var location = await this._ipService.GetCityAsync(ip);
 
             var user = await this._managementUser.FindUserByEmail(dto.Email);
             var idp = await this._validateTwoFactor.ImplementValidate(user.Id, dto.TwoAfCode);
