@@ -24,10 +24,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore ./Test.sln 
+        run: dotnet restore ./YarpGateway.sln 
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release ./Test.sln 
+        run: dotnet build --no-restore --configuration Release ./YarpGateway.sln 
 
       - name: Run tests
         run: |
