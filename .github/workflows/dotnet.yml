@@ -5,7 +5,7 @@ on:
     branches: [ "**" ]
   pull_request:
     branches: [ "main" ]
-    
+
 permissions:
   contents: read
   checks: write
@@ -24,22 +24,20 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore ./Test.sln 
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build --no-restore --configuration Release ./Test.sln 
 
       - name: Run tests
-        run: | 
-         cd Test/IdpTesting
-         dotnet test --no-build --configuration Release --logger 
-         "trx;LogFileName=test_results.trx" --results-directory TestResults
+        run: |
+          cd Test/IdpTesting
+          dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory TestResults
 
       - name: Publish Test Results
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: xUnit Tests
-          path: TestResults/**/*.trx
-        #   path: Test/idpTesting/TestResults/test_results.trx
+          path: Test/IdpTesting/TestResults/**/*.trx
           reporter: dotnet-trx
