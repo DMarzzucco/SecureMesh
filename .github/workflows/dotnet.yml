@@ -31,7 +31,7 @@ jobs:
 
       - name: Run tests
         run: |
-          cd Test/IdpTesting
+          cd Test/idpTesting
           dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory TestResults
 
       - name: Publish Test Results
@@ -39,5 +39,5 @@ jobs:
         if: always()
         with:
           name: xUnit Tests
-          path: Test/IdpTesting/TestResults/**/*.trx
+          path: Test/idpTesting/TestResults/**/*.trx
           reporter: dotnet-trx
