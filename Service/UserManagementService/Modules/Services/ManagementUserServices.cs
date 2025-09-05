@@ -96,7 +96,7 @@ public class ManagementUserServices : IManagementUserServices
 
         await this._redis.UpdateStateAsync(ott);
 
-        return "Your new email address was updated";
+        return $"Hi {user.FullName}, your new email address was updated";
     }
 
     /// <summary>

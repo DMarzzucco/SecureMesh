@@ -79,15 +79,7 @@ public class IdentityServiceMock
         Password = "AQAAAAIAAYagAAAAEMS4jLBZxqiCLDbX0FXyV3VoeSnq0FBBpYSVdgpFfHw83cBB33cnzomg736FuySfJg==",
         Roles = ROLES.ADMIN
     };
-
-    public static UserDTO UserMockDTO => new UserDTO
-    {
-        Id = 4,
-        FullName = "Dario Marzzucco",
-        Username = "derkmarzz77",
-        Email = "marzz77_@gmail.com",
-        Roles = ROLES.ADMIN
-    };
+    
     public static NewEmailDTO NewEmailMock => new NewEmailDTO
     {
         Code = "123456",
