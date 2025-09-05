@@ -38,6 +38,6 @@ jobs:
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: xUnit Tests
+          name: xUnit IDP Tests
           path: Test/idpTesting/TestResults/**/*.trx
           reporter: dotnet-trx
