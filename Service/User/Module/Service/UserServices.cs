@@ -68,7 +68,8 @@ namespace User.Module.Service
         /// Update Password
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="dt"></param>
+        /// <param name="oldPassword"></param>
+        /// <param name="newPassword"></param>
         /// <returns></returns>
         /// <exception cref="BadRequestExceptions"></exception>
         /// <exception cref="NotFoundExceptions"></exception>

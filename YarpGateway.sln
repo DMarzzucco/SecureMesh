@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "idpTesting", "Test\idpTesti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmsTesting", "Test\UmsTesting\UmsTesting.csproj", "{7E162F83-93DF-4A33-BCE6-032220CE2A83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SessionsManagementTesting", "Test\SessionsManagementTesting\SessionsManagementTesting.csproj", "{C5E10902-A71C-4298-8DE0-BFAA91463A33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,18 @@ Global
 		{7E162F83-93DF-4A33-BCE6-032220CE2A83}.Release|x64.Build.0 = Release|Any CPU
 		{7E162F83-93DF-4A33-BCE6-032220CE2A83}.Release|x86.ActiveCfg = Release|Any CPU
 		{7E162F83-93DF-4A33-BCE6-032220CE2A83}.Release|x86.Build.0 = Release|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Debug|x64.Build.0 = Debug|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Debug|x86.Build.0 = Debug|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Release|x64.ActiveCfg = Release|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Release|x64.Build.0 = Release|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Release|x86.ActiveCfg = Release|Any CPU
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +169,7 @@ Global
 		{5E72D7C5-EABB-41B0-AB93-D1CE4320CE65} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{6EC7C642-02BF-4E5F-A03B-E79E10A2B072} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 		{7E162F83-93DF-4A33-BCE6-032220CE2A83} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
+		{C5E10902-A71C-4298-8DE0-BFAA91463A33} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45E6A590-AF82-4DE8-92C1-FA2247E7B867}
