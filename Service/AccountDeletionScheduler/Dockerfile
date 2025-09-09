@@ -18,10 +18,10 @@ EXPOSE 3435
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Server/AccountDeletionScheduler/AccountDeletionScheduler.csproj", "Server/AccountDeletionScheduler/"]
-RUN dotnet restore "./Server/AccountDeletionScheduler/AccountDeletionScheduler.csproj"
+COPY ["Service/AccountDeletionScheduler/AccountDeletionScheduler.csproj", "Server/AccountDeletionScheduler/"]
+RUN dotnet restore "./Service/AccountDeletionScheduler/AccountDeletionScheduler.csproj"
 COPY . .
-WORKDIR "/src/Server/AccountDeletionScheduler"
+WORKDIR "/src/Service/AccountDeletionScheduler"
 #dotnet ef
 RUN dotnet tool install --global dotnet-ef 
 ENV PATH="$PATH:/root/.dotnet/tools"
