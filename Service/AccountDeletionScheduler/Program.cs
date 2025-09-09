@@ -4,6 +4,8 @@ using AccountDeletionScheduler.Server.UMS.Services;
 using AccountDeletionScheduler.Server.UMS.Services.Interfaces;
 using AccountDeletionScheduler.Services;
 using AccountDeletionScheduler.Utils;
+using AccountDeletionScheduler.Jobs.Interfaces;
+using AccountDeletionScheduler.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,7 @@ builder.Services.AddGrpcSerivceClient();
 builder.Services.AddHangfireServices(builder.Configuration);
 builder.Services.AddGrpc();
 
+builder.Services.AddScoped<IJobSchedulers, JobsSchedulers>();
 builder.Services.AddScoped<IScheduledDeletionService, ScheduledDeletionService>();
 
 var app = builder.Build();

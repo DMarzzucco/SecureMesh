@@ -2,7 +2,7 @@
 
 # stand up all infrstructure (Rabbitmq and Database)
 infra:
-	docker-compose up db db_idp db_ums db_hangfire db_sessions rabbitmq redis 
+	docker-compose up db db_idp db_ums db_ads db_sessions rabbitmq redis 
 
 # stand up workers
 workers:
@@ -10,15 +10,15 @@ workers:
 
 # stand up infrastructure and workers
 infra-w:
-	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 worker5 worker6 
+	docker-compose up db db_ads rabbitmq redis worker1 worker2 worker3 worker4 worker5 worker6 
 
 # stand up all APIs
 systems:
-	docker-compose up user hangfire sessions idp ums yarp-gateway
+	docker-compose up user ads sessions idp ums yarp-gateway
 
 # stand up system without gateway
 system_wg:
-	docker-compose up db db_hangfire rabbitmq redis worker1 worker2 worker3 worker4 
+	docker-compose up db db_ads rabbitmq redis worker1 worker2 worker3 worker4 
 
 # stop containers
 stop:

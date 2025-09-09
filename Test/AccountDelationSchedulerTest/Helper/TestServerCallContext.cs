@@ -1,7 +1,7 @@
 using System;
 using Grpc.Core;
 
-namespace idpTesting.Helper;
+namespace AccountDelationSchedulerTest.Helper;
 
 public class TestServerCallContext : ServerCallContext
 {

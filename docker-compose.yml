@@ -49,9 +49,9 @@ services:
       - db-ums-bridge    
 
   # Hangfire database
-  db_hangfire:
+  db_ads:
     image: postgres
-    container_name: data_base_pg_hangfired
+    container_name: data_base_pg_ads
     restart: always
     environment:
       POSTGRES_USER: hangfire
@@ -62,7 +62,7 @@ services:
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - db-hangfire-bridge
+      - db-ads-bridge
 
   # sessions Data base
   db_sessions:
@@ -174,28 +174,28 @@ services:
     depends_on:
       - rabbitmq
 
-  #Hangfire Servies
-  hangfire:
+  # Account Delation Scheduler Servies
+  ads:
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hanguser.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=pass123
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=3434
       - ASPNETCORE_HTTPS_PORTS=3434
-    container_name: hangfire_server.net
-    image: ${DOCKER_REGISTRY-}hangfire
+    container_name: ads-server.net
+    image: ${DOCKER_REGISTRY-}ads-server
     build:
       context: .
-      dockerfile: Server/AccountDeletionScheduler/Dockerfile
+      dockerfile: Service/AccountDeletionScheduler/Dockerfile
     ports:
       - "3434:3434"
     volumes:
       - ./certs/hangfire/hanguser.pfx:/https/hanguser.pfx
     networks:
-      - db-hangfire-bridge
+      - db-ads-bridge
       - compose-bridge
     depends_on:
-      - db_hangfire
+      - db_ads
 
   #User Api Container
   user:
@@ -216,7 +216,7 @@ services:
       - ./certs/user/aspnetcert.pfx:/https/aspnetcert.pfx
     networks:
       - compose-bridge
-      - db-hangfire-bridge
+      - db-ads-bridge
     depends_on:
       - db
     
@@ -287,7 +287,7 @@ services:
       - user
       - redis
       - sessions
-      - hangfire
+      - ads
       - db_ums
       - rabbitmq
     volumes:
@@ -298,7 +298,7 @@ services:
       - db-sessions-bridge
       - db-ums-bridge
       - db-idp-bridge
-      - db-hangfire-bridge
+      - db-ads-bridge
       - rabbit_network
       - redis_network
 
@@ -344,7 +344,7 @@ networks:
   compose-bridge:
     driver: bridge
 
-  db-hangfire-bridge:
+  db-ads-bridge:
     driver : bridge
 
   db-sessions-bridge:

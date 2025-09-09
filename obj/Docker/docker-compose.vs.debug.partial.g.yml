@@ -1,6 +1,6 @@
 services:
-  hangfire:
-    image: hangfire:dev
+  ads:
+    image: ads-server:dev
     build:
       args:
         LAUNCHING_FROM_VS: true
@@ -14,7 +14,7 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=/.nuget/fallbackpackages
     volumes:
-      - C:\Users\darma\Documents\SecureMesh\Server\AccountDeletionScheduler:/app:rw
+      - C:\Users\darma\Documents\SecureMesh\Service\AccountDeletionScheduler:/app:rw
       - C:\Users\darma\Documents\SecureMesh:/src:rw
       - C:\Users\darma\vsdbg\vs2017u5:/remote_debugger:rw
       - C:\Users\darma\.nuget\packages:/.nuget/packages:ro

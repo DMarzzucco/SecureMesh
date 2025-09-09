@@ -1,14 +1,14 @@
 using Grpc.Core;
-using Hangfire;
 using AccountDeletionScheduler.Server.UMS.Services.Interfaces;
 using AccountDeletionSchedulerServer.Protos;
+using AccountDeletionScheduler.Jobs.Interfaces;
 
 namespace AccountDeletionScheduler.Services;
 
-public class AccountDeletionSchedulerServiceImpl(IBackgroundJobClient backgroundJobClient, IScheduledDeletionService scheduledDeletionService) : AccountDeletionSchedulerService.AccountDeletionSchedulerServiceBase
+public class AccountDeletionSchedulerServiceImpl(IScheduledDeletionService scheduledDeletionService, IJobSchedulers jobSchedulers) : AccountDeletionSchedulerService.AccountDeletionSchedulerServiceBase
 {
-    private readonly IBackgroundJobClient backgroundJobClient = backgroundJobClient;
     private readonly IScheduledDeletionService scheduledDeletionService = scheduledDeletionService;
+    private readonly IJobSchedulers _jobSchedulers = jobSchedulers;
 
     /// <summary>
     /// Sheduled Delation
@@ -18,7 +18,7 @@ public class AccountDeletionSchedulerServiceImpl(IBackgroundJobClient background
     /// <returns></returns>
     public override Task<ScheduleResponse> ScheduleDeletion(ScheduleRequest request, ServerCallContext context)
     {
-        var jobId = this.backgroundJobClient.Schedule(() => this.CountedDeletedSyncWrapp(request.AuthId), TimeSpan.FromMinutes(10));
+        var jobId = this._jobSchedulers.CreateScheduler(() => this.CountedDeletedSyncWrapp(request.AuthId), TimeSpan.FromMinutes(10));
 
         return Task.FromResult(new ScheduleResponse { JobId = jobId });
     }
@@ -31,7 +31,7 @@ public class AccountDeletionSchedulerServiceImpl(IBackgroundJobClient background
     /// <returns></returns>
     public override Task<CancelResponse> CancelScheduledJob(CancelRequest request, ServerCallContext context)
     {
-        var success = this.backgroundJobClient.Delete(request.JobId);
+        var success = this._jobSchedulers.DeleteScheduler(request.JobId);
         return Task.FromResult(new CancelResponse { Success = success });
     }
 
@@ -42,5 +42,5 @@ public class AccountDeletionSchedulerServiceImpl(IBackgroundJobClient background
     public void CountedDeletedSyncWrapp(int id)
     {
         this.scheduledDeletionService.CountedDeletion(id).GetAwaiter().GetResult();
-    } 
+    }
 }
