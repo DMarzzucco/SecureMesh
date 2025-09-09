@@ -18,7 +18,7 @@ EXPOSE 3435
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Service/AccountDeletionScheduler/AccountDeletionScheduler.csproj", "Server/AccountDeletionScheduler/"]
+COPY ["Service/AccountDeletionScheduler/AccountDeletionScheduler.csproj", "Service/AccountDeletionScheduler/"]
 RUN dotnet restore "./Service/AccountDeletionScheduler/AccountDeletionScheduler.csproj"
 COPY . .
 WORKDIR "/src/Service/AccountDeletionScheduler"
