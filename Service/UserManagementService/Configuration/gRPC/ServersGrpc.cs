@@ -64,7 +64,7 @@ public static class ServersGrpc
         service.AddGrpcClient<AccountDeletionSchedulerService.AccountDeletionSchedulerServiceClient>(x =>
         {
             // x.Address = new Uri("https://localhost:3434");
-            x.Address = new Uri("https://hangfire:3434");
+            x.Address = new Uri("https://ads:3434");
             x.ChannelOptionsActions.Add(op =>
             {
                 op.HttpHandler = httpClientHandler;
