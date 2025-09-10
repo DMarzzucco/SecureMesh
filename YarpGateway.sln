@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{0C88DD14-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{20543853-AF10-B830-2A3D-9FE9F6ECBF6C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{DAD03CFC-D5FA-AC94-41C7-9ABAB326F09E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountDeletionScheduler", "Service\AccountDeletionScheduler\AccountDeletionScheduler.csproj", "{245A5AA2-D858-4EDB-996D-9B12345A59AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagementService", "Service\UserManagementService\UserManagementService.csproj", "{5E72D7C5-EABB-41B0-AB93-D1CE4320CE65}"
@@ -32,6 +30,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SessionsManagementTesting", "Test\SessionsManagementTesting\SessionsManagementTesting.csproj", "{C5E10902-A71C-4298-8DE0-BFAA91463A33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountDelationSchedulerTest", "Test\AccountDelationSchedulerTest\AccountDelationSchedulerTest.csproj", "{2DE16DA2-FE58-45B6-A9CE-CFF54030D7FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserDomainTest", "Test\UserDomainTest\UserDomainTest.csproj", "{E2527B46-0C59-4808-AEB0-F5E15A89B844}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +171,18 @@ Global
 		{2DE16DA2-FE58-45B6-A9CE-CFF54030D7FE}.Release|x64.Build.0 = Release|Any CPU
 		{2DE16DA2-FE58-45B6-A9CE-CFF54030D7FE}.Release|x86.ActiveCfg = Release|Any CPU
 		{2DE16DA2-FE58-45B6-A9CE-CFF54030D7FE}.Release|x86.Build.0 = Release|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Debug|x64.Build.0 = Debug|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Debug|x86.Build.0 = Debug|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Release|x64.ActiveCfg = Release|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Release|x64.Build.0 = Release|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Release|x86.ActiveCfg = Release|Any CPU
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,6 +197,7 @@ Global
 		{7E162F83-93DF-4A33-BCE6-032220CE2A83} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 		{C5E10902-A71C-4298-8DE0-BFAA91463A33} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 		{2DE16DA2-FE58-45B6-A9CE-CFF54030D7FE} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
+		{E2527B46-0C59-4808-AEB0-F5E15A89B844} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45E6A590-AF82-4DE8-92C1-FA2247E7B867}

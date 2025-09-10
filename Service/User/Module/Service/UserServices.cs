@@ -124,8 +124,6 @@ namespace User.Module.Service
             if (verificationPass == PasswordVerificationResult.Failed)
                 throw new ForbiddenExceptions("Password is Wrong");
 
-            Console.WriteLine($"THE NEW EMAIL IS {newEmail}");
-
             this._validation.ValidationEmail(newEmail);
 
             if (user.Email == newEmail)
@@ -207,7 +205,9 @@ namespace User.Module.Service
         /// <exception cref="NotFoundExceptions"></exception>
         public async Task<UserModel> FindValueByKey(string key, object value)
         {
-            var user = await this._repository.FindByKey(key, value) ?? throw new NotFoundExceptions("The username is wrong or not exist.");
+            var user = await this._repository.FindByKey(key, value) ??
+                throw new NotFoundExceptions("The username is wrong or not exist.");
+
             return user;
         }
 
@@ -215,11 +215,10 @@ namespace User.Module.Service
         /// Return Password Async 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="body"></param>
+        /// <param name="newPassword"></param>
         /// <returns></returns>
         /// <exception cref="NotFoundExceptions"></exception>
         /// <exception cref="ConflictExceptions"></exception>
-        /// <exception cref="BadRequestExceptions"></exception>
         public async Task<UserModel> ReturnPasswordAsync(int id, string newPassword)
         {
             var user = await this._repository.FindByIdAsync(id) ??
