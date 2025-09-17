@@ -13,7 +13,7 @@ public static class RateLimiterDefinitions
         // register 
         options.AddFixedWindowLimiter("register", op =>
         {
-            op.PermitLimit = 2;
+            op.PermitLimit = 6;
             op.Window = TimeSpan.FromMinutes(10);
         }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
@@ -41,7 +41,7 @@ public static class RateLimiterDefinitions
         // forget password
         options.AddFixedWindowLimiter("forget-password", op =>
         {
-            op.PermitLimit = 1;
+            op.PermitLimit = 3;
             op.Window = TimeSpan.FromMinutes(20);
         }).RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 

@@ -34,3 +34,4 @@ Publish/
 .idea/
 .vscode/
 .bin/
+**__pycache__
